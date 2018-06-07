@@ -15,7 +15,7 @@ window.onload = function init() {
     var light = new BABYLON.PointLight("Moon", new BABYLON.Vector3(20, 50, 70), scene);
     var shadowGenerator = new BABYLON.ShadowGenerator(1024, light);
 
-    scene.gravity = new BABYLON.Vector3(0, -9.81, 0);
+    scene.enablePhysics();
 
     var beforeRenderFunction = function () {
         // Camera
@@ -39,18 +39,31 @@ window.onload = function init() {
     mapInit(scene);
     initCharacter(scene, camera, shadowGenerator);
 
+    var ground = scene.meshes[0];
+    var warrior = scene.meshes[1];
+
+
+    // warrior.velocity = 0;
+    // scene.beforeRender = function () {
+    //     if (!warrior.intersectsMesh(ground, false)) {
+    //         warrior.velocity -= 0.01;
+    //         warrior.position.y -= warrior.velocity;
+    //     }
+    // };
+
     document.addEventListener('keydown', function(event) {
         if(event.keyCode == 65) {
-            scene.meshes[1].locallyTranslate(new BABYLON.Vector3(1, 0, 0));
+            warrior.locallyTranslate(new BABYLON.Vector3(1, 0, 0));
         }
         else if(event.keyCode == 68) {
-            scene.meshes[1].locallyTranslate(new BABYLON.Vector3(-1, 0, 0));
+            warrior.locallyTranslate(new BABYLON.Vector3(-1, 0, 0));
         }
         else if(event.keyCode == 87) {
-            scene.meshes[1].locallyTranslate(new BABYLON.Vector3(0, 0, -1));
+            warrior.locallyTranslate(new BABYLON.Vector3(0, 0, -1));
+            // scene.meshes[4].rotate(BABYLON.Axis.X, 1, BABYLON.Space.WORLD, mesh);
         }
         else if(event.keyCode == 83) {
-            scene.meshes[1].locallyTranslate(new BABYLON.Vector3(0, 0, 1));
+            warrior.locallyTranslate(new BABYLON.Vector3(0, 0, 1));
         }
     });
 

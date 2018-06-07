@@ -1,7 +1,7 @@
 
 var ground_x=500;
 var ground_y=500;
-var ground_max_z=7;// the maximum for the ground height map
+var ground_max_z=3;// the maximum for the ground height map
 var ground_min_z=-3; // the minimum for the ground height map
 var sky_size=10000.0; //the size of the skybox
 var texture_scale=100;//bigger values apply more texture on ground (becomes smaller)
