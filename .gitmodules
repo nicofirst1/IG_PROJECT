@@ -1,0 +1,3 @@
+[submodule "handjs"]
+	path = handjs
+	url = https://github.com/deltakosh/handjs.git
