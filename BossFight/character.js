@@ -11,5 +11,13 @@ var initCharacter = function (scene) {
 
     });
 
-    return scene;
+    // BABYLON.SceneLoader.ImportMesh("warrior", "Models/psc-warrior-babylon/", "psc-warrior.babylon", scene, function (newMeshes) {
+    //     var warrior = newMeshes[1];
+    //
+    //     warrior.scaling = new BABYLON.Vector3(15, 15, 15);
+    //     warrior.rotation.y = Math.PI;
+    //     warrior.position = new BABYLON.Vector3(0, 0, -80);
+    //
+    // });
+
 };
