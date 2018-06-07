@@ -8,7 +8,7 @@ window.onload = function init() {
     var engine = new BABYLON.Engine(canvas, true);
     var scene = new BABYLON.Scene(engine);
 
-    var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, BABYLON.Vector3.Zero(), scene);
+    var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 100, BABYLON.Vector3.Zero(), scene);
 
     camera.setPosition(new BABYLON.Vector3(-40, 40, 0));
 
@@ -32,6 +32,7 @@ window.onload = function init() {
 
     // CALLS
     mapInit(scene);
+    initCharacter(scene);
 
     engine.runRenderLoop(function () {
         scene.render();
