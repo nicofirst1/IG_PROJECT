@@ -1,21 +1,18 @@
 
+var ground_x=500;
+var ground_y=500;
+var ground_max_z=7;// the maximum for the ground height map
+var ground_min_z=-3; // the minimum for the ground height map
+var sky_size=10000.0; //the size of the skybox
+var texture_scale=100;//bigger values apply more texture on ground (becomes smaller)
 
 var mapInit = function (scene) {
 
-    var sun = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(60, 100, 10), scene);
-
-    //Ground
-    var extraGround = BABYLON.Mesh.CreateGround("extraGround", 1000, 1000, 1, scene, false);
-    var extraGroundMaterial = new BABYLON.StandardMaterial("extraGround", scene);
-    extraGroundMaterial.diffuseTexture = new BABYLON.Texture("Resources/map/greybrickwall000.png", scene);
-    extraGroundMaterial.diffuseTexture.uScale = 60;
-    extraGroundMaterial.diffuseTexture.vScale = 60;
-    extraGround.position.y = -2.05;
-    extraGround.material = extraGroundMaterial;
+    var sun = new BABYLON.PointLight("Moon", new BABYLON.Vector3(60, 100, 10), scene);
 
 
     // Skybox
-    var skybox = BABYLON.Mesh.CreateBox("skyBox", 1000.0, scene);
+    var skybox = BABYLON.Mesh.CreateBox("skyBox", sky_size, scene);
     var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
     skyboxMaterial.backFaceCulling = false;
     skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("Resources/map/hw_lagoon/lagoon", scene);
@@ -23,6 +20,18 @@ var mapInit = function (scene) {
     skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
     skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
     skybox.material = skyboxMaterial;
+
+    //Ground
+    var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/height_map/height_map.png", ground_x,
+        ground_y, 100, ground_min_z, ground_max_z, scene, false);
+    var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
+    groundMaterial.diffuseTexture = new BABYLON.Texture("Resources/map/ground_texture/greybrickwall000.png", scene);
+    groundMaterial.diffuseTexture.uScale = texture_scale;
+    groundMaterial.diffuseTexture.vScale = texture_scale;
+    groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+    ground.position.y = -6.0;
+    ground.material = groundMaterial;
+
 
 
 };
