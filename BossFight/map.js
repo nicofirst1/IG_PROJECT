@@ -1,4 +1,4 @@
-var map_init = function (scene) {
+var mapInit = function (scene) {
 
     if (BABYLON.Engine.isSupported()) {
         var sun = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(60, 100, 10), scene);

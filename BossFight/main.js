@@ -31,7 +31,7 @@ window.onload = function init() {
     scene.registerBeforeRender(beforeRenderFunction);
 
     // CALLS
-    map_init(scene);
+    mapInit(scene);
 
     engine.runRenderLoop(function () {
         scene.render();
