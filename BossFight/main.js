@@ -12,7 +12,19 @@ window.onload = function init() {
 
     camera.setPosition(new BABYLON.Vector3(-40, 40, 0));
 
+    var beforeRenderFunction = function () {
+        // Camera
+        if (camera.beta < 0.1)
+            camera.beta = 0.1;
+        else if (camera.beta > (Math.PI / 2) * 0.9)
+            camera.beta = (Math.PI / 2) * 0.9;
 
+        if (camera.radius > 50)
+            camera.radius = 50;
+
+        if (camera.radius < 5)
+            camera.radius = 5;
+    };
 
     camera.attachControl(canvas);
 
@@ -24,18 +36,4 @@ window.onload = function init() {
     engine.runRenderLoop(function () {
         scene.render();
     });
-};
-
-var beforeRenderFunction = function () {
-    // Camera
-    if (camera.beta < 0.1)
-        camera.beta = 0.1;
-    else if (camera.beta > (Math.PI / 2) * 0.9)
-        camera.beta = (Math.PI / 2) * 0.9;
-
-    if (camera.radius > 50)
-        camera.radius = 50;
-
-    if (camera.radius < 5)
-        camera.radius = 5;
 };
