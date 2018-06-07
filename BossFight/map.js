@@ -5,10 +5,13 @@ var ground_max_z=7;// the maximum for the ground height map
 var ground_min_z=-3; // the minimum for the ground height map
 var sky_size=10000.0; //the size of the skybox
 var texture_scale=100;//bigger values apply more texture on ground (becomes smaller)
+var subdivisions=100; // allows you to increase the complexity of your mesh in order to improve the visual quality of it
+
 
 var mapInit = function (scene) {
 
-    var sun = new BABYLON.PointLight("Moon", new BABYLON.Vector3(60, 100, 10), scene);
+    //light source
+    new BABYLON.PointLight("Moon", new BABYLON.Vector3(60, 100, 10), scene);
 
 
     // Skybox
@@ -23,7 +26,7 @@ var mapInit = function (scene) {
 
     //Ground
     var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/height_map/height_map.png", ground_x,
-        ground_y, 100, ground_min_z, ground_max_z, scene, false);
+        ground_y, subdivisions, ground_min_z, ground_max_z, scene, false);
     var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
     groundMaterial.diffuseTexture = new BABYLON.Texture("Resources/map/ground_texture/greybrickwall000.png", scene);
     groundMaterial.diffuseTexture.uScale = texture_scale;
