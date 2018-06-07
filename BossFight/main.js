@@ -12,6 +12,9 @@ window.onload = function init() {
 
     camera.setPosition(new BABYLON.Vector3(-40, 40, 0));
 
+    var light = new BABYLON.PointLight("Moon", new BABYLON.Vector3(20, 50, 70), scene);
+    var shadowGenerator = new BABYLON.ShadowGenerator(1024, light);
+
     var beforeRenderFunction = function () {
         // Camera
         if (camera.beta < 0.1)
@@ -32,7 +35,7 @@ window.onload = function init() {
 
     // CALLS
     mapInit(scene);
-    initCharacter(scene);
+    initCharacter(scene, shadowGenerator);
 
     engine.runRenderLoop(function () {
         scene.render();

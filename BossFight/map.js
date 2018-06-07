@@ -10,10 +10,6 @@ var subdivisions=100; // allows you to increase the complexity of your mesh in o
 
 var mapInit = function (scene) {
 
-    //light source
-    new BABYLON.PointLight("Moon", new BABYLON.Vector3(60, 100, 10), scene);
-
-
     // Skybox
     var skybox = BABYLON.Mesh.CreateBox("skyBox", sky_size, scene);
     var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
@@ -35,6 +31,5 @@ var mapInit = function (scene) {
     ground.position.y = -6.0;
     ground.material = groundMaterial;
 
-
-
+    ground.receiveShadows = true;
 };
