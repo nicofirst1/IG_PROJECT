@@ -43,4 +43,6 @@ var mapInit = function (scene) {
     ground.position.y = -6.0;
     ground.material = groundMaterial;
     ground.receiveShadows = true;
+
+    return ground;
 };

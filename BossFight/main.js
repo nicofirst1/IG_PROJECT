@@ -1,4 +1,8 @@
-var light_position=new BABYLON.Vector3(20, 50, 70)
+var light_position=new BABYLON.Vector3(20, 50, 70);
+
+var jumpHeight = 10;
+var jumpProgress = jumpHeight;
+var jumpBool = true;
 
 window.onload = function init() {
 
@@ -47,28 +51,23 @@ window.onload = function init() {
     scene.registerBeforeRender(beforeRenderFunction);
 
 
-    //var physicsPlugin = new BABYLON.CannonJSPlugin();
-    //scene.enablePhysics();
+    var g = new BABYLON.Vector3(0, -9.81, 0);
+    var dt = 0.002;
+    var physicsPlugin = new BABYLON.CannonJSPlugin();
 
-
-    //scene.enablePhysics(new BABYLON.Vector3(0,-9.81, 0), new BABYLON.OimoJSPlugin());
+    scene.enablePhysics(g, physicsPlugin);
 
     // CALLS
-    mapInit(scene);
-    initCharacter(scene, camera, shadowGenerator);
+    var ground = mapInit(scene);
 
-    var ground = scene.meshes[0];
-    var warrior = scene.meshes[1];
+    //var ground = BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, scene);
+    //initCharacter(scene, camera, shadowGenerator);
 
+    var warrior = BABYLON.Mesh.CreateSphere("sphere1", 16, 1, scene);
+    warrior.position.y = 30;
 
-    // warrior.velocity = 0;
-    // scene.beforeRender = function () {
-    //     if (!warrior.intersectsMesh(ground, false)) {
-    //         warrior.velocity -= 0.01;
-    //         warrior.position.y -= warrior.velocity;
-    //     }
-    // };
-
+    ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.9, friction: 0.05 }, scene);
+    warrior.physicsImpostor = new BABYLON.PhysicsImpostor(warrior, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 10, restitution: 0.9, friction: 0.05 }, scene);
 
 
     document.addEventListener('keydown', function(event) {
@@ -80,14 +79,28 @@ window.onload = function init() {
         }
         else if(event.keyCode == 87) {
             warrior.locallyTranslate(new BABYLON.Vector3(0, 0, -1));
-            // scene.meshes[4].rotate(BABYLON.Axis.X, 1, BABYLON.Space.WORLD, mesh);
+            warrior.translate(BABYLON.Vector3.Up(), 3 * 3);
         }
         else if(event.keyCode == 83) {
             warrior.locallyTranslate(new BABYLON.Vector3(0, 0, 1));
         }
+        else if(event.keyCode == 32) {
+            if (jumpBool == false) {
+                jumpBool = true;
+            }
+        }
     });
 
     engine.runRenderLoop(function () {
+        if (jumpBool) {
+            if (jumpProgress > 0) {
+                warrior.locallyTranslate(new BABYLON.Vector3(0, -1, 0));
+                jumpProgress -= 1;
+            } else {
+                jumpBool = false;
+                jumpProgress = jumpHeight;
+            }
+        }
         scene.render();
     });
 };
