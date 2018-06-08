@@ -10,6 +10,7 @@ var maxWalkingVelocity = 0.25;
 var startWalkingVelocity = 0.01;
 var currentWalkingVelocity = startWalkingVelocity;
 
+
 window.onload = function init() {
 
     if (!BABYLON.Engine.isSupported()) return;
@@ -53,7 +54,7 @@ window.onload = function init() {
     //scene.registerBeforeRender(beforeRenderFunction);
 
 
-    var g = new BABYLON.Vector3(0, -9.81, 0);
+    var g = new BABYLON.Vector3(0, -30, 0);
     var physicsPlugin = new BABYLON.CannonJSPlugin();
 
     scene.enablePhysics(g, physicsPlugin);
@@ -114,15 +115,10 @@ window.onload = function init() {
             currentWalkingVelocity = startWalkingVelocity;
         }
 
-        // if (jumpBool) {
-        //     if (jumpProgress > 0) {
-        //         warrior.locallyTranslate(new BABYLON.Vector3(0, 1, 0));
-        //         jumpProgress -= 1;
-        //     } else {
-        //         jumpBool = false;
-        //         jumpProgress = jumpHeight;
-        //     }
-        // }
+        if (window.jump) {
+            warrior.locallyTranslate(new BABYLON.Vector3(0, 3, 0));
+            window.jump = false;
+        }
 
         scene.render();
     });

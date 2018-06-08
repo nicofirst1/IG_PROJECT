@@ -36,10 +36,10 @@ var initCharacter = function (scene, camera, shadowGenerator) {
 
         shadowGenerator.addShadowCaster(scene.meshes[0], true);
         for (var index = 0; index < newMeshes.length; index++) {
-            newMeshes[index].setPivotMatrix(BABYLON.Matrix.Translation(0, 2.35, 0));
+            // newMeshes[index].setPivotMatrix(BABYLON.Matrix.Translation(0, 2.35, 0));
             newMeshes[index].receiveShadows = false;
             newMeshes[index].physicsImpostor = new BABYLON.PhysicsImpostor(newMeshes[index],
-                BABYLON.PhysicsImpostor.BoxImpostor,
+                BABYLON.PhysicsImpostor.CylinderImpostor,
                 { mass: 3, restitution: 0.1, friction: 0.05 }, scene);
         }
 
@@ -176,8 +176,8 @@ var initCharacter = function (scene, camera, shadowGenerator) {
                     }
                 }
                 else if(event.keyCode == 32) {
-                    if (jumpBool == false) {
-                        jumpBool = true;
+                    if (!window.jump) {
+                        window.jump = true;
                     }
                 }
             });
@@ -234,11 +234,6 @@ var initCharacter = function (scene, camera, shadowGenerator) {
                 }
                 else if (window.moveD) {
                     if (rightRange) scene.beginAnimation(skeleton, rightRange.from, rightRange.to, true);
-                }
-            }
-            else if(event.keyCode == 32) {
-                if (jumpBool == false) {
-                    jumpBool = true;
                 }
             }
         });
