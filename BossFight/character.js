@@ -36,6 +36,7 @@ var initCharacter = function (scene, camera, shadowGenerator) {
 
         shadowGenerator.addShadowCaster(scene.meshes[0], true);
         for (var index = 0; index < newMeshes.length; index++) {
+            newMeshes[index].setPivotMatrix(BABYLON.Matrix.Translation(0, 2.35, 0));
             newMeshes[index].receiveShadows = false;
             newMeshes[index].physicsImpostor = new BABYLON.PhysicsImpostor(newMeshes[index],
                 BABYLON.PhysicsImpostor.BoxImpostor,
