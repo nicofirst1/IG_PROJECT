@@ -21,7 +21,10 @@ var initCharacter = function (scene, camera, shadowGenerator) {
         var skeleton = skeletons[0];
 
         var warrior_mesh = newMeshes[1];
-        camera.target = warrior_mesh;
+        camera.target = warrior_mesh ;
+        camera.heightOffset = 0;
+        camera.radius = 100;
+
         warrior_mesh.position.y = 0.7;
         var scaling = 11;
         warrior_mesh.scaling = new BABYLON.Vector3(scaling, scaling, scaling);
