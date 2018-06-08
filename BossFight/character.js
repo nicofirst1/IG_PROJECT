@@ -37,11 +37,16 @@ var initCharacter = function (scene, camera, shadowGenerator) {
         shadowGenerator.addShadowCaster(scene.meshes[0], true);
         for (var index = 0; index < newMeshes.length; index++) {
             // newMeshes[index].setPivotMatrix(BABYLON.Matrix.Translation(0, 2.35, 0));
-            newMeshes[index].receiveShadows = false;
+            newMeshes[index].receiveShadows = true;
+
             newMeshes[index].physicsImpostor = new BABYLON.PhysicsImpostor(newMeshes[index],
                 BABYLON.PhysicsImpostor.CylinderImpostor,
-                { mass: 3, restitution: 0.1, friction: 0.05 }, scene);
+                {mass: 3, restitution: 0.1, friction: 0.05}, scene);
+
         }
+
+        // Moves only the skin, not the core body
+        newMeshes[0].position.y = -0.87;
 
         // ROBOT
         skeleton.animationPropertiesOverride = new BABYLON.AnimationPropertiesOverride();
