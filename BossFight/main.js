@@ -1,7 +1,7 @@
 var light_position1=new BABYLON.Vector3(100, 100, 100);
 var light_position2=new BABYLON.Vector3(-100, 100, -100);
-var light_position1=new BABYLON.Vector3(-100, 100, 100);
-var light_position2=new BABYLON.Vector3(100, 100, -100);
+var light_position3=new BABYLON.Vector3(-100, 100, 100);
+var light_position4=new BABYLON.Vector3(100, 100, -100);
 
 
 var warrior;
@@ -24,6 +24,8 @@ window.onload = function init() {
     var light1 = new BABYLON.PointLight("Moon", light_position1, scene);
 
     var light2 = new BABYLON.PointLight("Moon", light_position2, scene);
+    var light3 = new BABYLON.PointLight("Moon", light_position3, scene);
+    var light4 = new BABYLON.PointLight("Moon", light_position4, scene);
 
 
 
@@ -60,11 +62,15 @@ window.onload = function init() {
     mapInit(scene);
 
     //var ground = BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, scene);
-    //initCharacter(scene, camera, shadowGenerator);
+    initCharacter(scene, camera, shadowGenerator);
 
     warrior = scene.meshes[1];
 
-    initCharacter(scene, camera, shadowGenerator);//BABYLON.Mesh.CreateSphere("sphere1", 16, 1, scene);
+    //warrior = BABYLON.Mesh.CreateSphere("sphere1", 16, 1, scene);
+    //warrior.position.y = 15;
+
+    //warrior.physicsImpostor = new BABYLON.PhysicsImpostor(warrior, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 10, restitution: 0.9, friction: 0.05 }, scene);
+
 
     engine.runRenderLoop(function () {
 

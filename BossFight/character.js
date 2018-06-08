@@ -21,19 +21,25 @@ var initCharacter = function (scene, camera, shadowGenerator) {
         var skeleton = skeletons[0];
 
         var warrior_mesh = newMeshes[1];
-        camera.target = warrior_mesh ;
+
+        skeleton.checkCollisions = true;
+        warrior_mesh.checkCollisions = true;
+
+        camera.target = warrior_mesh;
         camera.heightOffset = 0;
         camera.radius = 100;
 
-        warrior_mesh.position.y = 0.7;
+        warrior_mesh.position.y = 100;
         var scaling = 11;
         warrior_mesh.scaling = new BABYLON.Vector3(scaling, scaling, scaling);
 
-        //skeletons.physicsImpostor = new BABYLON.PhysicsImpostor(warrior_mesh, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 10, restitution: 0.9, friction: 0.05 }, scene);
 
         shadowGenerator.addShadowCaster(scene.meshes[0], true);
         for (var index = 0; index < newMeshes.length; index++) {
             newMeshes[index].receiveShadows = false;
+            newMeshes[index].physicsImpostor = new BABYLON.PhysicsImpostor(newMeshes[index],
+                BABYLON.PhysicsImpostor.BoxImpostor,
+                { mass: 3, restitution: 0.1, friction: 0.05 }, scene);
         }
 
         // ROBOT

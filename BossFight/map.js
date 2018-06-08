@@ -33,8 +33,11 @@ var mapInit = function (scene) {
 
 
     //Ground
-    var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/height_map/height_map.png", ground_x,
-        ground_y, subdivisions, ground_min_z, ground_max_z, scene, false);
+    //var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/height_map/height_map.png", ground_x,
+    //    ground_y, subdivisions, ground_min_z, ground_max_z, scene, false);
+
+    var ground = BABYLON.Mesh.CreateGround("ground1", 500, 500, 2, scene);
+
     var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
     groundMaterial.diffuseTexture = new BABYLON.Texture("Resources/map/ground_texture/greybrickwall000.png", scene);
     groundMaterial.diffuseTexture.uScale = texture_scale;
@@ -43,6 +46,9 @@ var mapInit = function (scene) {
     ground.position.y = 0.0;
     ground.material = groundMaterial;
     ground.receiveShadows = true;
+
+    scene.collisionsEnabled = true;
+    ground.checkCollisions = true;
 
     ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.9, friction: 0.05 }, scene);
 
