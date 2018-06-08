@@ -1,3 +1,5 @@
+var light_position=new BABYLON.Vector3(20, 50, 70)
+
 window.onload = function init() {
 
     if (!BABYLON.Engine.isSupported()) return;
@@ -9,13 +11,8 @@ window.onload = function init() {
     var scene = new BABYLON.Scene(engine);
 
     var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 100, BABYLON.Vector3.Zero(), scene);
-    camera.setPosition(new BABYLON.Vector3(25, 25, 25));
-    scene.addCamera(camera);
-
-    var light = new BABYLON.PointLight("Moon", new BABYLON.Vector3(20, 50, 70), scene);
+    var light = new BABYLON.PointLight("Moon", light_position, scene);
     var shadowGenerator = new BABYLON.ShadowGenerator(1024, light);
-
-    scene.enablePhysics();
 
     var beforeRenderFunction = function () {
         // Camera
@@ -31,9 +28,29 @@ window.onload = function init() {
             camera.radius = 5;
     };
 
+
+
+    //----ENGINE
+    //disabel online support (remove warnings)
+    engine.enableOfflineSupport=false;
+
+    //----CAMERA
+    //set the camera position
+    camera.setPosition(new BABYLON.Vector3(25, 25, 25));
     camera.attachControl(canvas);
 
+
+    //----SCENES
+    //add the camera to the scene
+    scene.addCamera(camera);
+    scene.ambientColor = new BABYLON.Color3(0.3, 0.3, 0.3);
+    scene.enablePhysics();
     scene.registerBeforeRender(beforeRenderFunction);
+
+
+
+
+
 
     // CALLS
     mapInit(scene);
