@@ -44,13 +44,14 @@ window.onload = function init() {
     //add the camera to the scene
     scene.addCamera(camera);
     scene.ambientColor = new BABYLON.Color3(0.3, 0.3, 0.3);
-    scene.enablePhysics();
     scene.registerBeforeRender(beforeRenderFunction);
 
 
+    //var physicsPlugin = new BABYLON.CannonJSPlugin();
+    //scene.enablePhysics();
 
 
-
+    //scene.enablePhysics(new BABYLON.Vector3(0,-9.81, 0), new BABYLON.OimoJSPlugin());
 
     // CALLS
     mapInit(scene);
@@ -67,6 +68,8 @@ window.onload = function init() {
     //         warrior.position.y -= warrior.velocity;
     //     }
     // };
+
+
 
     document.addEventListener('keydown', function(event) {
         if(event.keyCode == 65) {

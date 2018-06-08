@@ -1,7 +1,7 @@
 var initCharacter = function (scene, camera, shadowGenerator) {
 
     var warrior = 0;
-    BABYLON.SceneLoader.ImportMesh("", "Models/knight/", "knight.babylon", scene, function (newMeshes) {
+    BABYLON.SceneLoader.ImportMesh("", "Models/psc-warrior-babylon/", "psc-warrior.babylon", scene, function (newMeshes) {
         warrior = newMeshes[0];
         camera.target = warrior;
 
