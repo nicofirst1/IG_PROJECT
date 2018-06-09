@@ -6,7 +6,7 @@ var InitCamera = function (scene) {
     // This attaches the camera to the canvas
 
     camera.ellipsoid = new BABYLON.Vector3(2, 2, 2);
-    camera.ellipsoidOffset = new BABYLON.Vector3(0, 0.5, 0);
+    camera.ellipsoidOffset = new BABYLON.Vector3(0, -1, 0);
     camera.checkCollisions = true;
     camera.applyGravity = true;
     camera._needMoveForGravity = true;
