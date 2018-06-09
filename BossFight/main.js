@@ -21,19 +21,19 @@ window.onload = function init() {
     var engine = new BABYLON.Engine(canvas, true);
     var scene = new BABYLON.Scene(engine);
 
-    var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 100, BABYLON.Vector3.Zero(), scene);
+    var camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 10, 0), scene);
     var light1 = new BABYLON.PointLight("Moon", light_position1, scene);
 
     var light2 = new BABYLON.PointLight("Moon", light_position2, scene);
     var light3 = new BABYLON.PointLight("Moon", light_position3, scene);
     var light4 = new BABYLON.PointLight("Moon", light_position4, scene);
-
-    var cam = scene.activeCamera;
-    cam.attachControl(engine.getRenderingCanvas());
-    cam.keysUp.push(90);
-    cam.keysDown.push(83);
-    cam.keysLeft.push(81);
-    cam.keysRight.push(68);
+    //
+    // var cam = scene.activeCamera;
+    // cam.attachControl(engine.getRenderingCanvas());
+    // cam.keysUp.push(90);
+    // cam.keysDown.push(83);
+    // cam.keysLeft.push(81);
+    // cam.keysRight.push(68);
 
     // Set full screen
     var setFullScreen = function () {
@@ -54,10 +54,12 @@ window.onload = function init() {
     BABYLON.Animation.AllowMatricesInterpolation = true;
 
     //----CAMERA
-    //set the camera position
-    camera.setPosition(new BABYLON.Vector3(25, 25, 25));
-    camera.attachControl(canvas);
-
+    // Targets the camera to a particular position. In this case the scene origin
+    //camera.setTarget(BABYLON.Vector3.Zero());
+    // Attach the camera to the canvas
+    camera.attachControl(canvas, true);
+    //camera.inputs.add(new BABYLON.FreeCameraGamepadInput());
+    //camera.inputs.attached.gamepad.gamepadAngularSensibility = 250;
 
     //----SCENES
     //add the camera to the scene

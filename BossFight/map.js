@@ -24,6 +24,24 @@ var mapInit = function (scene) {
     //This makes the skybox follow our camera's position
     skybox.infiniteDistance = true;
     skybox.material = skyboxMaterial;
+    skybox.layerMask = 2; // 010 in binary
+
+
+    // Shadows stuff
+    var defaultLight = new BABYLON.PointLight("Moon", light_position1, scene);
+
+    defaultLight.intensity = 0.5;
+    var dir = new BABYLON.DirectionalLight('dirLight', new BABYLON.Vector3(-0.5, -1, -0.5), this.scene);
+    dir.position = new BABYLON.Vector3(40, 60, 40);
+    var shadowGenerator = new BABYLON.ShadowGenerator(1024, dir);
+    shadowGenerator.useBlurVarianceShadowMap = true;
+    // Apply shadows on each mesh in the map
+    scene.meshes.forEach(function (m) {
+
+            m.receiveShadows = true;
+
+    });
+
 
     //add fog
     if (ambient_fog){
