@@ -40,10 +40,9 @@ window.onload = function init() {
     scene.ambientColor = new BABYLON.Color3(0.3, 0.15, 0.3);
     //scene.registerBeforeRender(beforeRenderFunction);
 
-    var ground = mapInit(scene, light_position1);
+    mapInit(scene, light_position1);
 
     scene.enablePhysics();
-
 
     scene.gravity = new BABYLON.Vector3(0, -0.6, 0);
     camera.applyGravity = true;
@@ -52,7 +51,9 @@ window.onload = function init() {
     scene.collisionsEnabled = true;
     camera.checkCollisions = true;
 
-    ground.checkCollisions = true;
+    window.addEventListener("resize", function () { engine.resize();});
+
+    initCharacter(scene, camera, shadowGenerator);
 
     engine.runRenderLoop(function () {
         scene.render();
