@@ -49,11 +49,7 @@ window.onload = function init() {
 
     mapInit(scene, light,shadowGenerator);
 
-
-    scene.gravity = new BABYLON.Vector3(0, -0.2, 0);
-    camera.applyGravity = true;
-    camera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
-
+    
     window.addEventListener("resize", function () { engine.resize();});
 
     initCharacter(scene, camera, shadowGenerator);
