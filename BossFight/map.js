@@ -46,7 +46,7 @@ var mapInit = function (scene, light, shadow) {
     //          GROUND
     //###############################
     var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
-    groundMaterial.diffuseTexture = new BABYLON.Texture("Resources/map/ground_texture/rocky.jpg", scene);
+    groundMaterial.diffuseTexture = new BABYLON.Texture("Resources/map/ground_texture/rock.jpg", scene);
     groundMaterial.diffuseTexture.uScale = texture_scale;
     groundMaterial.diffuseTexture.vScale = texture_scale;
     groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
