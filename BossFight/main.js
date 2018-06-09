@@ -28,7 +28,19 @@ window.onload = function init() {
     var light3 = new BABYLON.PointLight("Moon", light_position3, scene);
     var light4 = new BABYLON.PointLight("Moon", light_position4, scene);
 
+    var cam = scene.activeCamera;
+    cam.attachControl(engine.getRenderingCanvas());
+    cam.keysUp.push(90);
+    cam.keysDown.push(83);
+    cam.keysLeft.push(81);
+    cam.keysRight.push(68);
 
+    // Set full screen
+    var setFullScreen = function () {
+        engine.isPointerLock = true;
+        window.removeEventListener('click', setFullScreen);
+    };
+    window.addEventListener('click', setFullScreen);
 
     var shadowGenerator = new BABYLON.ShadowGenerator(1024, light1);
     shadowGenerator.useBlurExponentialShadowMap = true;
@@ -63,7 +75,7 @@ window.onload = function init() {
     mapInit(scene);
 
     //var ground = BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, scene);
-    initCharacter(scene, camera, shadowGenerator);
+    //initCharacter(scene, camera, shadowGenerator);
 
     warrior = scene.meshes[1];
 
