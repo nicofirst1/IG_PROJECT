@@ -2,7 +2,7 @@ window.onload = function init() {
 
     if (!BABYLON.Engine.isSupported()) return;
 
-    var gravity= new BABYLON.Vector3(0, 9.8, 0);
+    var gravity= new BABYLON.Vector3(0, -0.6, 0);
 
     // BABYLON.OBJFileLoader.OPTIMIZE_WITH_UV = true;
 
@@ -15,7 +15,7 @@ window.onload = function init() {
 
     var scene = new BABYLON.Scene(engine);
     scene.enablePhysics();
-    scene.gravity=gravity;
+    scene.gravity = gravity;
     scene.collisionsEnabled = true;
 
 
@@ -35,13 +35,12 @@ window.onload = function init() {
     };
     window.addEventListener('click', setFullScreen);
 
-    var gl = new BABYLON.GlowLayer("glow", scene);
+
 
     //----ENGINE
 
 
     BABYLON.Animation.AllowMatricesInterpolation = true;
-
 
     //add the camera to the scene
     scene.addCamera(camera);
@@ -49,7 +48,11 @@ window.onload = function init() {
 
     mapInit(scene, light,shadowGenerator);
 
-    
+
+    scene.gravity = new BABYLON.Vector3(0, -0.2, 0);
+    camera.applyGravity = true;
+    camera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
+
     window.addEventListener("resize", function () { engine.resize();});
 
     initCharacter(scene, camera, shadowGenerator);
@@ -58,4 +61,4 @@ window.onload = function init() {
         scene.render();
     });
 };
-
+ 
