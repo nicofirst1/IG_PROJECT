@@ -67,7 +67,7 @@ var mapInit = function (scene, light, shadow) {
     ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, {
         mass: 0,
         restitution: 0,
-        friction: 100,
+        friction: 10,
     }, scene);
 
 

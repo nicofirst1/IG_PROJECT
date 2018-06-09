@@ -2,7 +2,7 @@ window.onload = function init() {
 
     if (!BABYLON.Engine.isSupported()) return;
 
-    var gravity= new BABYLON.Vector3(0, -0.6, 0);
+    var gravity= new BABYLON.Vector3(0, 9.8, 0);
 
     // BABYLON.OBJFileLoader.OPTIMIZE_WITH_UV = true;
 
@@ -15,7 +15,7 @@ window.onload = function init() {
 
     var scene = new BABYLON.Scene(engine);
     scene.enablePhysics();
-    scene.gravity = gravity;
+    scene.gravity=gravity;
     scene.collisionsEnabled = true;
 
 
