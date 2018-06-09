@@ -3,7 +3,7 @@ var ground_y = 500;
 var ground_max_z = 70;// the maximum for the ground height map
 var ground_min_z = 0; // the minimum for the ground height map
 var sky_size = 10000.0; //the size of the skybox
-var texture_scale = 4;//bigger values apply more texture on ground (becomes smaller)
+var texture_scale = 8;//bigger values apply more texture on ground (becomes smaller)
 var subdivisions = 124; // allows you to increase the complexity of your mesh in order to improve the visual quality of it
 var ambient_fog = false;
 var water_color = "#0f38da";
@@ -71,23 +71,64 @@ var mapInit = function (scene, light, shadow) {
     }, scene);
 
 
+    //###############################
+    //          SNOW
+    //###############################
+    // Create a particle system
+    var particleSystem = new BABYLON.ParticleSystem("particles", 50000, scene);
+
+    //Texture of each particle
+    particleSystem.particleTexture = new BABYLON.Texture("Resources/map/flares/flare.png", scene);
+
+    // Where the particles come from
+    particleSystem.emitter = skybox; // the starting object, the emitter
+    particleSystem.minEmitBox = new BABYLON.Vector3(-100, 0, -100); // Starting all from
+    particleSystem.maxEmitBox = new BABYLON.Vector3(100, 50, 100); // To...
+
+    // Colors of all particles
+    particleSystem.color1 = new BABYLON.Color4(1, 1, 1.0, 1.0);
+    particleSystem.color2 = new BABYLON.Color4(1, 1, 1.0, 0.5);
+    particleSystem.colorDead = new BABYLON.Color4(0, 0, 0.2, 0.0);
+
+    // Size of each particle (random between...
+    particleSystem.minSize = 0.1;
+    particleSystem.maxSize = 0.5;
+
+    // Life time of each particle (random between...
+    particleSystem.minLifeTime = 3;
+    particleSystem.maxLifeTime = 15;
+
+    // Emission rate
+    particleSystem.emitRate = 5000;
+
+    // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
+    particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+
+    // Set the gravity of all particles
+    particleSystem.gravity = new BABYLON.Vector3(0, -15, 0);
+
+    // Direction of each particle after it has been emitted
+    particleSystem.direction1 = new BABYLON.Vector3(-7, -8, 3);
+    particleSystem.direction2 = new BABYLON.Vector3(7, -8, -3);
+
+    // Angular speed, in radians
+    particleSystem.minAngularSpeed = 0;
+    particleSystem.maxAngularSpeed = Math.PI;
+
+    // Speed
+    particleSystem.minEmitPower = 2;
+    particleSystem.maxEmitPower = 3;
+    particleSystem.updateSpeed = 0.007;
+
+    // Start the particle system
+    particleSystem.start();
+
 
 
     //###############################
     //          WATER
     //###############################
 
-    // var water = BABYLON.Mesh.CreateGround("water", ground_x, ground_y, 1, scene, false);
-    // var waterMaterial = new WaterMaterial("water", scene, light);
-    // waterMaterial.refractionTexture.renderList.push(ground);
-    //
-    // waterMaterial.reflectionTexture.renderList.push(ground);
-    // waterMaterial.reflectionTexture.renderList.push(skybox);
-    //
-    // water.material = waterMaterial;
-
-
-    // Water
     var waterMesh = BABYLON.Mesh.CreateGround("waterMesh", ground_x, ground_y, 1, scene, false);
 
     var water = new BABYLON.WaterMaterial("water", scene);
