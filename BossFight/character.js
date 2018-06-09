@@ -178,7 +178,7 @@ var armsMovementRelease = function(scene, arm, ccw, todoFireball, camera) {
 };
 
 var createFireball = function (scene, camera) {
-    fireball = BABYLON.Mesh.CreateBox("fireball", 1, scene);
+    fireball = BABYLON.Mesh.CreateSphere('bullet', 3, 1.6, scene);
 
     var fireballMaterial = new BABYLON.StandardMaterial("material", scene);
     fireballMaterial.diffuseTexture = new BABYLON.Texture("Resources/fire/fire.jpg", scene);
@@ -192,58 +192,27 @@ var createFireball = function (scene, camera) {
 var camera1;
 
 var fireFireball = function (scene, camera) {
-    var max = 10000;
-
-    var displacement = new BABYLON.Vector3(0.0, -0.5, 4);
-    var x = camera.position.x + displacement.x;
-    var y = camera.position.y + displacement.y;
-    var z = camera.position.z + displacement.z;
-
-    camera1  = new BABYLON.UniversalCamera("Camera1", new BABYLON.Vector3(x, y, z), scene);
-
-    var camTarget = camera.getTarget();
-    var xx = camTarget.x;
-    var yy = camTarget.y;
-    var zz = camTarget.z;
-
-    var target = new BABYLON.Vector3(xx, yy, zz);
-
-    camera1.setTarget(target);
-    fireball.parent = camera1;
-
-    var fireballCast = new BABYLON.Animation(
-        "fireballCast",
-        "position.z", fps,
-        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-
-    // Animation keys
-    var keys = [];
-
-    keys.push({frame: 0, value: 0});
-
-    var curr_pos = fireball.position.z;
-
-    for (var i = 0; i < max; i++) {
-        curr_pos += i;
-        keys.push({frame: i, value: curr_pos});
-    }
-
-    keys.push({frame: i, value: 0});
-
-    fireballCast.setKeys(keys);
-
-    fireball.animations = [];
-    fireball.animations.push(fireballCast);
-
-    var animatable = scene.beginAnimation(fireball, false, fps, false);
-    animatable.onAnimationEnd = function () {
-        animatable.animationStarted = false;
-        deleteMesh(fireball);
-    };
-};
-
-var deleteMesh = function (fireball) {
     fireball.dispose();
     fireball = null;
-};
+
+    var bullet = BABYLON.Mesh.CreateSphere('bullet', 3, 1.6, scene);
+    var displacement = new BABYLON.Vector3(0.0, -0.5, 4);
+    var startPos = camera.position;
+
+    bullet.position = new BABYLON.Vector3(startPos.x, startPos.y, startPos.z);
+    var fireballMaterial = new BABYLON.StandardMaterial("material", scene);
+    fireballMaterial.diffuseTexture = new BABYLON.Texture("Resources/fire/fire.jpg", scene);
+    fireballMaterial.emissiveColor = new BABYLON.Vector3(1.0, 0.0, 0.0);
+    bullet.material = fireballMaterial;
+
+    var invView = new BABYLON.Matrix();
+    camera.getViewMatrix().invertToRef(invView);
+    var direction = BABYLON.Vector3.TransformNormal(new BABYLON.Vector3(0, 0, 1), invView);
+
+    direction.normalize();
+
+    scene.registerBeforeRender(function () {
+        bullet.position.addInPlace(direction);
+    });
+
+}
