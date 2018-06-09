@@ -1,7 +1,7 @@
 var InitCamera = function (scene) {
     var camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 10, 0), scene);
 
-    camera.position = new BABYLON.Vector3(0, 350, 0);
+    camera.position = new BABYLON.Vector3(30, 80, 0);
 
     // This attaches the camera to the canvas
 
@@ -42,7 +42,7 @@ var InitCamera = function (scene) {
     return camera
 };
 
-var fps = 20;//the speed of the jump execution
+var fps = 13;//the speed of the jump execution
 var max_jump_heigth = 10;
 
 //jump animation
@@ -67,6 +67,10 @@ var cameraJump = function(scene) {
 
     for (i = 1; i < max_jump_heigth; i++) {
         current_position += 1;
+        keys.push({frame: i, value: current_position});
+    }
+
+    for (; i < max_jump_heigth + 2; i++) {
         keys.push({frame: i, value: current_position});
     }
 

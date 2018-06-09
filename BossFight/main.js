@@ -44,7 +44,7 @@ window.onload = function init() {
 
     scene.enablePhysics();
 
-    scene.gravity = new BABYLON.Vector3(0, -0.6, 0);
+    scene.gravity = new BABYLON.Vector3(0, -0.2, 0);
     camera.applyGravity = true;
     camera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
 
