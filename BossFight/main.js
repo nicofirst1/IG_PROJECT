@@ -37,7 +37,7 @@ window.onload = function init() {
 
     //add the camera to the scene
     scene.addCamera(camera);
-    scene.ambientColor = new BABYLON.Color3(0.3, 0.3, 0.3);
+    scene.ambientColor = new BABYLON.Color3(0.3, 0.15, 0.3);
     //scene.registerBeforeRender(beforeRenderFunction);
 
     var ground = mapInit(scene, light_position1);
@@ -45,7 +45,7 @@ window.onload = function init() {
     scene.enablePhysics();
 
 
-    scene.gravity = new BABYLON.Vector3(0, -9.81, 0);
+    scene.gravity = new BABYLON.Vector3(0, -0.6, 0);
     camera.applyGravity = true;
     camera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
 

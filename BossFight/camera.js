@@ -1,6 +1,4 @@
-
-
-var InitCamera=function (scene) {
+var InitCamera = function (scene) {
     var camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 10, 0), scene);
 
     camera.position = new BABYLON.Vector3(0, 35, 0);
@@ -23,10 +21,11 @@ var InitCamera=function (scene) {
     camera.speed = 4.0;
     camera.inertia = 0.6;
     camera.angularInertia = 0;
-    camera.angularSensibility=100;
+    camera.angularSensibility = 100;
 
     // add listener for jump
     window.addEventListener("keyup", onKeyUp, false);
+
     function onKeyUp(event) {
         switch (event.keyCode) {
             case 32:
@@ -36,16 +35,14 @@ var InitCamera=function (scene) {
     }
 
 
-
-
     return camera
 };
 
 
-var fps=35;
-var max_jump_heigth=20;
+var fps = 35;
+var max_jump_heigth = 10;
 
-var cameraJump = function(scene) {
+var cameraJump = function (scene) {
     var cam = scene.cameras[0];
 
     cam.animations = [];
@@ -60,19 +57,14 @@ var cameraJump = function(scene) {
     var keys = [];
 
     var i;
-    var current_position=cam.position.y;
+    var current_position = cam.position.y;
 
-    keys.push({ frame: 0, value: current_position });
+    keys.push({frame: 0, value: current_position});
 
-    for ( i = 1; i < max_jump_heigth; i++) {
-        current_position+=1;
-        keys.push({ frame: i, value: current_position});
+    for (i = 1; i < max_jump_heigth; i++) {
+        current_position += 1;
+        keys.push({frame: i, value: current_position});
     }
-    for (;i < max_jump_heigth*2-1; i++) {
-        current_position-=1;
-        keys.push({ frame: i, value: current_position});
-    }
-
 
 
     jump.setKeys(keys);
