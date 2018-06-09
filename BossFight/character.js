@@ -45,7 +45,7 @@ var initCharacter = function (scene, camera, shadowGenerator) {
     upperArmLeft.parent = camera;
 
     // LOWER LEFT
-    var lowerArmLeft = BABYLON.Mesh.CreateBox("arm", 2, scene);w
+    var lowerArmLeft = BABYLON.Mesh.CreateBox("arm", 2, scene);
     lowerArmLeft.scaling.x = 0.5;
     lowerArmLeft.scaling.y = 0.5;
     lowerArmLeft.scaling.z = 0.5;
