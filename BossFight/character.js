@@ -177,6 +177,8 @@ var armsMovementRelease = function(scene, arm, ccw, todoFireball, camera) {
     }
 };
 
+var pSystem;
+
 var createFireball = function (scene, camera) {
     fireball = BABYLON.Mesh.CreateSphere('bullet', 3, 1.6, scene);
 
@@ -187,6 +189,35 @@ var createFireball = function (scene, camera) {
 
     fireball.position = new BABYLON.Vector3(0.0, -0.5, 4);
     fireball.parent = camera;
+
+    pSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
+    pSystem.emitter = fireball;
+    pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+    pSystem.light = new BABYLON.PointLight("Omni1", new BABYLON.Vector3(0, 0, 0), scene);
+    pSystem.light.diffuse = new BABYLON.Color3(.8, 0, 0);
+    pSystem.light.range = 15;
+
+    pSystem.particleTexture = new BABYLON.Texture("Resources/fire/fire.jpg", scene);
+    pSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
+    pSystem.maxEmitBox = new BABYLON.Vector3(0, .2, 0);
+    pSystem.color1 = new BABYLON.Color4(1.0, 0.05, 0.05, .9);
+    pSystem.color2 = new BABYLON.Color4(0.85, 0.05, 0, .9);
+    pSystem.colorDead = new BABYLON.Color4(.5, .02, 0, .5);
+    pSystem.minSize = 1.75;
+    pSystem.maxSize = 2.0;
+    pSystem.minLifeTime = 0.075;
+    pSystem.maxLifeTime = 0.1;
+    pSystem.emitRate = 400;
+    pSystem.gravity = new BABYLON.Vector3(0, 0, 0);
+    pSystem.direction1 = new BABYLON.Vector3(0, .05, 0);
+    pSystem.direction2 = new BABYLON.Vector3(0, -.05, 0);
+    pSystem.minAngularSpeed = 1.5;
+    pSystem.maxAngularSpeed = 2.5;
+    pSystem.minEmitPower = 0.4;
+    pSystem.maxEmitPower = 0.75;
+    pSystem.updateSpeed = 0.008;
+
+    pSystem.start();
 };
 
 var camera1;
@@ -195,8 +226,10 @@ var fireFireball = function (scene, camera) {
     fireball.dispose();
     fireball = null;
 
+    //pSystem.dispose();
+    pSystem = null;
+
     var bullet = BABYLON.Mesh.CreateSphere('bullet', 3, 1.6, scene);
-    var displacement = new BABYLON.Vector3(0.0, -0.5, 4);
     var startPos = camera.position;
 
     bullet.position = new BABYLON.Vector3(startPos.x, startPos.y, startPos.z);
@@ -210,6 +243,35 @@ var fireFireball = function (scene, camera) {
     var direction = BABYLON.Vector3.TransformNormal(new BABYLON.Vector3(0, 0, 1), invView);
 
     direction.normalize();
+
+    var pSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
+    pSystem.emitter = bullet;
+    pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+    pSystem.light = new BABYLON.PointLight("Omni1", new BABYLON.Vector3(0, 0, 0), scene);
+    pSystem.light.diffuse = new BABYLON.Color3(.8, 0, 0);
+    pSystem.light.range = 15;
+
+    pSystem.particleTexture = new BABYLON.Texture("Resources/fire/fire.jpg", scene);
+    pSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
+    pSystem.maxEmitBox = new BABYLON.Vector3(0, .2, 0);
+    pSystem.color1 = new BABYLON.Color4(1.0, 0.05, 0.05, .9);
+    pSystem.color2 = new BABYLON.Color4(0.85, 0.05, 0, .9);
+    pSystem.colorDead = new BABYLON.Color4(.5, .02, 0, .5);
+    pSystem.minSize = 1.75;
+    pSystem.maxSize = 2.0;
+    pSystem.minLifeTime = 0.075;
+    pSystem.maxLifeTime = 0.1;
+    pSystem.emitRate = 400;
+    pSystem.gravity = new BABYLON.Vector3(0, 0, 0);
+    pSystem.direction1 = new BABYLON.Vector3(0, .05, 0);
+    pSystem.direction2 = new BABYLON.Vector3(0, -.05, 0);
+    pSystem.minAngularSpeed = 1.5;
+    pSystem.maxAngularSpeed = 2.5;
+    pSystem.minEmitPower = 0.4;
+    pSystem.maxEmitPower = 0.75;
+    pSystem.updateSpeed = 0.008;
+
+    pSystem.start();
 
     scene.registerBeforeRender(function () {
         bullet.position.addInPlace(direction);
