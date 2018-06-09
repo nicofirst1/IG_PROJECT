@@ -76,33 +76,38 @@ var mapInit = function (scene, light, shadow) {
     //###############################
     //          WATER
     //###############################
-    if (use_water) {
-        BABYLON.Engine.ShadersRepository = "";
-        var waterMaterial = new WaterMaterial("water", scene, moon);
-        // refraction
-        waterMaterial.refractionTexture.renderList.push(ground);
-        waterMaterial.refractionTexture.renderList.push(skybox);
 
-        // reflection
-        waterMaterial.reflectionTexture.renderList.push(ground);
-        waterMaterial.reflectionTexture.renderList.push(skybox);
-
-
-        scene.meshes.forEach(function (m) {
-
-            waterMaterial.reflectionTexture.renderList.push(m);
-            waterMaterial.refractionTexture.renderList.push(m);
-
-        });
+    // var water = BABYLON.Mesh.CreateGround("water", ground_x, ground_y, 1, scene, false);
+    // var waterMaterial = new WaterMaterial("water", scene, light);
+    // waterMaterial.refractionTexture.renderList.push(ground);
+    //
+    // waterMaterial.reflectionTexture.renderList.push(ground);
+    // waterMaterial.reflectionTexture.renderList.push(skybox);
+    //
+    // water.material = waterMaterial;
 
 
-        var water = BABYLON.Mesh.CreateGround("water", 1000, 1000, 1, scene, false);
-        //water.visibility = 0.5;
-        water.material = waterMaterial;
-    }
+    // Water
+    var waterMesh = BABYLON.Mesh.CreateGround("waterMesh", ground_x, ground_y, 1, scene, false);
 
+    var water = new BABYLON.WaterMaterial("water", scene);
+    water.bumpTexture = new BABYLON.Texture("Resources/map/ground_texture/water2.png", scene);
 
+    // Water properties
+    water.windForce = -15;
+    water.waveHeight = 1.3;
+    water.windDirection = new BABYLON.Vector2(1, 1);
+    water.waterColor = new BABYLON.Color3(0.1, 0.1, 0.6);
+    water.colorBlendFactor = 0.3;
+    water.bumpHeight = 0.1;
+    water.waveLength = 0.1;
 
+    // Add skybox and ground to the reflection and refraction
+    water.addToRenderList(skybox);
+    water.addToRenderList(ground);
+
+    // Assign the water material
+    waterMesh.material = water;
 
 
 };
