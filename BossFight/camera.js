@@ -1,7 +1,7 @@
 var InitCamera = function (scene) {
     var camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 10, 0), scene);
 
-    camera.position = new BABYLON.Vector3(30, 80, 0);
+    camera.position = new BABYLON.Vector3(30, 45, 0);
 
     // This attaches the camera to the canvas
 

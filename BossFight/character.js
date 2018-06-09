@@ -77,10 +77,10 @@ var initCharacter = function (scene, camera, shadowGenerator) {
     };
 
     document.body.onmouseup = function onReleaseLeft(event) {
-        armsMovementRelease(scene, upperArmRight, true, true);
-        armsMovementRelease(scene, lowerArmRight, false, false);
-        armsMovementRelease(scene, upperArmLeft, false, false);
-        armsMovementRelease(scene, lowerArmLeft, true, false);
+        armsMovementRelease(scene, upperArmRight, true, true, camera);
+        armsMovementRelease(scene, lowerArmRight, false, false, camera);
+        armsMovementRelease(scene, upperArmLeft, false, false, camera);
+        armsMovementRelease(scene, lowerArmLeft, true, false, camera);
     };
 };
 
@@ -132,7 +132,7 @@ var armsMovementCharge = function(scene, arm, max, ccw, camera, todoFireball) {
     }
 };
 
-var armsMovementRelease = function(scene, arm, ccw, todoFireball) {
+var armsMovementRelease = function(scene, arm, ccw, todoFireball, camera) {
 
     var max = Math.abs(arm.rotation.y);
 
@@ -172,16 +172,13 @@ var armsMovementRelease = function(scene, arm, ccw, todoFireball) {
     if (todoFireball && Math.abs(arm.rotation.y - 0.86666666666) < 0.0001) {
         animatable.onAnimationEnd = function () {
             animatable.animationStarted = false;
-            fireFireball(scene);
+            fireFireball(scene, camera);
         };
     }
 };
 
 var createFireball = function (scene, camera) {
     fireball = BABYLON.Mesh.CreateBox("fireball", 1, scene);
-    fireball.scaling.x = 0.6;
-    fireball.scaling.y = 0.6;
-    fireball.scaling.z = 0.6;
 
     var fireballMaterial = new BABYLON.StandardMaterial("material", scene);
     fireballMaterial.diffuseTexture = new BABYLON.Texture("Resources/fire/fire.jpg", scene);
@@ -192,8 +189,27 @@ var createFireball = function (scene, camera) {
     fireball.parent = camera;
 };
 
-var fireFireball = function (scene) {
+var camera1;
+
+var fireFireball = function (scene, camera) {
     var max = 10000;
+
+    var displacement = new BABYLON.Vector3(0.0, -0.5, 4);
+    var x = camera.position.x + displacement.x;
+    var y = camera.position.y + displacement.y;
+    var z = camera.position.z + displacement.z;
+
+    camera1  = new BABYLON.UniversalCamera("Camera1", new BABYLON.Vector3(x, y, z), scene);
+
+    var camTarget = camera.getTarget();
+    var xx = camTarget.x;
+    var yy = camTarget.y;
+    var zz = camTarget.z;
+
+    var target = new BABYLON.Vector3(xx, yy, zz);
+
+    camera1.setTarget(target);
+    fireball.parent = camera1;
 
     var fireballCast = new BABYLON.Animation(
         "fireballCast",
