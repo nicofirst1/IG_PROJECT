@@ -17,6 +17,11 @@ var InitCamera = function (scene) {
     camera.keysLeft = [65];  // A
     camera.keysRight = [68]; // D
 
+    /*
+    -----------------------------------
+    Camera parameters
+    -----------------------------------
+    */
     camera.speed = 2.5;
     camera.inertia = 0.4;
     camera.angularInertia = 0.3;
@@ -40,7 +45,8 @@ var InitCamera = function (scene) {
 var fps = 20;//the speed of the jump execution
 var max_jump_heigth = 10;
 
-var cameraJump = function (scene) {
+//jump animation
+var cameraJump = function(scene) {
     var cam = scene.cameras[0];
 
     cam.animations = [];
@@ -75,6 +81,6 @@ var cameraJump = function (scene) {
 
     cam.animations.push(jump);
 
-    scene.beginAnimation(cam, 0, fps, false);
+    scene.beginAnimation(cam, false, fps, false);
 };
 
