@@ -24,17 +24,6 @@ window.onload = function init() {
     var camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 10, 0), scene);
     var light1 = new BABYLON.PointLight("Moon", light_position1, scene);
 
-    var light2 = new BABYLON.PointLight("Moon", light_position2, scene);
-    var light3 = new BABYLON.PointLight("Moon", light_position3, scene);
-    var light4 = new BABYLON.PointLight("Moon", light_position4, scene);
-    //
-    // var cam = scene.activeCamera;
-    // cam.attachControl(engine.getRenderingCanvas());
-    // cam.keysUp.push(90);
-    // cam.keysDown.push(83);
-    // cam.keysLeft.push(81);
-    // cam.keysRight.push(68);
-
     // Set full screen
     var setFullScreen = function () {
         engine.isPointerLock = true;
@@ -53,13 +42,8 @@ window.onload = function init() {
 
     BABYLON.Animation.AllowMatricesInterpolation = true;
 
-    //----CAMERA
-    // Targets the camera to a particular position. In this case the scene origin
-    //camera.setTarget(BABYLON.Vector3.Zero());
     // Attach the camera to the canvas
     camera.attachControl(canvas, true);
-    //camera.inputs.add(new BABYLON.FreeCameraGamepadInput());
-    //camera.inputs.attached.gamepad.gamepadAngularSensibility = 250;
 
     //----SCENES
     //add the camera to the scene
@@ -67,14 +51,24 @@ window.onload = function init() {
     scene.ambientColor = new BABYLON.Color3(0.3, 0.3, 0.3);
     //scene.registerBeforeRender(beforeRenderFunction);
 
+    var ground = mapInit(scene);
 
-    var g = new BABYLON.Vector3(0, -30, 0);
-    var physicsPlugin = new BABYLON.CannonJSPlugin();
+    scene.enablePhysics();
 
-    scene.enablePhysics(g, physicsPlugin);
+
+    scene.gravity = new BABYLON.Vector3(0, -9.81, 0);
+    camera.applyGravity = true;
+    camera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
+
+    scene.collisionsEnabled = true;
+    camera.checkCollisions = true;
+
+    ground.checkCollisions = true;
+    //box.checkCollisions = true;
+
+    //initWeapon();
 
     // CALLS
-    mapInit(scene);
 
     //var ground = BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, scene);
     //initCharacter(scene, camera, shadowGenerator);
