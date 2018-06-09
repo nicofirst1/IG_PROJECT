@@ -169,7 +169,7 @@ var armsMovementRelease = function(scene, arm, ccw, todoFireball) {
 
     var animatable = scene.beginAnimation(arm, false, fps, false);
 
-    if (todoFireball && fireball != null) {
+    if (todoFireball && Math.abs(arm.rotation.y - 0.86666666666) < 0.0001) {
         animatable.onAnimationEnd = function () {
             animatable.animationStarted = false;
             fireFireball(scene);
