@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>BOSS FIGHT</title>
+    <script src="BossFight/map.js"></script>
+    <script src="Babylon.js/dist/babylon.js"></script>
+    <script src="BossFight/character.js"></script>
+    <script src="BossFight/main.js"></script>
+    <script src="BossFight/weapon.js"></script>
+    <script src="BossFight/camera.js"></script>
+    <script src="BossFight/light.js"></script>
+    <script src="BossFight/optimizer.js"></script>
+
+    <!-- Babylon.js -->
+    <script src="https://code.jquery.com/pep/0.4.2/pep.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
+    <script src="https://preview.babylonjs.com/cannon.js"></script>
+    <script src="https://preview.babylonjs.com/Oimo.js"></script>
+    <script src="https://preview.babylonjs.com/earcut.min.js"></script>
+    <script src="https://preview.babylonjs.com/babylon.js"></script>
+    <script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
+    <script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+    <script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
+    <script src="https://preview.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
+    <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
+    <script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+    <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #renderCanvas {
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+        }
+    </style>
+
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="menu/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="menu/fonts/fonts.css"/>
+    <link rel="stylesheet" href="menu/css/gamemenu.css"/>
+</head>
+<body>
+
+
+<h1 class="main-font title">Game Menu</h1>
+<ul id="main-menu"></ul>
+<div id="loading">
+    <img id="loading-img" width="120" src="menu/img/loading.gif"/>
+    <h2 class="main-font">Loading...</h2>
+</div>
+
+<div id="credits" style="display:none;margin-left:40px;margin-top:60px;">
+
+    <p>Interactive Graphic Project</p>
+    <p>Develop by Nicolò Brandizzi & Eric Stefan Miele</p>
+
+    <ul class="sub-menu" id="back-credits" style="top:0px;">
+        <li class="back">Back</li>
+    </ul>
+
+</div>
+
+<div id="assets">
+    <audio id="sfx-background" loop>
+        <source src="menu/sound/background-music.ogg"></source>
+        <source src="menu/sound/background-music.mp3"></source>
+    </audio>
+    <audio id="sfx-select">
+        <source src="menu/sound/menu_select_1.ogg"></source>
+        <source src="menu/sound/menu_select_1.mp3"></source>
+    </audio>
+    <audio id="sfx-move">
+        <source src="menu/sound/menu_move_1.ogg"></source>
+        <source src="menu/sound/menu_move_1.mp3"></source>
+    </audio>
+</div>
+
+<canvas id="renderCanvas"></canvas>
+
+</body>
+
+
+<script src="menu/js/jquery-2.1.4.min.js"></script>
+<script src="menu/js/bootstrap.min.js"></script>
+<script src="menu/js/gamemenu.js"></script>
+
+
+</html>
