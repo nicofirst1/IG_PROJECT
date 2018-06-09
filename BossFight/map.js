@@ -32,8 +32,6 @@ var mapInit = function (scene, light, shadow) {
 
 
 
-
-
     //###############################
     //          FOG
     //###############################
@@ -66,11 +64,10 @@ var mapInit = function (scene, light, shadow) {
     ground.material = groundMaterial;
     ground.isBlocker=true;
 
-    scene.enablePhysics();
     ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, {
         mass: 0,
         restitution: 0,
-        friction: 0
+        friction: 100,
     }, scene);
 
 

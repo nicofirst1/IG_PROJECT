@@ -7,10 +7,11 @@ window.onload = function init() {
     var canvas = document.getElementById("renderCanvas");
     var engine = new BABYLON.Engine(canvas, true);
     var scene = new BABYLON.Scene(engine);
+    scene.enablePhysics();
 
     var camera =InitCamera(scene);
 
-
+    var gravity= new BABYLON.Vector3(0, -0.6, 0);
 
     var array= initLight(scene);
     var light=array[0];
@@ -37,19 +38,13 @@ window.onload = function init() {
 
     //add the camera to the scene
     scene.addCamera(camera);
-    scene.ambientColor = new BABYLON.Color3(0.3, 0.15, 0.3);
     //scene.registerBeforeRender(beforeRenderFunction);
 
     mapInit(scene, light,shadowGenerator);
 
-    scene.enablePhysics();
 
-    scene.gravity = new BABYLON.Vector3(0, -0.6, 0);
-    camera.applyGravity = true;
-    camera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
-
+    scene.gravity = gravity;
     scene.collisionsEnabled = true;
-    camera.checkCollisions = true;
 
     window.addEventListener("resize", function () { engine.resize();});
 
