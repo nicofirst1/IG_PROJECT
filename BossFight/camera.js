@@ -1,5 +1,5 @@
 
-var InitCamera=function () {
+var InitCamera=function (scene) {
     var camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 10, 0), scene);
     camera.inputs.removeByType("FreeCameraKeyboardMoveInput");
 
