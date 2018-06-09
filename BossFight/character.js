@@ -13,7 +13,7 @@ var initCharacter = function (scene, camera, shadowGenerator) {
     upperArmRight.scaling.z = 0.5;
 
     var upperArmRightMaterial = new BABYLON.StandardMaterial("material", scene);
-    upperArmRightMaterial.emissiveColor = new BABYLON.Color3(1.000, 0.000, 0.000);
+    upperArmRightMaterial.diffuseTexture = new BABYLON.Texture("Resources/armor/armor.jpg", scene);
     upperArmRight.material = upperArmRightMaterial;
 
     upperArmRight.position = new BABYLON.Vector3(1.1, -0.5, 1.2);
@@ -26,7 +26,7 @@ var initCharacter = function (scene, camera, shadowGenerator) {
     lowerArmRight.scaling.z = 0.5;
 
     var lowerArmRightMaterial = new BABYLON.StandardMaterial("material", scene);
-    lowerArmRightMaterial.emissiveColor = new BABYLON.Color3(1.000, 0.000, 0.000);
+    lowerArmRightMaterial.diffuseTexture = new BABYLON.Texture("Resources/armor/armor.jpg", scene);
     lowerArmRight.material = lowerArmRightMaterial;
 
     lowerArmRight.position.y = upperArmRight.position.y + 0.45;
@@ -41,7 +41,7 @@ var initCharacter = function (scene, camera, shadowGenerator) {
     upperArmLeft.scaling.z = 0.5;
 
     var upperArmLeftMaterial = new BABYLON.StandardMaterial("material", scene);
-    upperArmLeftMaterial.emissiveColor = new BABYLON.Color3(1.000, 0.000, 0.000);
+    upperArmLeftMaterial.diffuseTexture = new BABYLON.Texture("Resources/armor/armor.jpg", scene);
     upperArmLeft.material = upperArmLeftMaterial;
 
     upperArmLeft.position = new BABYLON.Vector3(-1.1, -0.5, 1.2);
@@ -54,7 +54,7 @@ var initCharacter = function (scene, camera, shadowGenerator) {
     lowerArmLeft.scaling.z = 0.5;
 
     var lowerArmLeftMaterial = new BABYLON.StandardMaterial("material", scene);
-    lowerArmLeftMaterial.emissiveColor = new BABYLON.Color3(1.000, 0.000, 0.000);
+    lowerArmLeftMaterial.diffuseTexture = new BABYLON.Texture("Resources/armor/armor.jpg", scene);
     lowerArmLeft.material = lowerArmLeftMaterial;
 
     lowerArmLeft.position.y = upperArmLeft.position.y + 0.45;
