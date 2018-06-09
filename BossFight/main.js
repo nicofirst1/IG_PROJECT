@@ -21,7 +21,7 @@ window.onload = function init() {
     var engine = new BABYLON.Engine(canvas, true);
     var scene = new BABYLON.Scene(engine);
 
-    var camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 10, 0), scene);
+    var camera =InitCamera();
     var light1 = new BABYLON.PointLight("Moon", light_position1, scene);
 
     // Set full screen
@@ -131,3 +131,4 @@ window.onload = function init() {
         scene.render();
     });
 };
+
