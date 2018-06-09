@@ -11,11 +11,10 @@ var initLight= function (scene) {
     light.specular = new BABYLON.Color3(0, 1, 1);
 
     var hemisferic = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(0, 1, 0), scene);
-    hemisferic.intensity=0.001;
+    hemisferic.intensity=0.01;
     hemisferic.diffuse = new BABYLON.Color3.FromHexString(moon_color);
     hemisferic.specular = new BABYLON.Color3(0, 1, 1);
 
-    //todo: change color of flair
     var lensFlareSystem = new BABYLON.LensFlareSystem("lensFlareSystem", light, scene);
     var flare00 = new BABYLON.LensFlare(0.3, 0, new BABYLON.Color3.FromHexString(moon_color), "Resources/map/flares/flare.png", lensFlareSystem);
 
