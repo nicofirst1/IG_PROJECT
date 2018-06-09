@@ -2,16 +2,26 @@ window.onload = function init() {
 
     if (!BABYLON.Engine.isSupported()) return;
 
+    var gravity= new BABYLON.Vector3(0, -0.6, 0);
+
     // BABYLON.OBJFileLoader.OPTIMIZE_WITH_UV = true;
 
     var canvas = document.getElementById("renderCanvas");
+
+
     var engine = new BABYLON.Engine(canvas, true);
+    //disable online support (remove warnings)
+    engine.enableOfflineSupport=false;
+
     var scene = new BABYLON.Scene(engine);
     scene.enablePhysics();
+    scene.gravity = gravity;
+    scene.collisionsEnabled = true;
+
 
     var camera =InitCamera(scene);
-
-    var gravity= new BABYLON.Vector3(0, -0.6, 0);
+    // Attach the camera to the canvas
+    camera.attachControl(canvas, true);
 
     var array= initLight(scene);
     var light=array[0];
@@ -28,13 +38,10 @@ window.onload = function init() {
 
 
     //----ENGINE
-    //disable online support (remove warnings)
-    engine.enableOfflineSupport=false;
+
 
     BABYLON.Animation.AllowMatricesInterpolation = true;
 
-    // Attach the camera to the canvas
-    camera.attachControl(canvas, true);
 
     //add the camera to the scene
     scene.addCamera(camera);
@@ -43,8 +50,6 @@ window.onload = function init() {
     mapInit(scene, light,shadowGenerator);
 
 
-    scene.gravity = gravity;
-    scene.collisionsEnabled = true;
 
     window.addEventListener("resize", function () { engine.resize();});
 
