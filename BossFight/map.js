@@ -6,7 +6,7 @@ var sky_size = 10000.0; //the size of the skybox
 var texture_scale = 200;//bigger values apply more texture on ground (becomes smaller)
 var subdivisions = 200; // allows you to increase the complexity of your mesh in order to improve the visual quality of it
 var ambient_fog = false;
-var use_water = false;
+var water_color = "#0f38da";
 
 var mapInit = function (scene, light, shadow) {
 
@@ -94,13 +94,13 @@ var mapInit = function (scene, light, shadow) {
     water.bumpTexture = new BABYLON.Texture("Resources/map/ground_texture/water2.png", scene);
 
     // Water properties
-    water.windForce = -15;
-    water.waveHeight = 1.3;
+    water.windForce = 10;
+    water.waveHeight = 0.5;
     water.windDirection = new BABYLON.Vector2(1, 1);
-    water.waterColor = new BABYLON.Color3(0.1, 0.1, 0.6);
+    water.waterColor = new BABYLON.Color3.FromHexString(water_color);
     water.colorBlendFactor = 0.3;
     water.bumpHeight = 0.1;
-    water.waveLength = 0.1;
+    water.waveLength = 0.01;
 
     // Add skybox and ground to the reflection and refraction
     water.addToRenderList(skybox);
