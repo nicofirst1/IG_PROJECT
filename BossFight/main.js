@@ -35,7 +35,7 @@ window.onload = function init() {
     };
     window.addEventListener('click', setFullScreen);
 
-
+    var gl = new BABYLON.GlowLayer("glow", scene);
 
     //----ENGINE
 
