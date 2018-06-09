@@ -18,7 +18,6 @@ var InitCamera=function (scene) {
     camera.keysDown = [83];  // S
     camera.keysLeft = [65];  // A
     camera.keysRight = [68]; // D
-    //jump key 32
 
     //camera.parent = this.object;
     camera.speed = 4.0;
@@ -26,9 +25,8 @@ var InitCamera=function (scene) {
     camera.angularInertia = 0;
     camera.angularSensibility=100;
 
-
+    // add listener for jump
     window.addEventListener("keyup", onKeyUp, false);
-
     function onKeyUp(event) {
         switch (event.keyCode) {
             case 32:
@@ -36,8 +34,6 @@ var InitCamera=function (scene) {
                 break;
         }
     }
-
-
 
 
 
@@ -88,5 +84,5 @@ var cameraJump = function(scene) {
     cam.animations.push(jump);
 
     scene.beginAnimation(cam, 0, fps, false);
-}
+};
 
