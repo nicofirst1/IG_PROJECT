@@ -8,7 +8,7 @@ var subdivisions = 100; // allows you to increase the complexity of your mesh in
 var ambient_fog = false;
 var use_water = false;
 
-var mapInit = function (scene, light_position) {
+var mapInit = function (scene, light, shadow) {
 
 
     //###############################
@@ -102,17 +102,7 @@ var mapInit = function (scene, light_position) {
     }
 
 
-    //###############################
-    //      Light and shadows
-    //###############################
-    var moon = new BABYLON.PointLight("Moon", light_position, scene);
-    moon.intensity = 0.5;
 
-    var shadowGenerator = new BABYLON.ShadowGenerator(1024, moon);
-    shadowGenerator.useBlurVarianceShadowMap = true;
-    // Apply shadows on each mesh in the map
-    scene.meshes.forEach(function (m) {
-        m.receiveShadows = true;
-    });
+
 
 };

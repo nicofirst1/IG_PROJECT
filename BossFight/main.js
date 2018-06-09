@@ -10,8 +10,11 @@ window.onload = function init() {
 
     var camera =InitCamera(scene);
 
-    var light_position1 = new BABYLON.Vector3(100, 100, 100);
-    var light1 = new BABYLON.PointLight("Moon", light_position1, scene);
+
+
+    var array= initLight(scene);
+    var light=array[0];
+    var shadowGenerator=array[1];
 
     // Set full screen
     var setFullScreen = function () {
@@ -21,9 +24,6 @@ window.onload = function init() {
     };
     window.addEventListener('click', setFullScreen);
 
-    var shadowGenerator = new BABYLON.ShadowGenerator(1024, light1);
-    shadowGenerator.useBlurExponentialShadowMap = true;
-    shadowGenerator.blurKernel = 32;
 
 
     //----ENGINE
@@ -40,7 +40,7 @@ window.onload = function init() {
     scene.ambientColor = new BABYLON.Color3(0.3, 0.15, 0.3);
     //scene.registerBeforeRender(beforeRenderFunction);
 
-    mapInit(scene, light_position1);
+    mapInit(scene, light,shadowGenerator);
 
     scene.enablePhysics();
 
