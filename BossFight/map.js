@@ -3,12 +3,12 @@ var ground_y = 500;
 var ground_max_z = 70;// the maximum for the ground height map
 var ground_min_z = 0; // the minimum for the ground height map
 var sky_size = 10000.0; //the size of the skybox
-var texture_scale = 100;//bigger values apply more texture on ground (becomes smaller)
-var subdivisions = 100; // allows you to increase the complexity of your mesh in order to improve the visual quality of it
+var texture_scale = 200;//bigger values apply more texture on ground (becomes smaller)
+var subdivisions = 200; // allows you to increase the complexity of your mesh in order to improve the visual quality of it
 var ambient_fog = false;
 var use_water = false;
 
-var mapInit = function (scene, light_position) {
+var mapInit = function (scene, light, shadow) {
 
 
     //###############################
@@ -32,8 +32,6 @@ var mapInit = function (scene, light_position) {
 
 
 
-
-
     //###############################
     //          FOG
     //###############################
@@ -47,6 +45,15 @@ var mapInit = function (scene, light_position) {
     //###############################
     //          GROUND
     //###############################
+    var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
+    groundMaterial.diffuseTexture = new BABYLON.Texture("Resources/map/ground_texture/gravel.jpg", scene);
+    groundMaterial.diffuseTexture.uScale = texture_scale;
+    groundMaterial.diffuseTexture.vScale = texture_scale;
+    groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+    groundMaterial.roughness = 3;
+
+
+
     var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/height_map/height_map.png", ground_x,
         ground_y, subdivisions, ground_min_z, ground_max_z, scene, false);
 
@@ -54,23 +61,16 @@ var mapInit = function (scene, light_position) {
     ground.position.y = 0.0;
     ground.receiveShadows = true;
     ground.checkCollisions = true;
+    ground.material = groundMaterial;
+    ground.isBlocker=true;
 
-    scene.enablePhysics();
     ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, {
         mass: 0,
         restitution: 0,
-        friction: 0
+        friction: 100,
     }, scene);
 
-    var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
-    groundMaterial.diffuseTexture = new BABYLON.Texture("Resources/map/ground_texture/greybrickwall000.png", scene);
-    groundMaterial.diffuseTexture.uScale = texture_scale;
-    groundMaterial.diffuseTexture.vScale = texture_scale;
-    groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-    groundMaterial.roughness = 3;
 
-
-    ground.material = groundMaterial;
 
 
     //###############################
@@ -102,17 +102,7 @@ var mapInit = function (scene, light_position) {
     }
 
 
-    //###############################
-    //      Light and shadows
-    //###############################
-    var moon = new BABYLON.PointLight("Moon", light_position, scene);
-    moon.intensity = 0.5;
 
-    var shadowGenerator = new BABYLON.ShadowGenerator(1024, moon);
-    shadowGenerator.useBlurVarianceShadowMap = true;
-    // Apply shadows on each mesh in the map
-    scene.meshes.forEach(function (m) {
-        m.receiveShadows = true;
-    });
+
 
 };
