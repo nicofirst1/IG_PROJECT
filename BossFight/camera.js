@@ -17,10 +17,9 @@ var InitCamera = function (scene) {
     camera.keysLeft = [65];  // A
     camera.keysRight = [68]; // D
 
-    //camera.parent = this.object;
-    camera.speed = 4.0;
-    camera.inertia = 0.6;
-    camera.angularInertia = 0;
+    camera.speed = 2.5;
+    camera.inertia = 0.4;
+    camera.angularInertia = 0.3;
     camera.angularSensibility = 100;
 
     // add listener for jump
@@ -38,8 +37,7 @@ var InitCamera = function (scene) {
     return camera
 };
 
-
-var fps = 35;
+var fps = 20;//the speed of the jump execution
 var max_jump_heigth = 10;
 
 var cameraJump = function (scene) {
@@ -68,10 +66,12 @@ var cameraJump = function (scene) {
 
 
     jump.setKeys(keys);
+    /*
 
-    var easingFunction = new BABYLON.CircleEase();
-    easingFunction.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
-    jump.setEasingFunction(easingFunction);
+        var easingFunction = new BABYLON.CircleEase();
+        easingFunction.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
+        jump.setEasingFunction(easingFunction);
+    */
 
     cam.animations.push(jump);
 
