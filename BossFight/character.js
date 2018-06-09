@@ -69,18 +69,18 @@ var initCharacter = function (scene, camera, shadowGenerator) {
 
     document.body.onmousedown = function onClickLeft(event) {
         if (upperArmRight.rotation.y < 0.0001) {
-            armsMovementCharge(scene, upperArmRight, 1, true);
-            armsMovementCharge(scene, lowerArmRight, 1, false);
-            armsMovementCharge(scene, upperArmLeft, 1, false);
-            armsMovementCharge(scene, lowerArmLeft, 1, true);
+            armsMovementCharge(scene, upperArmRight, 1, true, camera, true);
+            armsMovementCharge(scene, lowerArmRight, 1, false, camera, false);
+            armsMovementCharge(scene, upperArmLeft, 1, false, camera, false);
+            armsMovementCharge(scene, lowerArmLeft, 1, true, camera, false);
         }
     };
 
     document.body.onmouseup = function onReleaseLeft(event) {
-        armsMovementRelease(scene, upperArmRight, true, camera);
-        armsMovementRelease(scene, lowerArmRight, false, camera);
-        armsMovementRelease(scene, upperArmLeft, false, camera);
-        armsMovementRelease(scene, lowerArmLeft, true, camera);
+        armsMovementRelease(scene, upperArmRight, true, true);
+        armsMovementRelease(scene, lowerArmRight, false, false);
+        armsMovementRelease(scene, upperArmLeft, false, false);
+        armsMovementRelease(scene, lowerArmLeft, true, false);
     };
 };
 
@@ -88,7 +88,9 @@ var fps = 30;
 var frames1 = 15;
 var frames2 = 2;
 
-var armsMovementCharge = function(scene, arm, max, ccw) {
+var fireball = false;
+
+var armsMovementCharge = function(scene, arm, max, ccw, camera, todoFireball) {
 
     var armsMov = new BABYLON.Animation(
         "armsMov",
@@ -117,10 +119,20 @@ var armsMovementCharge = function(scene, arm, max, ccw) {
     arm.animations = [];
     arm.animations.push(armsMov);
 
-    scene.beginAnimation(arm, false, fps, false);
+    var animatable = scene.beginAnimation(arm, false, fps, false);
+
+    if (todoFireball) {
+        animatable.onAnimationEnd = function () {
+            animatable.animationStarted = false;
+
+            if (Math.abs(arm.rotation.y - 0.86666666666) < 0.0001) {
+                createFireball(scene, camera);
+            }
+        };
+    }
 };
 
-var armsMovementRelease = function(scene, arm, ccw, camera) {
+var armsMovementRelease = function(scene, arm, ccw, todoFireball) {
 
     var max = Math.abs(arm.rotation.y);
 
@@ -135,7 +147,6 @@ var armsMovementRelease = function(scene, arm, ccw, camera) {
 
     keys.push({frame: 0, value: 0});
 
-    var init_rot = arm.rotation.y;
     var curr_rot = arm.rotation.y;
 
     var inc = max / (frames2);
@@ -156,15 +167,18 @@ var armsMovementRelease = function(scene, arm, ccw, camera) {
 
     scene.stopAnimation(arm);
 
-    if (Math.abs(init_rot - 0.866666) < 0.0001) {
-        scene.beginAnimation(arm, false, fps, false, 15, fireball(scene, camera));
-    } else {
-        scene.beginAnimation(arm, false, fps, false);
+    var animatable = scene.beginAnimation(arm, false, fps, false);
+
+    if (todoFireball && fireball != null) {
+        animatable.onAnimationEnd = function () {
+            animatable.animationStarted = false;
+            fireFireball(scene);
+        };
     }
 };
 
-var fireball = function (scene, camera) {
-    var fireball = BABYLON.Mesh.CreateBox("fireball", 1, scene);
+var createFireball = function (scene, camera) {
+    fireball = BABYLON.Mesh.CreateBox("fireball", 1, scene);
     fireball.scaling.x = 0.6;
     fireball.scaling.y = 0.6;
     fireball.scaling.z = 0.6;
@@ -174,8 +188,46 @@ var fireball = function (scene, camera) {
     fireballMaterial.emissiveColor = new BABYLON.Vector3(1.0, 0.0, 0.0);
     fireball.material = fireballMaterial;
 
-    fireball.position = new BABYLON.Vector3(0.0, -0.5, 2.5);
+    fireball.position = new BABYLON.Vector3(0.0, -0.5, 4);
     fireball.parent = camera;
+};
 
+var fireFireball = function (scene) {
+    var max = 10000;
 
+    var fireballCast = new BABYLON.Animation(
+        "fireballCast",
+        "position.z", fps,
+        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+
+    // Animation keys
+    var keys = [];
+
+    keys.push({frame: 0, value: 0});
+
+    var curr_pos = fireball.position.z;
+
+    for (var i = 0; i < max; i++) {
+        curr_pos += i;
+        keys.push({frame: i, value: curr_pos});
+    }
+
+    keys.push({frame: i, value: 0});
+
+    fireballCast.setKeys(keys);
+
+    fireball.animations = [];
+    fireball.animations.push(fireballCast);
+
+    var animatable = scene.beginAnimation(fireball, false, fps, false);
+    animatable.onAnimationEnd = function () {
+        animatable.animationStarted = false;
+        deleteMesh(fireball);
+    };
+};
+
+var deleteMesh = function (fireball) {
+    fireball.dispose();
+    fireball = null;
 };
