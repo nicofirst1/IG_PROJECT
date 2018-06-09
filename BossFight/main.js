@@ -61,4 +61,3 @@ window.onload = function init() {
         scene.render();
     });
 };
- 
