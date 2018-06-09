@@ -1,4 +1,4 @@
-var moon_position = new BABYLON.Vector3(100, -1000, 0);
+var moon_position = new BABYLON.Vector3(500, -500, -500);
 
 
 
@@ -13,7 +13,7 @@ var initLight= function (scene) {
 
 
     var lensFlareSystem = new BABYLON.LensFlareSystem("lensFlareSystem", light, scene);
-    var flare00 = new BABYLON.LensFlare(0.2, 0, new BABYLON.Color3(1, 1, 1), "Resources/map/flares/flare.png", lensFlareSystem);
+    var flare00 = new BABYLON.LensFlare(0.4, 0, new BABYLON.Color3(1, 1, 1), "Resources/map/flares/flare.png", lensFlareSystem);
 
 
     var shadowGenerator = new BABYLON.ShadowGenerator(1024, light);
