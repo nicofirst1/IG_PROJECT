@@ -9,7 +9,7 @@ var subdivisions=100; // allows you to increase the complexity of your mesh in o
 var ambient_fog=false;
 
 
-var mapInit = function (scene) {
+var mapInit = function (scene, light_position) {
 
     // Skybox
     var skybox = BABYLON.Mesh.CreateBox("skyBox", sky_size, scene);
@@ -28,7 +28,7 @@ var mapInit = function (scene) {
 
 
     // Shadows stuff
-    var defaultLight = new BABYLON.PointLight("Moon", light_position1, scene);
+    var defaultLight = new BABYLON.PointLight("Moon", light_position, scene);
 
     defaultLight.intensity = 0.5;
     var dir = new BABYLON.DirectionalLight('dirLight', new BABYLON.Vector3(-0.5, -1, -0.5), this.scene);
