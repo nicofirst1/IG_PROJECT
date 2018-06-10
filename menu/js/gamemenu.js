@@ -168,7 +168,7 @@ $(document).ready(function(e){
 	//On load
 	$(window).on("load", function(e){
 
-        //audio.sfx.background.play();
+       // audio.sfx.background.play();
         showMainMenu();
 	});
 	
