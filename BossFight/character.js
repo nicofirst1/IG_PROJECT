@@ -312,7 +312,6 @@ var fireFireball = function (scene, camera, ground) {
 
     bulletFireball.physicsImpostor.applyImpulse(impulseDir, bulletFireball.getAbsolutePosition());
 
-    var ground0 = ground[0];
     var groundBox = ground[1];
     bulletFireball.physicsImpostor.registerOnPhysicsCollide(groundBox.physicsImpostor, function() {
         pSystem.stop();
@@ -322,10 +321,59 @@ var fireFireball = function (scene, camera, ground) {
         bulletFireball.dispose();
 
         var bulletFireballRest = BABYLON.Mesh.CreateSphere('bulletFireballRest', 3, 1.6, scene);
-        bulletFireballRest.material = fireballMaterial;
         bulletFireballRest.checkCollisions = true;
         bulletFireballRest.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireball, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, friction: 1000, restitution: 0 });
         bulletFireballRest.position = pos;
+        bulletFireballRest.visibility = false;
+
+        var pSystem2 = new BABYLON.ParticleSystem("particles", 2000, scene);
+        pSystem2.emitter = bulletFireballRest;
+        pSystem2.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+        pSystem2.light = new BABYLON.PointLight("Omni1", new BABYLON.Vector3(0, 0, 0), scene);
+        pSystem2.light.diffuse = new BABYLON.Color3(0.412, 0.412, 0.412);
+        pSystem2.light.range = 15;
+
+        pSystem2.particleTexture = new BABYLON.Texture("Resources/steam/steam.png", scene);
+        pSystem2.minEmitBox = new BABYLON.Vector3(-3.5, -3.5, -3.5);
+        pSystem2.maxEmitBox = new BABYLON.Vector3(3.5, 3.5, 3.5);
+        pSystem2.color1 = new BABYLON.Color4(0.412, 0.412, 0.412, .9);
+        pSystem2.color2 = new BABYLON.Color4(0.863, 0.863, 0.863, .9);
+        pSystem2.colorDead = new BABYLON.Color4(0.863, 0.863, 0.863, .5);
+        pSystem2.minSize = 1.75;
+        pSystem2.maxSize = 2.0;
+        pSystem2.minLifeTime = 0.075;
+        pSystem2.maxLifeTime = 0.1;
+        pSystem2.emitRate = 400;
+        pSystem2.gravity = new BABYLON.Vector3(0, 0, 0);
+        pSystem2.direction1 = new BABYLON.Vector3(0, .05, 0);
+        pSystem2.direction2 = new BABYLON.Vector3(0, -.05, 0);
+        pSystem2.minAngularSpeed = 1.5;
+        pSystem2.maxAngularSpeed = 2.5;
+        pSystem2.minEmitPower = 1;
+        pSystem2.maxEmitPower = 3;
+        pSystem2.updateSpeed = 0.008;
+        pSystem2.updateFunction = explosion;
+
+        pSystem2.start();
+
+        setTimeout(function () {
+            bulletFireballRest.dispose();
+        }, 1000);
+    });
+
+    var ground0 = ground[0];
+    bulletFireball.physicsImpostor.registerOnPhysicsCollide(ground0.physicsImpostor, function() {
+        pSystem.stop();
+
+        var posAbs = bulletFireball.getAbsolutePosition();
+        var pos = new BABYLON.Vector3(posAbs.x, posAbs.y, posAbs.z);
+        bulletFireball.dispose();
+
+        var bulletFireballRest = BABYLON.Mesh.CreateSphere('bulletFireballRest', 3, 1.6, scene);
+        bulletFireballRest.checkCollisions = true;
+        bulletFireballRest.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireball, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, friction: 1000, restitution: 0 });
+        bulletFireballRest.position = pos;
+        bulletFireballRest.visibility = false;
 
         var pSystem2 = new BABYLON.ParticleSystem("particles", 2000, scene);
         pSystem2.emitter = bulletFireballRest;
@@ -360,10 +408,6 @@ var fireFireball = function (scene, camera, ground) {
         setTimeout(function () {
             bulletFireballRest.dispose();
         }, 1000);
-    });
-
-    bulletFireball.physicsImpostor.registerOnPhysicsCollide(ground0.physicsImpostor, function() {
-        window.alert('HERE');
     });
 };
 

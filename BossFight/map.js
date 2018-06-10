@@ -8,7 +8,7 @@ var subdivisions = 124; // allows you to increase the complexity of your mesh in
 var ambient_fog = false;
 var water_color = "#0f38da";
 
-var mapInit = function (scene, light, shadow) {
+var mapInit = function (scene, light, shadow, camera) {
 
 
     //###############################
@@ -42,43 +42,68 @@ var mapInit = function (scene, light, shadow) {
     //###############################
     //          GROUND
     //###############################
-    var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
-    groundMaterial.diffuseTexture = new BABYLON.Texture("Resources/map/ground_texture/rock.jpg", scene);
-    groundMaterial.diffuseTexture.uScale = texture_scale;
-    groundMaterial.diffuseTexture.vScale = texture_scale;
-    groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-    groundMaterial.roughness = 3;
-    groundMaterial.checkCollisions = true;
+    // var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
+    // groundMaterial.diffuseTexture = new BABYLON.Texture("Resources/map/ground_texture/rock.jpg", scene);
+    // groundMaterial.diffuseTexture.uScale = texture_scale;
+    // groundMaterial.diffuseTexture.vScale = texture_scale;
+    // groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+    // groundMaterial.roughness = 3;
+    // groundMaterial.checkCollisions = true;
 
-    var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/height_map/height_map.png", ground_x,
-        ground_y, subdivisions, ground_min_z, ground_max_z, scene, false);
+    //var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/height_map/height_map.png", ground_x,
+     //   ground_y, subdivisions, ground_min_z, ground_max_z, scene, false);
 
-    // var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/height_map/height_map.png", ground_x,
-    //     ground_y, subdivisions, ground_min_z, ground_max_z, scene, false, function () {
-    //         var exponentialPath = function (p) {
-    //             var path = [];
-    //             for (var i = -50; i <= 50; i++) {
-    //                 path.push(new BABYLON.Vector3(p - 50, (Math.sin(p / 3) * 10 * Math.exp((i - p) / 100) + i / 3), i));
-    //             }
-    //             return path;
-    //         };
-    //         // let's populate arrayOfPaths with all these different paths
-    //         var arrayOfPaths = [];
-    //         for (var p = 0; p <= 100; p++) {
-    //             arrayOfPaths[p] = exponentialPath(p);
-    //         }
-    //
-    //         ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.HeightmapImpostor, {mass: 0});
-    //
-    //     });
+    var useBoxes = true;
+    var createShape = function () {
+        if (useBoxes) {
+            b = BABYLON.Mesh.CreateBox("s", 8, scene);
+            b.scaling.x = (Math.random() * 3) * ((Math.random() < 0.5) ? -1 : 1);
+            b.scaling.y = (Math.random() * 3) * ((Math.random() < 0.5) ? -1 : 1);
+            b.scaling.z = (Math.random() * 3) * ((Math.random() < 0.5) ? -1 : 1);
+            b.physicsImpostor = new BABYLON.PhysicsImpostor(b, BABYLON.PhysicsImpostor.BoxImpostor, { mass: .1, friction: 0, restitution: 1.0 }, scene);
+        }
+        else {
+            b = BABYLON.Mesh.CreateSphere("s", 8, 8, scene);
+            b.physicsImpostor = new BABYLON.PhysicsImpostor(b, BABYLON.PhysicsImpostor.SphereImpostor, { mass: .1, friction: 0, restitution: 1.0 }, scene);
+        }
+        b.position.y = 80;
+        b.position.x = (Math.random() * 50) * ((Math.random() < 0.5) ? -1 : 1);
+        b.position.z = (Math.random() * 50) * ((Math.random() < 0.5) ? -1 : 1);
+    };
 
-    ground.material = groundMaterial;
-    ground.checkCollisions = true;
-    // ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, {
-    //     mass: 0,
-    //     restitution: 0.1,
-    //     friction: 10,
-    // }, scene);
+    var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "https://upload.wikimedia.org/wikipedia/commons/5/57/Heightmap.png", 500, 500, 50, 0, 25, scene, false, function () {
+        ground.convertToFlatShadedMesh();
+
+        ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0, friction: 10000, restitution: 0.1 }, scene);
+        ground.checkCollisions = true;
+
+        for (var ii = 0; ii < 10; ii++) {
+            createShape();
+        }
+
+
+        // scene.onPointerUp = function (evt, pickInfo) {
+        //     if (pickInfo.pickedMesh.name === "s") {
+        //         pickInfo.pickedMesh.applyImpulse(pickInfo.pickedMesh.position.subtract(camera.position).normalize().scale(30), pickInfo.pickedPoint)
+        //     }
+        // }
+
+        scene.registerBeforeRender(function () {
+            scene.meshes.forEach(function (m) {
+                if (m.name=="s" && m.position.y < -10) {
+                    m.position.y = 80;
+                    m.position.x = (Math.random() * 50) * ((Math.random() < 0.5) ? -1 : 1);
+                    m.position.z = (Math.random() * 50) * ((Math.random() < 0.5) ? -1 : 1);
+                    m.physicsImpostor.linearVelocity = new CANNON.Vec3(0,0,0);
+                    m.physicsImpostor.angularVelocity = new CANNON.Vec3(0,0,0);
+                    // m.dispose();
+                    // m.physicsImpostor.dispose();
+                    // createShape();
+                }
+            })
+        });
+    });
+
 
     var groundBox = BABYLON.MeshBuilder.CreateBox("groundBox", {height: 0, width: ground_x, depth: ground_y}, scene);
     groundBox.checkCollisions = true;
@@ -156,7 +181,7 @@ var mapInit = function (scene, light, shadow) {
     water.windDirection = new BABYLON.Vector2(1, 1);
     water.waterColor = new BABYLON.Color3.FromHexString(water_color);
     water.colorBlendFactor = 0.3;
-    water.bumpHeight = 0.1;
+    water.bumpHeight = 0.001;
     water.waveLength = 0.01;
 
     // Add skybox and ground to the reflection and refraction

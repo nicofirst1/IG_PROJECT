@@ -76,7 +76,7 @@ var start=function () {
     scene.addCamera(camera);
     //scene.registerBeforeRender(beforeRenderFunction);
 
-    var ground = mapInit(scene, light,shadowGenerator);
+    var ground = mapInit(scene, light,shadowGenerator, camera);
 
 
     scene.gravity = new BABYLON.Vector3(0, -0.2, 0);
