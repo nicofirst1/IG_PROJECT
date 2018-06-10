@@ -31,6 +31,7 @@ var initCharacter = function (scene, camera, shadowGenerator) {
     cameraPS.minEmitPower = 0.4;
     cameraPS.maxEmitPower = 0.75;
     cameraPS.updateSpeed = 0.008;
+    cameraPS.start();
 
     // UPPER RIGHT
     upperArmRight = BABYLON.Mesh.CreateBox("arm", 1, scene);
@@ -206,7 +207,7 @@ var armsMovementRelease = function(scene, arm, ccw, todoFireball, camera) {
 var pSystem;
 
 var createFireball = function (scene, camera) {
-    fireball = BABYLON.Mesh.CreateSphere('bullet', 3, 1.6, scene);
+    fireball = BABYLON.Mesh.CreateSphere('fireball', 3, 1.6, scene);
 
     var fireballMaterial = new BABYLON.StandardMaterial("material", scene);
     fireballMaterial.diffuseTexture = new BABYLON.Texture("Resources/fire/fire.jpg", scene);
@@ -227,7 +228,7 @@ var createFireball = function (scene, camera) {
     pSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
     pSystem.maxEmitBox = new BABYLON.Vector3(0, .2, 0);
     pSystem.color1 = new BABYLON.Color4(1.0, 0.05, 0.05, .9);
-    pSystem.color2 = new BABYLON.Color4(0.85, 0.05, 0, .9);
+    pSystem.color2 = new BABYLON.Color4(1, 1, 0, .9);
     pSystem.colorDead = new BABYLON.Color4(.5, .02, 0, .5);
     pSystem.minSize = 1.75;
     pSystem.maxSize = 2.0;
@@ -242,8 +243,13 @@ var createFireball = function (scene, camera) {
     pSystem.minEmitPower = 0.4;
     pSystem.maxEmitPower = 0.75;
     pSystem.updateSpeed = 0.008;
-
     pSystem.start();
+
+    var direction = new BABYLON.Vector3(0.03, 0.03, 0.03);
+
+    scene.registerBeforeRender(function () {
+         if (fireball != null) fireball.rotation.addInPlace(direction);
+    });
 };
 
 var camera1;
@@ -251,27 +257,31 @@ var camera1;
 var fireFireball = function (scene, camera) {
     fireball.dispose();
     fireball = null;
-
-    //pSystem.dispose();
     pSystem = null;
 
-    var bullet = BABYLON.Mesh.CreateSphere('bullet', 3, 1.6, scene);
-    var startPos = camera.position;
+    var bulletFireball = BABYLON.Mesh.CreateSphere('bulletFireball', 3, 1.6, scene);
+    //bulletFireball.checkCollisions = true;
+    //bulletFireball.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireball, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, restitution: 0.9 }, scene);
 
-    bullet.position = new BABYLON.Vector3(startPos.x, startPos.y, startPos.z);
-    var fireballMaterial = new BABYLON.StandardMaterial("material", scene);
-    fireballMaterial.diffuseTexture = new BABYLON.Texture("Resources/fire/fire.jpg", scene);
-    fireballMaterial.emissiveColor = new BABYLON.Vector3(1.0, 0.0, 0.0);
-    bullet.material = fireballMaterial;
 
     var invView = new BABYLON.Matrix();
     camera.getViewMatrix().invertToRef(invView);
     var direction = BABYLON.Vector3.TransformNormal(new BABYLON.Vector3(0, 0, 1), invView);
-
     direction.normalize();
 
+    var startPos = new BABYLON.Vector3(camera.position.x, camera.position.y, camera.position.z);
+    startPos.x += direction.x * 3;
+    startPos.y += direction.y * 3;
+    startPos.z += direction.z * 3;
+
+    bulletFireball.position = new BABYLON.Vector3(startPos.x, startPos.y, startPos.z);
+    var fireballMaterial = new BABYLON.StandardMaterial("material", scene);
+    fireballMaterial.diffuseTexture = new BABYLON.Texture("Resources/fire/fire.jpg", scene);
+    fireballMaterial.emissiveColor = new BABYLON.Vector3(1.0, 0.0, 0.0);
+    bulletFireball.material = fireballMaterial;
+
     var pSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
-    pSystem.emitter = bullet;
+    pSystem.emitter = bulletFireball;
     pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
     pSystem.light = new BABYLON.PointLight("Omni1", new BABYLON.Vector3(0, 0, 0), scene);
     pSystem.light.diffuse = new BABYLON.Color3(.8, 0, 0);
@@ -281,7 +291,7 @@ var fireFireball = function (scene, camera) {
     pSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
     pSystem.maxEmitBox = new BABYLON.Vector3(0, .2, 0);
     pSystem.color1 = new BABYLON.Color4(1.0, 0.05, 0.05, .9);
-    pSystem.color2 = new BABYLON.Color4(0.85, 0.05, 0, .9);
+    pSystem.color2 = new BABYLON.Color4(1, 1, 0, .9);
     pSystem.colorDead = new BABYLON.Color4(.5, .02, 0, .5);
     pSystem.minSize = 1.75;
     pSystem.maxSize = 2.0;
@@ -296,11 +306,130 @@ var fireFireball = function (scene, camera) {
     pSystem.minEmitPower = 0.4;
     pSystem.maxEmitPower = 0.75;
     pSystem.updateSpeed = 0.008;
-
     pSystem.start();
 
-    scene.registerBeforeRender(function () {
-        bullet.position.addInPlace(direction);
-    });
+    // scene.registerBeforeRender(function () {
+    //     bulletFireball.position.addInPlace(direction);
+    // });
 
+    var max = 100;
+
+    var fireFireballAnimX = new BABYLON.Animation(
+        "fireFireballAnimX",
+        "position.x", fps,
+        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+
+    var fireFireballAnimY = new BABYLON.Animation(
+        "fireFireballAnimY",
+        "position.y", fps,
+        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+
+    var fireFireballAnimZ = new BABYLON.Animation(
+        "fireFireballAnimZ",
+        "position.z", fps,
+        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+
+    // Animation keys
+    var keysX = [];
+    var keysY = [];
+    var keysZ = [];
+
+    var curr_pos = new BABYLON.Vector3(startPos.x, startPos.y, startPos.z);
+
+    keysX.push({frame: 0, value: curr_pos.x});
+    keysY.push({frame: 0, value: curr_pos.x});
+    keysZ.push({frame: 0, value: curr_pos.x});
+
+    for (var i = 1; i < max; i++) {
+        curr_pos.x += direction.x * i;
+        curr_pos.y += direction.y * i;
+        curr_pos.z += direction.z * i;
+        keysX.push({frame: i, value: curr_pos.x});
+        keysY.push({frame: i, value: curr_pos.y});
+        keysZ.push({frame: i, value: curr_pos.z});
+    }
+
+    fireFireballAnimX.setKeys(keysX);
+    fireFireballAnimY.setKeys(keysY);
+    fireFireballAnimZ.setKeys(keysZ);
+
+    bulletFireball.animations = [];
+    bulletFireball.animations.push(fireFireballAnimX, fireFireballAnimY, fireFireballAnimZ);
+
+    var animatable = scene.beginAnimation(bulletFireball, false, 30, false);
+    animatable.onAnimationEnd = function () {
+        animatable.animationStarted = false;
+
+        var pSystem2 = new BABYLON.ParticleSystem("particles", 2000, scene);
+        pSystem2.emitter = bulletFireball;
+        pSystem2.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+        pSystem2.light = new BABYLON.PointLight("Omni1", new BABYLON.Vector3(0, 0, 0), scene);
+        pSystem2.light.diffuse = new BABYLON.Color3(.8, 0, 0);
+        pSystem2.light.range = 15;
+
+        pSystem2.particleTexture = new BABYLON.Texture("Resources/fire/fire.jpg", scene);
+        pSystem2.minEmitBox = new BABYLON.Vector3(-3.5, -3.5, -3.5);
+        pSystem2.maxEmitBox = new BABYLON.Vector3(3.5, 3.5, 3.5);
+        pSystem2.color1 = new BABYLON.Color4(1.0, 0.05, 0.05, .9);
+        pSystem2.color2 = new BABYLON.Color4(1, 1, 0, .9);
+        pSystem2.colorDead = new BABYLON.Color4(.5, .02, 0, .5);
+        pSystem2.minSize = 1.75;
+        pSystem2.maxSize = 2.0;
+        pSystem2.minLifeTime = 0.075;
+        pSystem2.maxLifeTime = 0.1;
+        pSystem2.emitRate = 400;
+        pSystem2.gravity = new BABYLON.Vector3(0, 0, 0);
+        pSystem2.direction1 = new BABYLON.Vector3(0, .05, 0);
+        pSystem2.direction2 = new BABYLON.Vector3(0, -.05, 0);
+        pSystem2.minAngularSpeed = 1.5;
+        pSystem2.maxAngularSpeed = 2.5;
+        pSystem2.minEmitPower = 1;
+        pSystem2.maxEmitPower = 3;
+        pSystem2.updateSpeed = 0.008;
+        pSystem2.updateFunction = explosion;
+
+        pSystem2.start();
+
+        setTimeout(function() {bulletFireball.dispose(); }, 1500);
+
+
+    };
+};
+
+var explosion = function(particles) {
+    for (var index = 0; index < particles.length; index++) {
+        var particle = particles[index];
+        particle.age += this._scaledUpdateSpeed;
+
+        // change direction to return to emitter
+        if (particle.age >= particle.lifeTime / 2) {
+            var oldLength = particle.direction.length();
+            var newDirection = this.emitter.position.subtract(particle.position);
+            particle.direction = newDirection.scale(3);
+        }
+
+        if (particle.age >= particle.lifeTime) { // Recycle
+            particles.splice(index, 1);
+            this._stockParticles.push(particle);
+            index--;
+            continue;
+        } else {
+            particle.colorStep.scaleToRef(this._scaledUpdateSpeed, this._scaledColorStep);
+            particle.color.addInPlace(this._scaledColorStep);
+
+            if (particle.color.a < 0)
+                particle.color.a = 0;
+
+            particle.angle += particle.angularSpeed * this._scaledUpdateSpeed;
+
+            particle.direction.scaleToRef(this._scaledUpdateSpeed, this._scaledDirection);
+            particle.position.addInPlace(this._scaledDirection);
+
+            this.gravity.scaleToRef(this._scaledUpdateSpeed, this._scaledGravity);
+            particle.direction.addInPlace(this._scaledGravity);
+        }
+    }
 }

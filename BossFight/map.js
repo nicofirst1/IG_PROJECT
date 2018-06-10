@@ -27,10 +27,7 @@ var mapInit = function (scene, light, shadow) {
     skybox.infiniteDistance = true;
     skybox.material = skyboxMaterial;
     skybox.layerMask = 2; // 010 in binary
-
-
-
-
+    skybox.checkCollisions = true;
 
     //###############################
     //          FOG
@@ -51,6 +48,7 @@ var mapInit = function (scene, light, shadow) {
     groundMaterial.diffuseTexture.vScale = texture_scale;
     groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
     groundMaterial.roughness = 3;
+    groundMaterial.checkCollisions = true;
 
 
 
@@ -66,10 +64,17 @@ var mapInit = function (scene, light, shadow) {
 
     ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, {
         mass: 0,
-        restitution: 0,
+        restitution: 0.9,
         friction: 10,
     }, scene);
 
+    var groundBox = BABYLON.MeshBuilder.CreateBox("groundBox", {height: 0, width: ground_x, depth: ground_y}, scene);
+    groundBox.checkCollisions = true;
+    groundBox.physicsImpostor = new BABYLON.PhysicsImpostor(groundBox, BABYLON.PhysicsImpostor.BoxImpostor, {
+        mass: 0,
+        restitution: 0.1,
+        friction: 10,
+    }, scene);
 
     //###############################
     //          SNOW
