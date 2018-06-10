@@ -312,6 +312,7 @@ var fireFireball = function (scene, camera, ground) {
 
     bulletFireball.physicsImpostor.applyImpulse(impulseDir, bulletFireball.getAbsolutePosition());
 
+    var ground0 = ground[0];
     var groundBox = ground[1];
     bulletFireball.physicsImpostor.registerOnPhysicsCollide(groundBox.physicsImpostor, function() {
         pSystem.stop();
@@ -359,6 +360,10 @@ var fireFireball = function (scene, camera, ground) {
         setTimeout(function () {
             bulletFireballRest.dispose();
         }, 1000);
+    });
+
+    bulletFireball.physicsImpostor.registerOnPhysicsCollide(ground0.physicsImpostor, function() {
+        window.alert('HERE');
     });
 };
 
