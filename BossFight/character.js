@@ -6,6 +6,32 @@ var lowerArmLeft;
 
 var initCharacter = function (scene, camera, shadowGenerator) {
 
+    var cameraPS = new BABYLON.ParticleSystem("particles", 2000, scene);
+    cameraPS.emitter = camera;
+    cameraPS.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+    cameraPS.light = new BABYLON.PointLight("Omni1", camera.position, scene);
+    cameraPS.light.diffuse = new BABYLON.Color3(1, 1, 1);
+    cameraPS.light.range = 15;
+
+    cameraPS.minEmitBox = new BABYLON.Vector3(0, 0, 0);
+    cameraPS.maxEmitBox = new BABYLON.Vector3(0, .2, 0);
+    cameraPS.color1 = new BABYLON.Color4(1, 1, 1, .9);
+    cameraPS.color2 = new BABYLON.Color4(1, 1, 1, .9);
+    cameraPS.colorDead = new BABYLON.Color4(1, 1, 1, .5);
+    cameraPS.minSize = 1.75;
+    cameraPS.maxSize = 2.0;
+    cameraPS.minLifeTime = 0.075;
+    cameraPS.maxLifeTime = 0.1;
+    cameraPS.emitRate = 400;
+    cameraPS.gravity = new BABYLON.Vector3(0, 0, 0);
+    cameraPS.direction1 = new BABYLON.Vector3(0, .05, 0);
+    cameraPS.direction2 = new BABYLON.Vector3(0, -.05, 0);
+    cameraPS.minAngularSpeed = 1.5;
+    cameraPS.maxAngularSpeed = 2.5;
+    cameraPS.minEmitPower = 0.4;
+    cameraPS.maxEmitPower = 0.75;
+    cameraPS.updateSpeed = 0.008;
+
     // UPPER RIGHT
     upperArmRight = BABYLON.Mesh.CreateBox("arm", 1, scene);
     upperArmRight.scaling.x = 0.3;
