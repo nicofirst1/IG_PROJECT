@@ -1,8 +1,3 @@
-/*
-	Game Menu Template
-	Develop by Leandro Curioso
-	leandro.curioso@gmail.com	
-*/
 
 body { 
   background: url("../img/background/background.jpg") no-repeat center center fixed; 
@@ -18,9 +13,9 @@ h1{
 }
 
 .title{
-	color:red;
+	color: #7ec3e6;
 	position:relative;
-	top:30px;
+	top:120px;
 	right:5px;
 }
 
@@ -34,9 +29,9 @@ h1{
 	margin:0 auto;
 	/*display:none;*/
 	position:relative;
-	top:100px;
+	top:200px;
 	right:25px;
-	font-size:30px;
+	font-size:50px;
 	font-family: '8-bit_limit_brkregular';
 	display:inline-block;
 }
@@ -78,11 +73,11 @@ h1{
 }
 
 #main-menu li:hover{
-	color:red;
+	color: #b5fdff;
 }
 
 .selected-opt {
-	color:red;
+	color: #b5fdff;
 }
 
 #loading {
@@ -100,12 +95,12 @@ h1{
 }
 
 #credits{
-	color:#FFF;
+	color: #8fb4ff;
 	list-style-type: none;
 	margin:0 auto;
 	display:none;
 	position:relative;
-	top:40px;
+	top:100px;
 	right:25px;
 	font-size:25px;
 	font-family: '8-bit_limit_brkregular';

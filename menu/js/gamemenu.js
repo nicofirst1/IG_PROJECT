@@ -1,8 +1,4 @@
-/*
-	Game Menu Template
-	Develop by Leandro Curioso
-	leandro.curioso@gmail.com	
-*/
+
 
 $(document).ready(function(e){
 	
@@ -83,35 +79,7 @@ $(document).ready(function(e){
                     start();
 				}
 			},
-			loadGame:{
-				id:"opt-load-game",
-				title: "Load Game",
-				subMenu:{
-					options:{
-						opt0: {
-							title: "Saved in Misty Land",
-							date: "01/01/2020",
-							callback:function(){
-								showLoading();
-							}
-						},
-						opt1: {
-							title: "Saved in Avenger Hell",
-							date: "01/01/2030",
-							callback:function(){
-								showLoading();
-							}
-						},
-						opt2: {
-							title: "Saved in Proud Herr",
-							date: "01/01/3000",
-							callback:function(){
-								showLoading();
-							}
-						}
-					}
-				}
-			},
+
 			options:{
 				id:"opt-options",
 				title: "Options",
