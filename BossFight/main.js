@@ -13,12 +13,14 @@ var hide_menu=function () {
     //
     var menu=document.getElementById("main-menu");
     menu.style.display='none';
-    var menu=document.getElementById("loading");
+    menu=document.getElementById("loading");
+    menu.style.display='none';
+    menu=document.getElementById("menu-title");
     menu.style.display='none';
 
 
 
-}
+};
 
 var start=function () {
 
@@ -31,7 +33,6 @@ var start=function () {
     // BABYLON.OBJFileLoader.OPTIMIZE_WITH_UV = true;
 
     var canvas = document.getElementById("renderCanvas");
-
 
     var engine = new BABYLON.Engine(canvas, true);
     //disable online support (remove warnings)
@@ -90,4 +91,4 @@ var start=function () {
         scene.render();
     });
 
-}
+};
