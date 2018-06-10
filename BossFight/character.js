@@ -55,7 +55,7 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
     var lowerArmRightMaterial = new BABYLON.StandardMaterial("material", scene);
     lowerArmRightMaterial.diffuseTexture = new BABYLON.Texture("Resources/armor/armor.jpg", scene);
     lowerArmRight.material = lowerArmRightMaterial;
-ground
+
     lowerArmRight.position.y = upperArmRight.position.y + 0.45;
     lowerArmRight.position.z = upperArmRight.position.z ;
 
@@ -171,8 +171,6 @@ var armsMovementRelease = function(scene, arm, ccw, todoFireball, camera, ground
 
     // Animation keys
     var keys = [];
-
-    keys.push({frame: 0, value: 0});
 
     var curr_rot = arm.rotation.y;
 
