@@ -1,6 +1,30 @@
-window.onload = function init() {
+
+
+var hide_menu=function () {
+    //
+    // var menu_items=[];
+    // menu_items.push(document.getElementById("main-menu"));
+    //
+    // for (var elem in menu_items){
+    //     elem.style.display='none';
+    //     elem.style.visibility = 'hidden';
+    //
+    // }
+    //
+    var menu=document.getElementById("main-menu");
+    menu.style.display='none';
+    var menu=document.getElementById("loading");
+    menu.style.display='none';
+
+
+
+}
+
+var start=function () {
 
     if (!BABYLON.Engine.isSupported()) return;
+
+    hide_menu();
 
     var gravity= new BABYLON.Vector3(0, -0.6, 0);
 
@@ -12,11 +36,16 @@ window.onload = function init() {
     var engine = new BABYLON.Engine(canvas, true);
     //disable online support (remove warnings)
     engine.enableOfflineSupport=false;
+    engine.doNotHandleContextLost = true;
+
 
     var scene = new BABYLON.Scene(engine);
     scene.enablePhysics();
     scene.gravity = gravity;
     scene.collisionsEnabled = true;
+
+
+    var optimizer=initOptimizer(scene);
 
 
     var camera =InitCamera(scene);
@@ -60,4 +89,5 @@ window.onload = function init() {
     engine.runRenderLoop(function () {
         scene.render();
     });
-};
+
+}
