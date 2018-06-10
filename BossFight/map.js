@@ -50,23 +50,35 @@ var mapInit = function (scene, light, shadow) {
     groundMaterial.roughness = 3;
     groundMaterial.checkCollisions = true;
 
-
-
     var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/height_map/height_map.png", ground_x,
         ground_y, subdivisions, ground_min_z, ground_max_z, scene, false);
 
-    //var ground = BABYLON.Mesh.CreateGround("ground1", 500, 500, 2, scene);
-    ground.position.y = 0.0;
-    ground.receiveShadows = true;
-    ground.checkCollisions = true;
-    ground.material = groundMaterial;
-    ground.isBlocker=true;
+    // var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/height_map/height_map.png", ground_x,
+    //     ground_y, subdivisions, ground_min_z, ground_max_z, scene, false, function () {
+    //         var exponentialPath = function (p) {
+    //             var path = [];
+    //             for (var i = -50; i <= 50; i++) {
+    //                 path.push(new BABYLON.Vector3(p - 50, (Math.sin(p / 3) * 10 * Math.exp((i - p) / 100) + i / 3), i));
+    //             }
+    //             return path;
+    //         };
+    //         // let's populate arrayOfPaths with all these different paths
+    //         var arrayOfPaths = [];
+    //         for (var p = 0; p <= 100; p++) {
+    //             arrayOfPaths[p] = exponentialPath(p);
+    //         }
+    //
+    //         ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.HeightmapImpostor, {mass: 0});
+    //
+    //     });
 
-    ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, {
-        mass: 0,
-        restitution: 0.9,
-        friction: 10,
-    }, scene);
+    ground.material = groundMaterial;
+    ground.checkCollisions = true;
+    // ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, {
+    //     mass: 0,
+    //     restitution: 0.1,
+    //     friction: 10,
+    // }, scene);
 
     var groundBox = BABYLON.MeshBuilder.CreateBox("groundBox", {height: 0, width: ground_x, depth: ground_y}, scene);
     groundBox.checkCollisions = true;
@@ -129,7 +141,6 @@ var mapInit = function (scene, light, shadow) {
     particleSystem.start();
 
 
-
     //###############################
     //          WATER
     //###############################
@@ -155,5 +166,5 @@ var mapInit = function (scene, light, shadow) {
     // Assign the water material
     waterMesh.material = water;
 
-
+    return [ground, groundBox];
 };

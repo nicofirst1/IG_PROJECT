@@ -4,7 +4,7 @@ var upperArmLeft;
 var lowerArmLeft;
 
 
-var initCharacter = function (scene, camera, shadowGenerator) {
+var initCharacter = function (scene, camera, shadowGenerator, ground) {
 
     var cameraPS = new BABYLON.ParticleSystem("particles", 2000, scene);
     cameraPS.emitter = camera;
@@ -55,7 +55,7 @@ var initCharacter = function (scene, camera, shadowGenerator) {
     var lowerArmRightMaterial = new BABYLON.StandardMaterial("material", scene);
     lowerArmRightMaterial.diffuseTexture = new BABYLON.Texture("Resources/armor/armor.jpg", scene);
     lowerArmRight.material = lowerArmRightMaterial;
-
+ground
     lowerArmRight.position.y = upperArmRight.position.y + 0.45;
     lowerArmRight.position.z = upperArmRight.position.z ;
 
@@ -104,10 +104,10 @@ var initCharacter = function (scene, camera, shadowGenerator) {
     };
 
     document.body.onmouseup = function onReleaseLeft(event) {
-        armsMovementRelease(scene, upperArmRight, true, true, camera);
-        armsMovementRelease(scene, lowerArmRight, false, false, camera);
-        armsMovementRelease(scene, upperArmLeft, false, false, camera);
-        armsMovementRelease(scene, lowerArmLeft, true, false, camera);
+        armsMovementRelease(scene, upperArmRight, true, true, camera, ground);
+        armsMovementRelease(scene, lowerArmRight, false, false, camera, ground);
+        armsMovementRelease(scene, upperArmLeft, false, false, camera, ground);
+        armsMovementRelease(scene, lowerArmLeft, true, false, camera, ground);
     };
 };
 
@@ -159,7 +159,7 @@ var armsMovementCharge = function(scene, arm, max, ccw, camera, todoFireball) {
     }
 };
 
-var armsMovementRelease = function(scene, arm, ccw, todoFireball, camera) {
+var armsMovementRelease = function(scene, arm, ccw, todoFireball, camera, ground) {
 
     var max = Math.abs(arm.rotation.y);
 
@@ -199,7 +199,7 @@ var armsMovementRelease = function(scene, arm, ccw, todoFireball, camera) {
     if (todoFireball && Math.abs(arm.rotation.y - 0.86666666666) < 0.0001) {
         animatable.onAnimationEnd = function () {
             animatable.animationStarted = false;
-            fireFireball(scene, camera);
+            fireFireball(scene, camera, ground);
         };
     }
 };
@@ -254,15 +254,14 @@ var createFireball = function (scene, camera) {
 
 var camera1;
 
-var fireFireball = function (scene, camera) {
+var fireFireball = function (scene, camera, ground) {
     fireball.dispose();
     fireball = null;
     pSystem = null;
 
     var bulletFireball = BABYLON.Mesh.CreateSphere('bulletFireball', 3, 1.6, scene);
-    //bulletFireball.checkCollisions = true;
-    //bulletFireball.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireball, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, restitution: 0.9 }, scene);
-
+    bulletFireball.checkCollisions = true;
+    bulletFireball.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireball, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, friction: 0, restitution: 0 });
 
     var invView = new BABYLON.Matrix();
     camera.getViewMatrix().invertToRef(invView);
@@ -308,63 +307,29 @@ var fireFireball = function (scene, camera) {
     pSystem.updateSpeed = 0.008;
     pSystem.start();
 
-    // scene.registerBeforeRender(function () {
-    //     bulletFireball.position.addInPlace(direction);
-    // });
+    var impulseDir = new BABYLON.Vector3(0.0, 0.0, 0.0);
+    impulseDir.x = direction.x * 70;
+    impulseDir.y = direction.y * 70;
+    impulseDir.z = direction.z * 70;
 
-    var max = 100;
+    bulletFireball.physicsImpostor.applyImpulse(impulseDir, bulletFireball.getAbsolutePosition());
 
-    var fireFireballAnimX = new BABYLON.Animation(
-        "fireFireballAnimX",
-        "position.x", fps,
-        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var groundBox = ground[1];
+    bulletFireball.physicsImpostor.registerOnPhysicsCollide(groundBox.physicsImpostor, function() {
+        pSystem.stop();
 
-    var fireFireballAnimY = new BABYLON.Animation(
-        "fireFireballAnimY",
-        "position.y", fps,
-        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+        var posAbs = bulletFireball.getAbsolutePosition();
+        var pos = new BABYLON.Vector3(posAbs.x, posAbs.y, posAbs.z);
+        bulletFireball.dispose();
 
-    var fireFireballAnimZ = new BABYLON.Animation(
-        "fireFireballAnimZ",
-        "position.z", fps,
-        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-
-    // Animation keys
-    var keysX = [];
-    var keysY = [];
-    var keysZ = [];
-
-    var curr_pos = new BABYLON.Vector3(startPos.x, startPos.y, startPos.z);
-
-    keysX.push({frame: 0, value: curr_pos.x});
-    keysY.push({frame: 0, value: curr_pos.x});
-    keysZ.push({frame: 0, value: curr_pos.x});
-
-    for (var i = 1; i < max; i++) {
-        curr_pos.x += direction.x * i;
-        curr_pos.y += direction.y * i;
-        curr_pos.z += direction.z * i;
-        keysX.push({frame: i, value: curr_pos.x});
-        keysY.push({frame: i, value: curr_pos.y});
-        keysZ.push({frame: i, value: curr_pos.z});
-    }
-
-    fireFireballAnimX.setKeys(keysX);
-    fireFireballAnimY.setKeys(keysY);
-    fireFireballAnimZ.setKeys(keysZ);
-
-    bulletFireball.animations = [];
-    bulletFireball.animations.push(fireFireballAnimX, fireFireballAnimY, fireFireballAnimZ);
-
-    var animatable = scene.beginAnimation(bulletFireball, false, 30, false);
-    animatable.onAnimationEnd = function () {
-        animatable.animationStarted = false;
+        var bulletFireballRest = BABYLON.Mesh.CreateSphere('bulletFireballRest', 3, 1.6, scene);
+        bulletFireballRest.material = fireballMaterial;
+        bulletFireballRest.checkCollisions = true;
+        bulletFireballRest.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireball, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, friction: 1000, restitution: 0 });
+        bulletFireballRest.position = pos;
 
         var pSystem2 = new BABYLON.ParticleSystem("particles", 2000, scene);
-        pSystem2.emitter = bulletFireball;
+        pSystem2.emitter = bulletFireballRest;
         pSystem2.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
         pSystem2.light = new BABYLON.PointLight("Omni1", new BABYLON.Vector3(0, 0, 0), scene);
         pSystem2.light.diffuse = new BABYLON.Color3(.8, 0, 0);
@@ -393,10 +358,10 @@ var fireFireball = function (scene, camera) {
 
         pSystem2.start();
 
-        setTimeout(function() {bulletFireball.dispose(); }, 1500);
-
-
-    };
+        setTimeout(function () {
+            bulletFireballRest.dispose();
+        }, 1000);
+    });
 };
 
 var explosion = function(particles) {
@@ -432,4 +397,4 @@ var explosion = function(particles) {
             particle.direction.addInPlace(this._scaledGravity);
         }
     }
-}
+};
