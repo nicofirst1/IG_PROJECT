@@ -112,16 +112,17 @@ var update_healt = function (value) {
 
     if (healt_value <= 0) {
         gameOverFlag = true;
+
+
+        gameOverText.text = "Game Over\n\nYour Score is : "+score_value+"\n\nReload page to restart game";
+
         advancedTexture.addControl(gameOverBar);
         advancedTexture.addControl(gameOverText);
+
         //restore mana with timer
         setInterval(function () {
 
-
             gameOverBar.alpha += 0.01;
-            advancedTexture.addControl(gameOverText);
-
-
         }, 50);
 
 
@@ -276,15 +277,11 @@ var gameOver = function (scene, advancedTexture) {
     gameOverBar.height = canvas.height;
     gameOverBar.alpha = 0.0;
     gameOverBar.width = canvas.width;
-    gameOverBar.cornerRadius = 20;
-    gameOverBar.thickness = 1;
-    gameOverBar.linkOffsetY = 30;
-    gameOverBar.zIndex = 5;
+    //gameOverBar.alpha = 1;
 
     gameOverText = new BABYLON.GUI.TextBlock();
-    gameOverText.text = "Game Over";
     gameOverText.color = "white";
-    gameOverText.fontSize = 124;
+    gameOverText.fontSize = 100;
 
 
 };
