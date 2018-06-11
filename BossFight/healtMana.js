@@ -8,6 +8,7 @@ var mana_bar;
 var mana_text;
 
 
+
 var ignoreCollision=["ground","arm","groundBox"]; //meshes to ignore for collisions
 var damages={
     bulletFireballRest:1,
@@ -18,6 +19,9 @@ var previousCollision={
     subId:""
 };
 
+var healtRegenTimeout=2000;
+var manaRegenTimeout=2000;
+
 
 var initHealtMana=function (scene, camera) {
 
@@ -25,47 +29,66 @@ var initHealtMana=function (scene, camera) {
 
     var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("gameUI",true,scene);
 
+    //init healt and mana bars
     healtBar(scene,advancedTexture);
     manaBar(scene,advancedTexture);
 
-    camera.onCollide = function(collidedMesh) {
 
-        //ignore collision with sepcific meshes
-        for (var idx in ignoreCollision){
-            if (collidedMesh.id===ignoreCollision[idx]){
-                return;
-            }
+    //add mdamage function on camera
+    camera.onCollide = inflictDamage;
+
+    //restore healt with timer
+    setInterval(function() {
+        if (healt_value<100){
+            update_healt(1)
         }
+    }, healtRegenTimeout);
 
-        console.log(collidedMesh);
-
-        //ignore collision from same objects
-        if(previousCollision.id===collidedMesh.id) {
-            if (previousCollision.subId==collidedMesh.subId){
-                return;
-            }
+    //restore mana with timer
+    setInterval(function() {
+        if (mana_value<100){
+            update_mana(1)
         }
-
-        if (collidedMesh.id==="metheorite"){
-
-            update_healt(-damages.metheorite);
-
-
-        }
-
-        if(collidedMesh.id==="bulletFireballRest"){
-            update_healt(-damages.bulletFireballRest)
-        }
-
-        //update previous collision
-        previousCollision.id=collidedMesh.id;
-        previousCollision.subId=collidedMesh.subId;
-
-    }
+    }, manaRegenTimeout);
 };
 
 
+var inflictDamage=function (collidedMesh) {
+    //ignore collision with sepcific meshes
+    for (var idx in ignoreCollision){
+        if (collidedMesh.id===ignoreCollision[idx]){
+            return;
+        }
+    }
 
+    console.log(collidedMesh);
+
+
+    if(collidedMesh.id==="bulletFireballRest"){
+        update_healt(-damages.bulletFireballRest)
+    }
+
+    //ignore collision from same objects
+    if(previousCollision.id===collidedMesh.id) {
+        if (previousCollision.subId==collidedMesh.subId){
+            return;
+        }
+    }
+
+    if (collidedMesh.id==="metheorite"){
+
+        update_healt(-damages.metheorite);
+
+
+    }
+
+
+    //update previous collision
+    previousCollision.id=collidedMesh.id;
+    previousCollision.subId=collidedMesh.subId;
+
+
+}
 
 var update_healt=function (value) {
     healt_value+=value;
@@ -74,8 +97,10 @@ var update_healt=function (value) {
 
 };
 
-var update_mana=function (new_value) {
-    mana_value=new_value;
+var update_mana=function (value) {
+    mana_value+=value;
+    mana_bar.width=5*mana_value+"px";
+    mana_text.text=mana_value+"/100";
 
 };
 
