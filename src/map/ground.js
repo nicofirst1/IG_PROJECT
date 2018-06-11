@@ -16,7 +16,6 @@ var initGround = function(scene, groundSize) {
 
         var grounds = [ground, groundBox];
 
-        var meteorite_number = 25;
 
         for (var ii = 0; ii < meteorite_number; ii++) {
             createMeteorite(grounds, scene);
