@@ -65,16 +65,18 @@ var mapInit = function (scene, light, shadow, camera) {
 
         var b = BABYLON.Mesh.CreateSphere("metheorite", 3, 3, scene);
         var max = 5;
-        var min = 0.5;
+        var min = 0.1;
         var rnd = Math.random() * (max - min) + min;
         b.scaling.x = rnd;
         b.scaling.y = rnd;
         b.scaling.z = rnd;
         b.physicsImpostor = new BABYLON.PhysicsImpostor(b, BABYLON.PhysicsImpostor.SphereImpostor, { mass: rnd, friction: 100000, restitution: 1.0 });
 
+        var minPos = -500;
+        var maxPos = 0;
         b.position.y = 1000;
-        b.position.x = (Math.random() * 250) * ((Math.random() < 0.5) ? -1 : 1);
-        b.position.z = (Math.random() * 250) * ((Math.random() < 0.5) ? -1 : 1);
+        b.position.x =  Math.random() * (maxPos - minPos) + minPos;
+        b.position.z = Math.random() * (maxPos - minPos) + minPos;
 
         var impulseDir = new BABYLON.Vector3(rnd*40, -rnd*100, rnd*40);
         b.physicsImpostor.applyImpulse(impulseDir, b.getAbsolutePosition());
@@ -262,17 +264,8 @@ var mapInit = function (scene, light, shadow, camera) {
         scene.registerBeforeRender(function () {
             scene.meshes.forEach(function (m) {
                 if (m.name=="metheorite" && m.position.y < -10) {
-                    m.position.y = 1000;
-                    var rnd = (Math.random() * 3);
-                    m.position.x = (Math.random() * 250) * ((Math.random() < 0.5) ? -1 : 1);
-                    m.position.z = (Math.random() * 250) * ((Math.random() < 0.5) ? -1 : 1);
-                    m.physicsImpostor.linearVelocity = new CANNON.Vec3(0,1,0);
-                    m.physicsImpostor.angularVelocity = new CANNON.Vec3(0,0,0);
-                    var impulseDir = new BABYLON.Vector3(rnd*40, -rnd*100, rnd*40);
-                    m.physicsImpostor.applyImpulse(impulseDir, m.getAbsolutePosition());
-                    // m.dispose();
-                    // m.physicsImpostor.dispose();
-                    // createShape();
+                    m.dispose();
+                    createShape([ground, groundBox]);
                 }
             })
         });
