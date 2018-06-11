@@ -1,6 +1,6 @@
 var advancedTexture;
 
-var healt_value = 1;
+var healt_value = 100;
 var healt_bar;
 var healt_text;
 
@@ -28,6 +28,10 @@ var score_value = 0;
 var gameOverBar;
 var gameOverText;
 var gameOverFlag = false;
+
+var manaInterval;
+var manaConsumptionFlag = false;
+var manaConsumptionInterval=100;
 
 var initHealtMana = function (scene, camera) {
 
@@ -59,10 +63,15 @@ var initHealtMana = function (scene, camera) {
         if (gameOverFlag) {
             return
         }
+        if (manaConsumptionFlag) {
+            return;
+        }
         if (mana_value < 100) {
             update_mana(1)
         }
     }, manaRegenTimeout);
+
+
 };
 
 
@@ -114,12 +123,11 @@ var update_healt = function (value) {
         gameOverFlag = true;
 
 
-        gameOverText.text = "Game Over\n\nYour Score is : "+score_value+"\n\nReload page to restart game";
+        gameOverText.text = "Game Over\n\nYour Score is : " + score_value + "\n\nReload page to restart game";
 
         advancedTexture.addControl(gameOverBar);
         advancedTexture.addControl(gameOverText);
 
-        //restore mana with timer
         setInterval(function () {
 
             gameOverBar.alpha += 0.01;

@@ -101,6 +101,10 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
             armsMovementCharge(scene, upperArmLeft, 1, false, camera, false);
             armsMovementCharge(scene, lowerArmLeft, 1, true, camera, false);
         }
+        manaConsumptionFlag=true;
+        manaInterval= setInterval(function () {
+            update_mana(-1)
+        }, manaConsumptionInterval);
     };
 
     document.body.onmouseup = function onReleaseLeft(event) {
@@ -108,6 +112,10 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
         armsMovementRelease(scene, lowerArmRight, false, false, camera, ground);
         armsMovementRelease(scene, upperArmLeft, false, false, camera, ground);
         armsMovementRelease(scene, lowerArmLeft, true, false, camera, ground);
+        clearInterval(manaInterval);
+        manaConsumptionFlag=false;
+
+
     };
 };
 
