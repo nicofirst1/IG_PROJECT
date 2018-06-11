@@ -10,7 +10,7 @@ var mana_bar;
 var mana_text;
 
 
-var ignoreCollision = ["ground", "arm", "groundBox"]; //meshes to ignore for collisions
+var ignoreCollision = [ "arm"]; //meshes to ignore for collisions
 var damages = {
     bulletFireballRest: 1,
     metheorite: 30,
@@ -86,6 +86,12 @@ var inflictDamage = function (collidedMesh) {
             return;
         }
     }
+
+    if(collidedMesh.id==="groundBox"||collidedMesh.id==="ground"){
+        isJumping=false;
+        return;
+    }
+
 
     console.log(collidedMesh);
 
