@@ -12,7 +12,11 @@ var ignoreCollision=["ground","arm","groundBox"]; //meshes to ignore for collisi
 var damages={
     bulletFireballRest:1,
     metheorite:30,
-}
+};
+var previousCollision={
+    id:"",
+    subId:""
+};
 
 
 var initHealtMana=function (scene, camera) {
@@ -32,7 +36,15 @@ var initHealtMana=function (scene, camera) {
                 return;
             }
         }
-        console.log(collidedMesh.id);
+
+        console.log(collidedMesh);
+
+        //ignore collision from same objects
+        if(previousCollision.id===collidedMesh.id) {
+            if (previousCollision.subId==collidedMesh.subId){
+                return;
+            }
+        }
 
         if (collidedMesh.id==="metheorite"){
 
@@ -45,6 +57,9 @@ var initHealtMana=function (scene, camera) {
             update_healt(-damages.bulletFireballRest)
         }
 
+        //update previous collision
+        previousCollision.id=collidedMesh.id;
+        previousCollision.subId=collidedMesh.subId;
 
     }
 };
