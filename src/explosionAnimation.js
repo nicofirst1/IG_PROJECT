@@ -7,22 +7,20 @@ var explosionAnimation = function(scene, pSystem, mesh, texture_path, r, g, b, m
     var pos = new BABYLON.Vector3(posAbs.x, posAbs.y, posAbs.z);
 
     var name = (r > 0.5) ? 'restObject' : 'restObjectWater';
-    var restObject = BABYLON.Mesh.CreateSphere(name, 12, 3, scene);
+    var restObject;
+    if (meteoriteBool) restObject = BABYLON.Mesh.CreateSphere(name, 12, 3, scene);
+    else restObject = BABYLON.Mesh.CreateSphere(name, 12, 0.1, scene);
+
+    water.addToRenderList(restObject);
 
     var fireballMaterial = new BABYLON.StandardMaterial("material", scene);
     fireballMaterial.diffuseTexture = new BABYLON.Texture("Resources/magma/magma.jpg", scene);
     fireballMaterial.emissiveColor = new BABYLON.Vector3(1.0, 0.0, 0.0);
     restObject.material = fireballMaterial;
 
-    if (meteoriteBool) {
-        restObject.scaling.x = mesh.scaling.x ;
-        restObject.scaling.y = mesh.scaling.y ;
-        restObject.scaling.z = mesh.scaling.z ;
-    } else {
-        restObject.scaling.x = mesh.scaling.x / 30;
-        restObject.scaling.y = mesh.scaling.y / 30;
-        restObject.scaling.z = mesh.scaling.z / 30;
-    }
+    restObject.scaling.x = mesh.scaling.x;
+    restObject.scaling.y = mesh.scaling.y;
+    restObject.scaling.z = mesh.scaling.z;
 
     restObject.checkCollisions = true;
     restObject.physicsImpostor = new BABYLON.PhysicsImpostor(restObject, BABYLON.PhysicsImpostor.SphereImpostor, {
