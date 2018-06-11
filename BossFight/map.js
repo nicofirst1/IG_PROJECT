@@ -280,8 +280,8 @@ var mapInit = function (scene, light, shadow, camera) {
 
     if (snow_flag) {
         snow(scene, skybox);
-    }
-    d
+    };
+
     //###############################
     //          WATER
     //###############################
