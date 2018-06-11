@@ -422,7 +422,7 @@ var fireFireball = function (scene, camera, ground) {
 
         var bulletFireballRest = BABYLON.Mesh.CreateSphere('bulletFireballRest', 3, 1.6, scene);
         bulletFireballRest.checkCollisions = true;
-        bulletFireballRest.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireball, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, friction: 1000, restitution: 0 });
+        bulletFireballRest.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireballRest, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, friction: 1000, restitution: 0 });
         bulletFireballRest.position = pos;
         bulletFireballRest.visibility = false;
 
@@ -480,7 +480,7 @@ var fireFireball = function (scene, camera, ground) {
 
             var bulletFireballRest = BABYLON.Mesh.CreateSphere('bulletFireballRest', 3, 1.6, scene);
             bulletFireballRest.checkCollisions = true;
-            bulletFireballRest.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireball, BABYLON.PhysicsImpostor.SphereImpostor, {
+            bulletFireballRest.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireballRest, BABYLON.PhysicsImpostor.SphereImpostor, {
                 mass: 1,
                 friction: 1000,
                 restitution: 0

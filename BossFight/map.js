@@ -53,22 +53,193 @@ var mapInit = function (scene, light, shadow, camera) {
     //var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/height_map/height_map.png", ground_x,
      //   ground_y, subdivisions, ground_min_z, ground_max_z, scene, false);
 
-    var useBoxes = true;
-    var createShape = function () {
-        if (useBoxes) {
-            b = BABYLON.Mesh.CreateBox("s", 8, scene);
-            b.scaling.x = (Math.random() * 3) * ((Math.random() < 0.5) ? -1 : 1);
-            b.scaling.y = (Math.random() * 3) * ((Math.random() < 0.5) ? -1 : 1);
-            b.scaling.z = (Math.random() * 3) * ((Math.random() < 0.5) ? -1 : 1);
-            b.physicsImpostor = new BABYLON.PhysicsImpostor(b, BABYLON.PhysicsImpostor.BoxImpostor, { mass: .1, friction: 0, restitution: 1.0 }, scene);
-        }
-        else {
-            b = BABYLON.Mesh.CreateSphere("s", 8, 8, scene);
-            b.physicsImpostor = new BABYLON.PhysicsImpostor(b, BABYLON.PhysicsImpostor.SphereImpostor, { mass: .1, friction: 0, restitution: 1.0 }, scene);
-        }
-        b.position.y = 80;
-        b.position.x = (Math.random() * 50) * ((Math.random() < 0.5) ? -1 : 1);
-        b.position.z = (Math.random() * 50) * ((Math.random() < 0.5) ? -1 : 1);
+    var groundBox = BABYLON.MeshBuilder.CreateBox("groundBox", {height: 4, width: ground_x, depth: ground_y}, scene);
+    groundBox.checkCollisions = true;
+    groundBox.physicsImpostor = new BABYLON.PhysicsImpostor(groundBox, BABYLON.PhysicsImpostor.BoxImpostor, {
+        mass: 0,
+        restitution: 0.1,
+        friction: 10,
+    }, scene);
+
+    var createShape = function (grounds) {
+
+        var b = BABYLON.Mesh.CreateSphere("metheorite", 3, 3, scene);
+        var max = 5;
+        var min = 0.5;
+        var rnd = Math.random() * (max - min) + min;
+        b.scaling.x = rnd;
+        b.scaling.y = rnd;
+        b.scaling.z = rnd;
+        b.physicsImpostor = new BABYLON.PhysicsImpostor(b, BABYLON.PhysicsImpostor.SphereImpostor, { mass: rnd, friction: 100000, restitution: 1.0 });
+
+        b.position.y = 1000;
+        b.position.x = (Math.random() * 250) * ((Math.random() < 0.5) ? -1 : 1);
+        b.position.z = (Math.random() * 250) * ((Math.random() < 0.5) ? -1 : 1);
+
+        var impulseDir = new BABYLON.Vector3(rnd*40, -rnd*100, rnd*40);
+        b.physicsImpostor.applyImpulse(impulseDir, b.getAbsolutePosition());
+
+        var fireballMaterial = new BABYLON.StandardMaterial("material", scene);
+        fireballMaterial.diffuseTexture = new BABYLON.Texture("Resources/fire/fire.jpg", scene);
+        fireballMaterial.emissiveColor = new BABYLON.Vector3(1.0, 0.0, 0.0);
+        b.material = fireballMaterial;
+
+        var pSystem2 = new BABYLON.ParticleSystem("particles", 2000, scene);
+        pSystem2.emitter = b;
+        pSystem2.particleTexture = new BABYLON.Texture("Resources/map/flares/flare.png", scene);
+        pSystem2.minEmitBox = new BABYLON.Vector3(-1, 1, -1);
+        pSystem2.maxEmitBox = new BABYLON.Vector3(1, 1, 1);
+
+        pSystem2.color1 = new BABYLON.Color4(1.000, 0.271, 0.000, 1.0);
+        pSystem2.color2 = new BABYLON.Color4(0.1, 0.1, 0.1, 1.0);
+        pSystem2.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
+
+        pSystem2.minSize = rnd * 3;
+        pSystem2.maxSize = rnd * 6;
+
+        pSystem2.minLifeTime = 0.3;
+        pSystem2.maxLifeTime = 1.5;
+
+        pSystem2.emitRate = 500;
+
+        pSystem2.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+
+        pSystem2.gravity = new BABYLON.Vector3(0, 0, 0);
+
+        pSystem2.direction1 = new BABYLON.Vector3(0, 8, 0);
+        pSystem2.direction2 = new BABYLON.Vector3(0, 8, 0);
+
+        pSystem2.minAngularSpeed = 0;
+        pSystem2.maxAngularSpeed = Math.PI;
+
+        pSystem2.minEmitPower = 1;
+        pSystem2.maxEmitPower = 2;
+        pSystem2.updateSpeed = 0.005;
+
+        pSystem2.start();
+
+        var groundBox = grounds[1];
+        b.physicsImpostor.registerOnPhysicsCollide(groundBox.physicsImpostor, function() {
+            pSystem2.stop();
+
+            var posAbs = b.getAbsolutePosition();
+            var pos = new BABYLON.Vector3(posAbs.x, posAbs.y, posAbs.z);
+            b.dispose();
+
+            var bulletFireballRest = BABYLON.Mesh.CreateSphere('bulletFireballRest', 3, 1.6, scene);
+            bulletFireballRest.checkCollisions = true;
+            bulletFireballRest.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireballRest, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, friction: 1000, restitution: 0 });
+            bulletFireballRest.position = pos;
+            bulletFireballRest.visibility = false;
+
+            var pSystem3 = new BABYLON.ParticleSystem("particles", 2000, scene);
+            pSystem3.emitter = bulletFireballRest;
+            pSystem3.particleTexture = new BABYLON.Texture("Resources/map/flares/flare.png", scene);
+            pSystem3.minEmitBox = new BABYLON.Vector3(-1, 1, -1); // Starting all from
+            pSystem3.maxEmitBox = new BABYLON.Vector3(1, 1, 1); // To...
+
+            pSystem3.color1 = new BABYLON.Color4(0.1, 0.1, 0.1, 1.0);
+            pSystem3.color2 = new BABYLON.Color4(0.1, 0.1, 0.1, 1.0);
+            pSystem3.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
+
+            pSystem3.minSize = rnd * 6;
+            pSystem3.maxSize = rnd * 12;
+
+            pSystem3.minLifeTime = 0.3;
+            pSystem3.maxLifeTime = 1.5;
+
+            pSystem3.emitRate = 500;
+
+            pSystem3.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+
+            pSystem3.gravity = new BABYLON.Vector3(0, 0, 0);
+
+            pSystem3.direction1 = new BABYLON.Vector3(0, 8, 0);
+            pSystem3.direction2 = new BABYLON.Vector3(0, 8, 0);
+
+            pSystem3.minAngularSpeed = 0;
+            pSystem3.maxAngularSpeed = Math.PI;
+
+            pSystem3.minEmitPower = 1;
+            pSystem3.maxEmitPower = 2;
+            pSystem3.updateSpeed = 0.005;
+
+            pSystem3.start();
+
+            setTimeout(function () {
+                pSystem3.stop();
+                setTimeout(function () {
+                    bulletFireballRest.dispose();
+                }, 4000);
+            }, 3000);
+            createShape(grounds);
+
+        });
+
+        var ground0 = grounds[0];
+        b.physicsImpostor.registerOnPhysicsCollide(ground0.physicsImpostor, function() {
+            //b.collisionsCount += 1;
+            if (true) {
+                pSystem2.stop();
+
+                var posAbs = b.getAbsolutePosition();
+                var pos = new BABYLON.Vector3(posAbs.x, posAbs.y, posAbs.z);
+                b.dispose();
+
+                var bulletFireballRest = BABYLON.Mesh.CreateSphere('bulletFireballRest', 3, 1.6, scene);
+                bulletFireballRest.checkCollisions = true;
+                bulletFireballRest.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireballRest, BABYLON.PhysicsImpostor.SphereImpostor, {
+                    mass: 1,
+                    friction: 1000,
+                    restitution: 0
+                });
+                bulletFireballRest.position = pos;
+                bulletFireballRest.visibility = false;
+
+                var pSystem3 = new BABYLON.ParticleSystem("particles", 2000, scene);
+                pSystem3.emitter = bulletFireballRest;
+                pSystem3.particleTexture = new BABYLON.Texture("Resources/map/flares/flare.png", scene);
+                pSystem3.minEmitBox = new BABYLON.Vector3(-1, 1, -1); // Starting all from
+                pSystem3.maxEmitBox = new BABYLON.Vector3(1, 1, 1); // To...
+
+                pSystem3.color1 = new BABYLON.Color4(1.000, 0.271, 0.000, 1.0);
+                pSystem3.color2 = new BABYLON.Color4(0.1, 0.1, 0.1, 1.0);
+                pSystem3.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
+
+                pSystem3.minSize = rnd * 6;
+                pSystem3.maxSize = rnd * 12;
+
+                pSystem3.minLifeTime = 0.3;
+                pSystem3.maxLifeTime = 1.5;
+
+                pSystem3.emitRate = 500;
+
+                pSystem3.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+
+                pSystem3.gravity = new BABYLON.Vector3(0, 0, 0);
+
+                pSystem3.direction1 = new BABYLON.Vector3(0, 8, 0);
+                pSystem3.direction2 = new BABYLON.Vector3(0, 8, 0);
+
+                pSystem3.minAngularSpeed = 0;
+                pSystem3.maxAngularSpeed = Math.PI;
+
+                pSystem3.minEmitPower = 1;
+                pSystem3.maxEmitPower = 2;
+                pSystem3.updateSpeed = 0.005;
+
+                pSystem3.start();
+
+                setTimeout(function () {
+                    pSystem3.stop();
+                    setTimeout(function () {
+                        bulletFireballRest.dispose();
+                    }, 4000);
+                }, 3000);
+
+                createShape(grounds);
+            }
+        });
     };
 
     var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/poly_HM/Heightmap.png", 500, 500, 50, 0, 25, scene, false, function () {
@@ -78,7 +249,7 @@ var mapInit = function (scene, light, shadow, camera) {
         ground.checkCollisions = true;
 
         for (var ii = 0; ii < 10; ii++) {
-            createShape();
+            createShape([ground, groundBox]);
         }
 
 
@@ -90,12 +261,15 @@ var mapInit = function (scene, light, shadow, camera) {
 
         scene.registerBeforeRender(function () {
             scene.meshes.forEach(function (m) {
-                if (m.name=="s" && m.position.y < -10) {
-                    m.position.y = 80;
-                    m.position.x = (Math.random() * 50) * ((Math.random() < 0.5) ? -1 : 1);
-                    m.position.z = (Math.random() * 50) * ((Math.random() < 0.5) ? -1 : 1);
-                    m.physicsImpostor.linearVelocity = new CANNON.Vec3(0,0,0);
+                if (m.name=="metheorite" && m.position.y < -10) {
+                    m.position.y = 1000;
+                    var rnd = (Math.random() * 3);
+                    m.position.x = (Math.random() * 250) * ((Math.random() < 0.5) ? -1 : 1);
+                    m.position.z = (Math.random() * 250) * ((Math.random() < 0.5) ? -1 : 1);
+                    m.physicsImpostor.linearVelocity = new CANNON.Vec3(0,1,0);
                     m.physicsImpostor.angularVelocity = new CANNON.Vec3(0,0,0);
+                    var impulseDir = new BABYLON.Vector3(rnd*40, -rnd*100, rnd*40);
+                    m.physicsImpostor.applyImpulse(impulseDir, m.getAbsolutePosition());
                     // m.dispose();
                     // m.physicsImpostor.dispose();
                     // createShape();
@@ -105,13 +279,6 @@ var mapInit = function (scene, light, shadow, camera) {
     });
 
 
-    var groundBox = BABYLON.MeshBuilder.CreateBox("groundBox", {height: 4, width: ground_x, depth: ground_y}, scene);
-    groundBox.checkCollisions = true;
-    groundBox.physicsImpostor = new BABYLON.PhysicsImpostor(groundBox, BABYLON.PhysicsImpostor.BoxImpostor, {
-        mass: 0,
-        restitution: 0.1,
-        friction: 10,
-    }, scene);
 
     //###############################
     //          SNOW
