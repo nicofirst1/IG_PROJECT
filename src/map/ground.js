@@ -1,4 +1,4 @@
-var initGround = function(scene, groundSize) {
+var initGround = function(scene, groundSize, camera) {
 
     var groundBox = BABYLON.MeshBuilder.CreateBox("groundBox", {height: 4, width: groundSize, depth: groundSize}, scene);
     groundBox.checkCollisions = true;
@@ -23,6 +23,7 @@ var initGround = function(scene, groundSize) {
 
         // If meteorite 20 below the ground it starts again from the sky
         scene.registerBeforeRender(function () {
+            if (camera.position.y < -100) displayGameOver();
             scene.meshes.forEach(function (m) {
                 if (m.name=="meteorite" && m.position.y < -600) {
                     m.dispose();
