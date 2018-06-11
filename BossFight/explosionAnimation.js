@@ -6,12 +6,22 @@ var explosionAnimation = function(scene, pSystem, mesh, texture_path, r, g, b, m
     var posAbs = mesh.getAbsolutePosition();
     var pos = new BABYLON.Vector3(posAbs.x, posAbs.y, posAbs.z);
 
-    var restObject = BABYLON.Mesh.CreateSphere('restObject', 12, 3, scene);
+    var name = (r > 0.5) ? 'restObject' : 'restObjectWater';
+    var restObject = BABYLON.Mesh.CreateSphere(name, 12, 3, scene);
+
+    var fireballMaterial = new BABYLON.StandardMaterial("material", scene);
+    fireballMaterial.diffuseTexture = new BABYLON.Texture("Resources/magma/magma.jpg", scene);
+    fireballMaterial.emissiveColor = new BABYLON.Vector3(1.0, 0.0, 0.0);
+    restObject.material = fireballMaterial;
 
     if (meteoriteBool) {
-        restObject.scaling.x = mesh.scaling.x;
-        restObject.scaling.y = mesh.scaling.y;
-        restObject.scaling.z = mesh.scaling.z;
+        restObject.scaling.x = mesh.scaling.x ;
+        restObject.scaling.y = mesh.scaling.y ;
+        restObject.scaling.z = mesh.scaling.z ;
+    } else {
+        restObject.scaling.x = mesh.scaling.x / 30;
+        restObject.scaling.y = mesh.scaling.y / 30;
+        restObject.scaling.z = mesh.scaling.z / 30;
     }
 
     restObject.checkCollisions = true;
@@ -21,7 +31,7 @@ var explosionAnimation = function(scene, pSystem, mesh, texture_path, r, g, b, m
         restitution: 100
     });
     restObject.position = pos;
-    restObject.visibility = false;
+    //restObject.visibility = false;
 
     if (tailBool) {
         pSystem.emitter = restObject;
