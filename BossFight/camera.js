@@ -1,41 +1,19 @@
 var InitCamera = function (scene) {
     var camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 10, 0), scene);
 
-    camera.position = new BABYLON.Vector3(30, 45, 0);
+    var camera_position=new BABYLON.Vector3(30, 45, 0);
 
-    var pSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
-    pSystem.emitter = camera;
-    pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-    pSystem.light = new BABYLON.PointLight("Omni1", new BABYLON.Vector3(0, 0, 0), scene);
-    pSystem.light.diffuse = new BABYLON.Color3(.8, 0, 0);
-    pSystem.light.range = 15;
+    camera.position = camera_position;
 
-    pSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
-    pSystem.maxEmitBox = new BABYLON.Vector3(0, .2, 0);
-    pSystem.color1 = new BABYLON.Color4(0.5, 0.05, 1.0, .9);
-    pSystem.color2 = new BABYLON.Color4(0.0, 0.05, 0.85, .9);
-    pSystem.colorDead = new BABYLON.Color4(.5, .02, 0, .5);
-    pSystem.minSize = 1.75;
-    pSystem.maxSize = 2.0;
-    pSystem.minLifeTime = 0.075;
-    pSystem.maxLifeTime = 0.1;
-    pSystem.emitRate = 400;
-    pSystem.gravity = new BABYLON.Vector3(0, 0, 0);
-    pSystem.direction1 = new BABYLON.Vector3(0, .05, 0);
-    pSystem.direction2 = new BABYLON.Vector3(0, -.05, 0);
-    pSystem.minAngularSpeed = 1.5;
-    pSystem.maxAngularSpeed = 2.5;
-    pSystem.minEmitPower = 0.4;
-    pSystem.maxEmitPower = 0.75;
-    pSystem.updateSpeed = 0.008;
+    cameraLight(scene,camera);
 
     // This attaches the camera to the canvas
-
     camera.ellipsoid = new BABYLON.Vector3(2, 2, 2);
     camera.ellipsoidOffset = new BABYLON.Vector3(0, -1, 0);
     camera.checkCollisions = true;
     camera.applyGravity = true;
     camera._needMoveForGravity = true;
+
 
     // WASD
     camera.keysUp = [87];    // W
@@ -48,7 +26,7 @@ var InitCamera = function (scene) {
     Camera parameters
     -----------------------------------
     */
-    camera.speed = 2.5;
+    camera.speed = 6.5;
     camera.inertia = 0.2;
     camera.angularInertia = 0.3;
     camera.angularSensibility = 100;
@@ -116,3 +94,33 @@ var cameraJump = function(scene) {
     scene.beginAnimation(cam, false, fps, false);
 };
 
+
+var cameraLight=function (scene,camera) {
+
+    var pSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
+    pSystem.emitter = camera;
+    pSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+    pSystem.light = new BABYLON.PointLight("Omni1", new BABYLON.Vector3(0, 0, 0), scene);
+    pSystem.light.diffuse = new BABYLON.Color3(.8, 0, 0);
+    pSystem.light.range = 15;
+
+    pSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
+    pSystem.maxEmitBox = new BABYLON.Vector3(0, .2, 0);
+    pSystem.color1 = new BABYLON.Color4(0.5, 0.05, 1.0, .9);
+    pSystem.color2 = new BABYLON.Color4(0.0, 0.05, 0.85, .9);
+    pSystem.colorDead = new BABYLON.Color4(.5, .02, 0, .5);
+    pSystem.minSize = 1.75;
+    pSystem.maxSize = 2.0;
+    pSystem.minLifeTime = 0.075;
+    pSystem.maxLifeTime = 0.1;
+    pSystem.emitRate = 400;
+    pSystem.gravity = new BABYLON.Vector3(0, 0, 0);
+    pSystem.direction1 = new BABYLON.Vector3(0, .05, 0);
+    pSystem.direction2 = new BABYLON.Vector3(0, -.05, 0);
+    pSystem.minAngularSpeed = 1.5;
+    pSystem.maxAngularSpeed = 2.5;
+    pSystem.minEmitPower = 0.4;
+    pSystem.maxEmitPower = 0.75;
+    pSystem.updateSpeed = 0.008;
+
+};
