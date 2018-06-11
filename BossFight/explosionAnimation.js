@@ -1,6 +1,6 @@
 var tailBool = true;
 
-var explosionAnimation = function(scene, pSystem, mesh, texture_path, r, g, b, minSize, maxSize, grounds, metheoriteBool) {
+var explosionAnimation = function(scene, pSystem, mesh, texture_path, r, g, b, minSize, maxSize, grounds, meteoriteBool) {
     pSystem.stop();
 
     var posAbs = mesh.getAbsolutePosition();
@@ -8,7 +8,7 @@ var explosionAnimation = function(scene, pSystem, mesh, texture_path, r, g, b, m
 
     var restObject = BABYLON.Mesh.CreateSphere('restObject', 12, 3, scene);
 
-    if (metheoriteBool) {
+    if (meteoriteBool) {
         restObject.scaling.x = mesh.scaling.x;
         restObject.scaling.y = mesh.scaling.y;
         restObject.scaling.z = mesh.scaling.z;
@@ -67,7 +67,7 @@ var explosionAnimation = function(scene, pSystem, mesh, texture_path, r, g, b, m
         pSystem2.stop();
         setTimeout(function () {
             restObject.dispose();
-            if (metheoriteBool) createMetheorite(grounds, scene);
+            if (meteoriteBool) createMeteorite(grounds, scene);
         }, 4000);
     }, 3000);
 

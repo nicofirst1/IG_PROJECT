@@ -1,7 +1,7 @@
 var metheoriteID = 0;
 var seed = 1;
 
-var createMetheorite = function (grounds, scene) {
+var createMeteorite = function (grounds, scene) {
 
     var b = BABYLON.Mesh.CreateSphere("metheorite", 12, 3, scene);
     b.subID = metheoriteID;
