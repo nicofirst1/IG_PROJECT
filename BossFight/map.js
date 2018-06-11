@@ -71,7 +71,7 @@ var mapInit = function (scene, light, shadow, camera) {
         b.scaling.x = rnd;
         b.scaling.y = rnd;
         b.scaling.z = rnd;
-        b.physicsImpostor = new BABYLON.PhysicsImpostor(b, BABYLON.PhysicsImpostor.SphereImpostor, { mass: rnd, friction: 100000, restitution: 1.0 });
+        b.physicsImpostor = new BABYLON.PhysicsImpostor(b, BABYLON.PhysicsImpostor.SphereImpostor, { mass: rnd, friction: 0, restitution: 0 });
 
         var minPos = -500;
         var maxPos = 0;
