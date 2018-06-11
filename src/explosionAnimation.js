@@ -83,9 +83,9 @@ var explosionAnimation = function(scene, pSystem, mesh, texture_path, r, g, b, m
         setTimeout(function () {
             restObject.dispose();
             if (meteoriteBool) {
-                if (score_value % 10 && max_dim < 25) {
-                    min_dim += 1;
-                    max_dim += 1;
+                if (score_value % 10 && max_dim < 15) {
+                    min_dim += 0.5;
+                    max_dim += 0.5;
                 }
                 createMeteorite(grounds, scene);
             }
