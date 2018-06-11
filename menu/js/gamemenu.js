@@ -84,48 +84,6 @@ $(document).ready(function(e){
 				}
 			},
 
-			continue:{
-				id:"continue",
-				title:"Continue",
-                enabled:started,
-
-                callback:function () {
-					if (started){
-						hideMenu();
-					}
-					else{
-						started=true;
-						start();
-					}
-                },
-			},
-
-			options:{
-				id:"opt-options",
-				title: "Options",
-				subMenu:{
-					options:{
-						opt0: {
-							title: "Sound",
-							callback:function(){
-								showLoading();
-							}
-						},
-						opt1: {
-							title: "SFX",
-							callback:function(){
-								showLoading();
-							}
-						},
-						opt2: {
-							title: "Language",
-							callback:function(){
-								showLoading();
-							}
-						}
-					}
-				}
-			},
 			credits:{
 				id:"opt-credits",
 				title: "Credits",
