@@ -67,7 +67,6 @@ var start=function () {
     };
     window.addEventListener('click', setFullScreen);
 
-    //initShield(scene,camera);
 
 
     //----ENGINE
@@ -90,6 +89,7 @@ var start=function () {
 
     initCharacter(scene, camera, shadowGenerator, grounds);
 
+    //initShield(scene,camera);
 
     engine.runRenderLoop(function () {
         scene.render();
