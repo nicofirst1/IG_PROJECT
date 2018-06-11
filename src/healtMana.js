@@ -120,26 +120,31 @@ var inflictDamage = function (collidedMesh) {
     previousCollision.subId = collidedMesh.subId;
 
 
+};
+
+var displayGameOver=function () {
+    gameOverFlag = true;
+
+
+    gameOverText.text = "Game Over\n\nYour Score is : " + score_value + "\n\nReload page to restart game";
+
+    advancedTexture.addControl(gameOverBar);
+    advancedTexture.addControl(gameOverText);
+
+    setInterval(function () {
+
+        gameOverBar.alpha += 0.01;
+    }, 50);
+
+
 }
 
 var update_healt = function (value) {
     healt_value += value;
 
     if (healt_value <= 0) {
-        gameOverFlag = true;
 
-
-        gameOverText.text = "Game Over\n\nYour Score is : " + score_value + "\n\nReload page to restart game";
-
-        advancedTexture.addControl(gameOverBar);
-        advancedTexture.addControl(gameOverText);
-
-        setInterval(function () {
-
-            gameOverBar.alpha += 0.01;
-        }, 50);
-
-
+        displayGameOver();
     }
 
     healt_bar.width = 5 * healt_value + "px";
