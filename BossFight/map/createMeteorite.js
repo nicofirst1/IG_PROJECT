@@ -1,5 +1,7 @@
 var metheoriteID = 0;
 var seed = 1;
+var max_dim = 5;
+var min_dim = 3;
 
 var createMeteorite = function (grounds, scene) {
 
@@ -8,8 +10,8 @@ var createMeteorite = function (grounds, scene) {
     metheoriteID += 1;
     if (metheoriteID > 1000) metheoriteID = 0;
 
-    var max = 15;
-    var min = 3;
+    var max = max_dim;
+    var min = min_dim;
     var rnd = Math.random(seed++) * (max - min) + min;
     b.scaling.x = rnd;
     b.scaling.y = rnd;
@@ -24,7 +26,7 @@ var createMeteorite = function (grounds, scene) {
     b.position.z = Math.random(seed++) * (maxPos - minPos) + minPos;
 
     var impulseDir = new BABYLON.Vector3(0, 0, 0);
-    impulseDir.y = 1000;
+    impulseDir.y = -100;
     b.physicsImpostor.applyImpulse(impulseDir, b.getAbsolutePosition());
 
     var fireballMaterial = new BABYLON.StandardMaterial("material", scene);
