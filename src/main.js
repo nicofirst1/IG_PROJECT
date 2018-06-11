@@ -67,6 +67,7 @@ var start=function () {
     };
     window.addEventListener('click', setFullScreen);
 
+    //initShield(scene,camera);
 
 
     //----ENGINE
