@@ -84,8 +84,14 @@ var explosionAnimation = function(scene, pSystem, mesh, texture_path, r, g, b, m
                 if (score_value % 10 && max_dim < 15) {
                     min_dim += 0.5;
                     max_dim += 0.5;
+                    meteoriteProb+=0.05/(score_value%10);
+
                 }
                 createMeteorite(grounds, scene);
+                if(Math.random()>=meteoriteProb){
+                    createMeteorite(grounds, scene);
+
+                };
             }
         }, 4000);
     }, 3000);
