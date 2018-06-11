@@ -6,6 +6,7 @@ var min_dim = 3;
 var createMeteorite = function (grounds, scene) {
 
     var b = BABYLON.Mesh.CreateSphere("metheorite", 12, 3, scene);
+    water.addToRenderList(b);
     b.subID = metheoriteID;
     metheoriteID += 1;
     if (metheoriteID > 1000) metheoriteID = 0;
