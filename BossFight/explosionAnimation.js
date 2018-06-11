@@ -1,25 +1,28 @@
-var tailBool = false;
+var tailBool = true;
 
 var explosionAnimation = function(scene, pSystem, mesh, texture_path, r, g, b, minSize, maxSize, grounds, metheoriteBool) {
+    pSystem.stop();
+
     var posAbs = mesh.getAbsolutePosition();
     var pos = new BABYLON.Vector3(posAbs.x, posAbs.y, posAbs.z);
-
-    pSystem.stop();
-    if (tailBool) {
-        mesh.visibility = false;
-    } else {
-        mesh.dispose();
-    }
 
     var restObject = BABYLON.Mesh.CreateSphere('restObject', 3, 3, scene);
     restObject.checkCollisions = true;
     restObject.physicsImpostor = new BABYLON.PhysicsImpostor(restObject, BABYLON.PhysicsImpostor.SphereImpostor, {
-        mass: 1,
+        mass: 0,
         friction: 1000,
-        restitution: 0
+        restitution: 100
     });
     restObject.position = pos;
     restObject.visibility = false;
+
+    if (tailBool) {
+        pSystem.emitter = restObject;
+    }
+
+    mesh.dispose();
+
+    console.log('MESH DISPOSED');
 
     var pSystem2 = new BABYLON.ParticleSystem("particles", 2000, scene);
     pSystem2.emitter = restObject;
@@ -58,13 +61,9 @@ var explosionAnimation = function(scene, pSystem, mesh, texture_path, r, g, b, m
     setTimeout(function () {
         pSystem2.stop();
         setTimeout(function () {
-            if (tailBool) {
-                mesh.dispose();
-            }
-            if (metheoriteBool) createMetheorite(grounds, scene);
             restObject.dispose();
+            if (metheoriteBool) createMetheorite(grounds, scene);
         }, 4000);
     }, 3000);
-
 
 };

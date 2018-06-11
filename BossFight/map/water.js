@@ -14,7 +14,6 @@ var initWater = function(scene, skybox, grounds) {
     water.windForce = 10;
     water.waveHeight = 0.5;
     water.windDirection = new BABYLON.Vector2(1, 1);
-    water.waterColor = new BABYLON.Color3.FromHexString(water_color);
     water.colorBlendFactor = 0.3;
     water.bumpHeight = water_hight;
     water.waveLength = 0.1;

@@ -1,6 +1,0 @@
-[submodule "handjs"]
-	path = handjs
-	url = https://github.com/deltakosh/handjs.git
-[submodule "Babylon.js"]
-	path = Babylon.js
-	url = https://github.com/BabylonJS/Babylon.js.git

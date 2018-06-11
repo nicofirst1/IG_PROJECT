@@ -284,7 +284,7 @@ var fireballRot = true;
 
 
 var createFireball = function (scene, camera) {
-    fireball = BABYLON.Mesh.CreateSphere('fireball', 3, 0.1, scene);
+    fireball = BABYLON.Mesh.CreateSphere('fireball', 16, 0.1, scene);
 
     var fireballMaterial = new BABYLON.StandardMaterial("material", scene);
     fireballMaterial.diffuseTexture = new BABYLON.Texture("Resources/fire/fire.jpg", scene);
@@ -351,7 +351,7 @@ var fireFireball = function (scene, camera, ground) {
     fireball = null;
     pSystem = null;
 
-    var bulletFireball = BABYLON.Mesh.CreateSphere('bulletFireball', 3, 0.1, scene);
+    var bulletFireball = BABYLON.Mesh.CreateSphere('bulletFireball', 16, 0.1, scene);
     bulletFireball.subID = fireballID;
     fireballID -= 1;
 
@@ -420,155 +420,16 @@ var fireFireball = function (scene, camera, ground) {
 
     var groundBox = ground[1];
     bulletFireball.physicsImpostor.registerOnPhysicsCollide(groundBox.physicsImpostor, function() {
-        pSystem2.stop();
-
-        var posAbs = bulletFireball.getAbsolutePosition();
-        var pos = new BABYLON.Vector3(posAbs.x, posAbs.y, posAbs.z);
-        bulletFireball.dispose();
-
-        var bulletFireballRest = BABYLON.Mesh.CreateSphere('bulletFireballRestWater', 3, 1.6, scene);
-        bulletFireballRest.checkCollisions = true;
-        bulletFireballRest.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireballRest, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, friction: 1000, restitution: 0 });
-        bulletFireballRest.position = pos;
-        bulletFireballRest.visibility = false;
-
-        var pSystem3 = new BABYLON.ParticleSystem("particles", 2000, scene);
-        pSystem3.emitter = bulletFireballRest;
-        pSystem3.particleTexture = new BABYLON.Texture("Resources/map/flares/flare.png", scene);
-        pSystem3.minEmitBox = new BABYLON.Vector3(-1, 1, -1); // Starting all from
-        pSystem3.maxEmitBox = new BABYLON.Vector3(1, 1, 1); // To...
-
-        pSystem3.color1 = new BABYLON.Color4(0.1, 0.1, 0.1, 1.0);
-        pSystem3.color2 = new BABYLON.Color4(0.1, 0.1, 0.1, 1.0);
-        pSystem3.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
-
-        pSystem3.minSize = 0.5;
-        pSystem3.maxSize = 2;
-
-        pSystem3.minLifeTime = 0.3;
-        pSystem3.maxLifeTime = 1.5;
-
-        pSystem3.emitRate = 500;
-
-        pSystem3.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-
-        pSystem3.gravity = new BABYLON.Vector3(0, 0, 0);
-
-        pSystem3.direction1 = new BABYLON.Vector3(0, 8, 0);
-        pSystem3.direction2 = new BABYLON.Vector3(0, 8, 0);
-
-        pSystem3.minAngularSpeed = 0;
-        pSystem3.maxAngularSpeed = Math.PI;
-
-        pSystem3.minEmitPower = 1;
-        pSystem3.maxEmitPower = 2;
-        pSystem3.updateSpeed = 0.005;
-
-        pSystem3.start();
-
-        setTimeout(function () {
-            pSystem3.stop();
-            setTimeout(function () {
-                bulletFireballRest.dispose();
-            }, 4000);
-        }, 3000);
+        explosionAnimation(scene, pSystem2, bulletFireball, "Resources/map/flares/flare.png", 0.1, 0.1, 0.1, 0.5, 2, ground, false);
     });
 
     var ground0 = ground[0];
     bulletFireball.physicsImpostor.registerOnPhysicsCollide(ground0.physicsImpostor, function() {
         bulletFireball.collisionsCount += 1;
         if (bulletFireball.collisionsCount == 3) {
-            pSystem2.stop();
-
-            var posAbs = bulletFireball.getAbsolutePosition();
-            var pos = new BABYLON.Vector3(posAbs.x, posAbs.y, posAbs.z);
-            bulletFireball.dispose();
-
-            var bulletFireballRest = BABYLON.Mesh.CreateSphere('bulletFireballRest', 3, 1.6, scene);
-            bulletFireballRest.checkCollisions = true;
-            bulletFireballRest.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireballRest, BABYLON.PhysicsImpostor.SphereImpostor, {
-                mass: 1,
-                friction: 1000,
-                restitution: 0
-            });
-            bulletFireballRest.position = pos;
-            bulletFireballRest.visibility = false;
-
-            var pSystem3 = new BABYLON.ParticleSystem("particles", 2000, scene);
-            pSystem3.emitter = bulletFireballRest;
-            pSystem3.particleTexture = new BABYLON.Texture("Resources/map/flares/flare.png", scene);
-            pSystem3.minEmitBox = new BABYLON.Vector3(-1, 1, -1); // Starting all from
-            pSystem3.maxEmitBox = new BABYLON.Vector3(1, 1, 1); // To...
-
-            pSystem3.color1 = new BABYLON.Color4(1.000, 0.271, 0.000, 1.0);
-            pSystem3.color2 = new BABYLON.Color4(0.1, 0.1, 0.1, 1.0);
-            pSystem3.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
-
-            pSystem3.minSize = 0.5;
-            pSystem3.maxSize = 2;
-
-            pSystem3.minLifeTime = 0.3;
-            pSystem3.maxLifeTime = 1.5;
-
-            pSystem3.emitRate = 500;
-
-            pSystem3.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-
-            pSystem3.gravity = new BABYLON.Vector3(0, 0, 0);
-
-            pSystem3.direction1 = new BABYLON.Vector3(0, 8, 0);
-            pSystem3.direction2 = new BABYLON.Vector3(0, 8, 0);
-
-            pSystem3.minAngularSpeed = 0;
-            pSystem3.maxAngularSpeed = Math.PI;
-
-            pSystem3.minEmitPower = 1;
-            pSystem3.maxEmitPower = 2;
-            pSystem3.updateSpeed = 0.005;
-
-            pSystem3.start();
-
-            setTimeout(function () {
-                pSystem3.stop();
-                setTimeout(function () {
-                    bulletFireballRest.dispose();
-                }, 4000);
-            }, 3000);
+            explosionAnimation(scene, pSystem2, bulletFireball, "Resources/map/flares/flare.png", 1.000, 0.271, 0.000, 0.5, 2, ground, false);
         }
     });
 };
 
-var explosion = function(particles) {
-    for (var index = 0; index < particles.length; index++) {
-        var particle = particles[index];
-        particle.age += this._scaledUpdateSpeed;
 
-        // change direction to return to emitter
-        if (particle.age >= particle.lifeTime / 2) {
-            var oldLength = particle.direction.length();
-            var newDirection = this.emitter.position.subtract(particle.position);
-            particle.direction = newDirection.scale(3);
-        }
-
-        if (particle.age >= particle.lifeTime) { // Recycle
-            particles.splice(index, 1);
-            this._stockParticles.push(particle);
-            index--;
-            continue;
-        } else {
-            particle.colorStep.scaleToRef(this._scaledUpdateSpeed, this._scaledColorStep);
-            particle.color.addInPlace(this._scaledColorStep);
-
-            if (particle.color.a < 0)
-                particle.color.a = 0;
-
-            particle.angle += particle.angularSpeed * this._scaledUpdateSpeed;
-
-            particle.direction.scaleToRef(this._scaledUpdateSpeed, this._scaledDirection);
-            particle.position.addInPlace(this._scaledDirection);
-
-            this.gravity.scaleToRef(this._scaledUpdateSpeed, this._scaledGravity);
-            particle.direction.addInPlace(this._scaledGravity);
-        }
-    }
-};
