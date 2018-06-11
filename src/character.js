@@ -103,7 +103,13 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
         }
         manaConsumptionFlag=true;
         manaInterval= setInterval(function () {
-            update_mana(-1)
+            if (mana_value == 0) {
+                var evt = document.createEvent("MouseEvents");
+                evt.initEvent("mouseup", true, true);
+                document.body.dispatchEvent(evt);
+            } else {
+                update_mana(-1);
+            }
         }, manaConsumptionInterval);
     };
 
@@ -114,8 +120,6 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
         armsMovementRelease(scene, lowerArmLeft, true, false, camera, ground);
         clearInterval(manaInterval);
         manaConsumptionFlag=false;
-
-
     };
 };
 
