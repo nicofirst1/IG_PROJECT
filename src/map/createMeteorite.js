@@ -20,8 +20,8 @@ var createMeteorite = function (grounds, scene) {
     b.physicsImpostor = new BABYLON.PhysicsImpostor(b, BABYLON.PhysicsImpostor.SphereImpostor, { mass: rnd / 3 , friction: 1000, restitution: 0 });
     b.checkCollisions = true;
 
-    var minPos = -250;
-    var maxPos = 250;
+    var minPos = -groundSize/2;
+    var maxPos = groundSize/2;
     b.position.y = 1000;
     b.position.x =  Math.random(seed++) * (maxPos - minPos) + minPos;
     b.position.z = Math.random(seed++) * (maxPos - minPos) + minPos;

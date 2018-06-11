@@ -1,6 +1,6 @@
-var initGround = function(scene, ground_x, ground_y) {
+var initGround = function(scene, groundSize) {
 
-    var groundBox = BABYLON.MeshBuilder.CreateBox("groundBox", {height: 4, width: ground_x, depth: ground_y}, scene);
+    var groundBox = BABYLON.MeshBuilder.CreateBox("groundBox", {height: 4, width: groundSize, depth: groundSize}, scene);
     groundBox.checkCollisions = true;
     groundBox.physicsImpostor = new BABYLON.PhysicsImpostor(groundBox, BABYLON.PhysicsImpostor.BoxImpostor, {
         mass: 0,
@@ -8,7 +8,7 @@ var initGround = function(scene, ground_x, ground_y) {
         friction: 10,
     }, scene);
 
-    var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/poly_HM/Heightmap.png", ground_x, ground_x, 50, 0, 25, scene, false, function () {
+    var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/poly_HM/Heightmap.png", groundSize, groundSize, 50, 0, 25, scene, false, function () {
         ground.convertToFlatShadedMesh();
 
         ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0, friction: 10000, restitution: 0.1 }, scene);

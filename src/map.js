@@ -1,5 +1,4 @@
-var ground_x = 500;
-var ground_y = 500;
+var groundSize = 500;
 var ground_max_z = 70;// the maximum for the ground height map
 var ground_min_z = 0; // the minimum for the ground height map
 var sky_size = 10000.0; //the size of the skybox
@@ -24,7 +23,7 @@ var mapInit = function (scene, light, shadow, camera) {
         snow(scene, skybox);
     }
 
-    var grounds = initGround(scene, ground_x, ground_y);
+    var grounds = initGround(scene, groundSize);
 
     initWater(scene, skybox, grounds);
 
