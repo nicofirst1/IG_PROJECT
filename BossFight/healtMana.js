@@ -1,66 +1,79 @@
-var healt_value=100;
+var advancedTexture;
+
+var healt_value = 1;
 var healt_bar;
 var healt_text;
 
 
-var mana_value=100;
+var mana_value = 100;
 var mana_bar;
 var mana_text;
 
 
-
-var ignoreCollision=["ground","arm","groundBox"]; //meshes to ignore for collisions
-var damages={
-    bulletFireballRest:1,
-    metheorite:30,
+var ignoreCollision = ["ground", "arm", "groundBox"]; //meshes to ignore for collisions
+var damages = {
+    bulletFireballRest: 1,
+    metheorite: 30,
 };
-var previousCollision={
-    id:"",
-    subId:""
+var previousCollision = {
+    id: "",
+    subId: ""
 };
 
-var healtRegenTimeout=2000;
-var manaRegenTimeout=2000;
+var healtRegenTimeout = 2000;
+var manaRegenTimeout = 2000;
 
 
-var score_value=0;
+var score_value = 0;
+var gameOverBar;
+var gameOverText;
+var gameOverFlag = false;
+
+var initHealtMana = function (scene, camera) {
 
 
-var initHealtMana=function (scene, camera) {
-
-
-
-    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("gameUI",true,scene);
+    advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("gameUI", true, scene);
 
     //init healt and mana bars
-    healtBar(scene,advancedTexture);
-    manaBar(scene,advancedTexture);
-    scoreBar(scene,advancedTexture);
+    healtBar(scene, advancedTexture);
+    manaBar(scene, advancedTexture);
+    scoreBar(scene, advancedTexture);
+    gameOver(scene, advancedTexture);
 
 
     //add mdamage function on camera
     camera.onCollide = inflictDamage;
 
     //restore healt with timer
-    setInterval(function() {
-        if (healt_value<100){
+    setInterval(function () {
+        if (gameOverFlag) {
+            return
+        }
+        if (healt_value < 100) {
             update_healt(1)
         }
     }, healtRegenTimeout);
 
     //restore mana with timer
-    setInterval(function() {
-        if (mana_value<100){
+    setInterval(function () {
+        if (gameOverFlag) {
+            return
+        }
+        if (mana_value < 100) {
             update_mana(1)
         }
     }, manaRegenTimeout);
 };
 
 
-var inflictDamage=function (collidedMesh) {
+var inflictDamage = function (collidedMesh) {
     //ignore collision with sepcific meshes
-    for (var idx in ignoreCollision){
-        if (collidedMesh.id===ignoreCollision[idx]){
+
+    if (healt_value == 0) {
+        return;
+    }
+    for (var idx in ignoreCollision) {
+        if (collidedMesh.id === ignoreCollision[idx]) {
             return;
         }
     }
@@ -68,18 +81,18 @@ var inflictDamage=function (collidedMesh) {
     console.log(collidedMesh);
 
 
-    if(collidedMesh.id==="bulletFireballRest"){
+    if (collidedMesh.id === "restObject") {
         update_healt(-damages.bulletFireballRest)
     }
 
     //ignore collision from same objects
-    if(previousCollision.id===collidedMesh.id) {
-        if (previousCollision.subId==collidedMesh.subId){
+    if (previousCollision.id === collidedMesh.id) {
+        if (previousCollision.subId === collidedMesh.subId) {
             return;
         }
     }
 
-    if (collidedMesh.id==="metheorite"){
+    if (collidedMesh.id === "metheorite") {
 
         update_healt(-damages.metheorite);
 
@@ -88,27 +101,45 @@ var inflictDamage=function (collidedMesh) {
 
 
     //update previous collision
-    previousCollision.id=collidedMesh.id;
-    previousCollision.subId=collidedMesh.subId;
+    previousCollision.id = collidedMesh.id;
+    previousCollision.subId = collidedMesh.subId;
 
 
 }
 
-var update_healt=function (value) {
-    healt_value+=value;
-    healt_bar.width=5*healt_value+"px";
-    healt_text.text=healt_value+"/100";
+var update_healt = function (value) {
+    healt_value += value;
+
+    if (healt_value <= 0) {
+        gameOverFlag = true;
+        advancedTexture.addControl(gameOverBar);
+        advancedTexture.addControl(gameOverText);
+        //restore mana with timer
+        setInterval(function () {
+
+
+            gameOverBar.alpha += 0.01;
+            advancedTexture.addControl(gameOverText);
+
+
+        }, 50);
+
+
+    }
+
+    healt_bar.width = 5 * healt_value + "px";
+    healt_text.text = healt_value + "/100";
 
 };
 
-var update_mana=function (value) {
-    mana_value+=value;
-    mana_bar.width=5*mana_value+"px";
-    mana_text.text=mana_value+"/100";
+var update_mana = function (value) {
+    mana_value += value;
+    mana_bar.width = 5 * mana_value + "px";
+    mana_text.text = mana_value + "/100";
 
 };
 
-var healtBar= function (scene,advancedTexture) {
+var healtBar = function (scene, advancedTexture) {
 
 
     healt_bar = new BABYLON.GUI.Rectangle();
@@ -118,7 +149,7 @@ var healtBar= function (scene,advancedTexture) {
     healt_bar.color = "Orange";
     healt_bar.thickness = 4;
     healt_bar.background = "red";
-    healt_bar.top="10px";
+    healt_bar.top = "10px";
 
     healt_bar.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     healt_bar.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
@@ -130,20 +161,20 @@ var healtBar= function (scene,advancedTexture) {
     healt_bk.color = "gray";
     healt_bk.thickness = 4;
     healt_bk.background = "gray";
-    healt_bk.top="10px";
+    healt_bk.top = "10px";
 
     healt_bk.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     healt_bk.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
 
-    healt_text=new BABYLON.GUI.TextBlock();
-    healt_text.text="100/100";
-    healt_text.color="white";
-    healt_text.fontSize=24;
-    healt_text.top="15px";
+    healt_text = new BABYLON.GUI.TextBlock();
+    healt_text.text = "100/100";
+    healt_text.color = "white";
+    healt_text.fontSize = 24;
+    healt_text.top = "15px";
 
     healt_text.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     healt_text.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
-    healt_text.paddingLeft="200px";
+    healt_text.paddingLeft = "200px";
 
     advancedTexture.addControl(healt_bk);
     advancedTexture.addControl(healt_bar);
@@ -153,7 +184,7 @@ var healtBar= function (scene,advancedTexture) {
 };
 
 
-var manaBar= function (scene, advancedTexture) {
+var manaBar = function (scene, advancedTexture) {
 
 
     mana_bar = new BABYLON.GUI.Rectangle();
@@ -163,7 +194,7 @@ var manaBar= function (scene, advancedTexture) {
     mana_bar.color = "#429cff";
     mana_bar.thickness = 4;
     mana_bar.background = "#1f36ff";
-    mana_bar.top="55px";
+    mana_bar.top = "55px";
     mana_bar.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     mana_bar.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
 
@@ -174,18 +205,18 @@ var manaBar= function (scene, advancedTexture) {
     mana_bk.color = "#5e5e5e";
     mana_bk.thickness = 4;
     mana_bk.background = "#5e5e5e";
-    mana_bk.top="55px";
+    mana_bk.top = "55px";
     mana_bk.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     mana_bk.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
 
-    mana_text=new BABYLON.GUI.TextBlock();
-    mana_text.text="100/100";
-    mana_text.color="white";
-    mana_text.fontSize=24;
+    mana_text = new BABYLON.GUI.TextBlock();
+    mana_text.text = "100/100";
+    mana_text.color = "white";
+    mana_text.fontSize = 24;
     mana_text.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     mana_text.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
-    mana_text.paddingLeft="200px";
-    mana_text.paddingTop="60";
+    mana_text.paddingLeft = "200px";
+    mana_text.paddingTop = "60";
 
     advancedTexture.addControl(mana_bk);
     advancedTexture.addControl(mana_bar);
@@ -195,9 +226,7 @@ var manaBar= function (scene, advancedTexture) {
 };
 
 
-var scoreBar= function (scene, advancedTexture) {
-
-
+var scoreBar = function (scene, advancedTexture) {
 
 
     var score_bk = new BABYLON.GUI.Rectangle();
@@ -207,29 +236,56 @@ var scoreBar= function (scene, advancedTexture) {
     score_bk.color = "#5e5e5e";
     score_bk.thickness = 4;
     score_bk.background = "#5e5e5e";
-    score_bk.top="10px";
+    score_bk.top = "10px";
     score_bk.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
     score_bk.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
 
-    var score_text=new BABYLON.GUI.TextBlock();
-    score_text.text="Score: "+score_value;
-    score_text.color="white";
-    score_text.fontSize=24;
+    var score_text = new BABYLON.GUI.TextBlock();
+    score_text.text = "Score: " + score_value;
+    score_text.color = "white";
+    score_text.fontSize = 24;
     score_text.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
     score_text.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
-    score_text.paddingRight="100px";
-    score_text.paddingTop="15";
+    score_text.paddingRight = "10px";
+    score_text.paddingTop = "15";
 
     advancedTexture.addControl(score_bk);
     advancedTexture.addControl(score_text);
 
 
     //restore mana with timer
-    setInterval(function() {
-        score_value+=1;
-            score_text.text="Score: "+score_value;
+    setInterval(function () {
+            if (gameOverFlag) {
+                return
+            }
+            score_value += 1;
+            score_text.text = "Score: " + score_value;
         }
-    , 1000);
+        , 1000);
 
 
 };
+
+var gameOver = function (scene, advancedTexture) {
+
+
+    var canvas = document.getElementById("renderCanvas");
+
+    gameOverBar = new BABYLON.GUI.Rectangle("gameOver");
+    gameOverBar.background = "black";
+    gameOverBar.height = canvas.height;
+    gameOverBar.alpha = 0.0;
+    gameOverBar.width = canvas.width;
+    gameOverBar.cornerRadius = 20;
+    gameOverBar.thickness = 1;
+    gameOverBar.linkOffsetY = 30;
+    gameOverBar.zIndex = 5;
+
+    gameOverText = new BABYLON.GUI.TextBlock();
+    gameOverText.text = "Game Over";
+    gameOverText.color = "white";
+    gameOverText.fontSize = 124;
+
+
+};
+
