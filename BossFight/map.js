@@ -6,7 +6,6 @@ var sky_size = 10000.0; //the size of the skybox
 var texture_scale = 8;//bigger values apply more texture on ground (becomes smaller)
 var subdivisions = 124; // allows you to increase the complexity of your mesh in order to improve the visual quality of it
 var ambient_fog = false;
-var water_color = "#0f38da";
 var snow_flag=false;
 
 
@@ -27,7 +26,7 @@ var mapInit = function (scene, light, shadow, camera) {
 
     var grounds = initGround(scene, ground_x, ground_y);
 
-    initWater(scene, water_color, skybox, grounds);
+    initWater(scene, skybox, grounds);
 
     return grounds;
 };
