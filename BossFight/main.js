@@ -53,7 +53,7 @@ var start=function () {
     // Attach the camera to the canvas
     camera.attachControl(canvas, true);
 
-    initHealtMana(scene);
+    initHealtMana(scene,camera );
 
     var array= initLight(scene);
     var light=array[0];

@@ -1,4 +1,16 @@
-var initHealtMana=function (scene) {
+var healt_value=100;
+var healt_bar;
+var healt_text;
+
+
+var mana_value=100;
+var mana_bar;
+var mana_text;
+
+
+var ignoreCollision=["ground","arm","groundBox"]; //meshes to ignore for collisions
+
+var initHealtMana=function (scene, camera) {
 
 
 
@@ -6,12 +18,38 @@ var initHealtMana=function (scene) {
 
     healtBar(scene,advancedTexture);
     manaBar(scene,advancedTexture);
-}
+
+    camera.onCollide = function(collidedMesh) {
+
+        //ignore collision with sepcific meshes
+        for (var idx in ignoreCollision){
+            if (collidedMesh.id===ignoreCollision[idx]){
+                return;
+            }
+        }
+
+        console.log(collidedMesh.id)
+
+    }
+};
+
+
+
+
+var update_healt=function (new_value) {
+    healt_value=new_value;
+
+};
+
+var update_mana=function (new_value) {
+    mana_value=new_value;
+
+};
 
 var healtBar= function (scene,advancedTexture) {
 
 
-    var healt_bar = new BABYLON.GUI.Rectangle();
+    healt_bar = new BABYLON.GUI.Rectangle();
     healt_bar.width = "500px";
     healt_bar.height = "40px";
     healt_bar.cornerRadius = 0;
@@ -35,7 +73,7 @@ var healtBar= function (scene,advancedTexture) {
     healt_bk.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     healt_bk.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
 
-    var healt_text=new BABYLON.GUI.TextBlock();
+    healt_text=new BABYLON.GUI.TextBlock();
     healt_text.text="100/100";
     healt_text.color="white";
     healt_text.fontSize=24;
@@ -56,7 +94,7 @@ var healtBar= function (scene,advancedTexture) {
 var manaBar= function (scene, advancedTexture) {
 
 
-    var mana_bar = new BABYLON.GUI.Rectangle();
+    mana_bar = new BABYLON.GUI.Rectangle();
     mana_bar.width = "500px";
     mana_bar.height = "40px";
     mana_bar.cornerRadius = 0;
@@ -78,7 +116,7 @@ var manaBar= function (scene, advancedTexture) {
     mana_bk.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     mana_bk.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
 
-    var mana_text=new BABYLON.GUI.TextBlock();
+    mana_text=new BABYLON.GUI.TextBlock();
     mana_text.text="100/100";
     mana_text.color="white";
     mana_text.fontSize=24;
