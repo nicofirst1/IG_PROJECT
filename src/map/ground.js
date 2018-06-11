@@ -8,7 +8,7 @@ var initGround = function(scene, groundSize) {
         friction: 10,
     }, scene);
 
-    var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/poly_HM/Heightmap.png", groundSize, groundSize, 50, 0, 25, scene, false, function () {
+    var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/poly_HM/Heightmap.png", groundSize, groundSize, subdivisions, 0, ground_max_z, scene, false, function () {
         ground.convertToFlatShadedMesh();
 
         ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0, friction: 10000, restitution: 0.1 }, scene);
