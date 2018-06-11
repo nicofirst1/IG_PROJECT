@@ -78,7 +78,7 @@ var start=function () {
     scene.addCamera(camera);
     //scene.registerBeforeRender(beforeRenderFunction);
 
-    var ground = mapInit(scene, light,shadowGenerator, camera);
+    var grounds = mapInit(scene, light,shadowGenerator, camera);
 
 
     scene.gravity = new BABYLON.Vector3(0, -0.5, 0);
@@ -87,7 +87,9 @@ var start=function () {
 
     window.addEventListener("resize", function () { engine.resize();});
 
-    initCharacter(scene, camera, shadowGenerator, ground);
+    initCharacter(scene, camera, shadowGenerator, grounds);
+
+
 
     engine.runRenderLoop(function () {
         scene.render();

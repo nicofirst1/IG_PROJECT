@@ -2,13 +2,13 @@ var metheoriteID = 0;
 
 var createMetheorite = function (grounds, scene) {
 
-    var b = BABYLON.Mesh.CreateSphere("metheorite", 3, 3, scene);
+    var b = BABYLON.Mesh.CreateSphere("metheorite", 12, 3, scene);
     b.subID = metheoriteID;
     metheoriteID += 1;
     if (metheoriteID > 1000) metheoriteID = 0;
 
-    var max = 15;
-    var min = 1;
+    var max = 6;
+    var min = 3;
     var rnd = Math.random() * (max - min) + min;
     b.scaling.x = rnd;
     b.scaling.y = rnd;
@@ -71,13 +71,16 @@ var createMetheorite = function (grounds, scene) {
 
     var groundBox = grounds[1];
     b.physicsImpostor.registerOnPhysicsCollide(groundBox.physicsImpostor, function() {
-        explosionAnimation(scene, pSystem, b, "Resources/map/flares/flare.png", 0.1, 0.1, 0.1, rnd * 6, rnd * 12, grounds, true);
-
+        if (b.position.y < 200) {
+            explosionAnimation(scene, pSystem, b, "Resources/map/flares/flare.png", 0.1, 0.1, 0.1, rnd * 6, rnd * 12, grounds, true);
+        }
     });
 
     var ground0 = grounds[0];
     b.physicsImpostor.registerOnPhysicsCollide(ground0.physicsImpostor, function() {
-        explosionAnimation(scene, pSystem, b, "Resources/map/flares/flare.png", 1.000, 0.271, 0.000, rnd * 6, rnd * 12, grounds, true);
+        if (b.position.y < 200) {
+            explosionAnimation(scene, pSystem, b, "Resources/map/flares/flare.png", 1.000, 0.271, 0.000, rnd * 6, rnd * 12, grounds, true);
+        }
     });
 
 

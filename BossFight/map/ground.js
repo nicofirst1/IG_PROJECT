@@ -1,5 +1,3 @@
-var metheorite_num = 3;
-
 var initGround = function(scene, ground_x, ground_y) {
 
     var groundBox = BABYLON.MeshBuilder.CreateBox("groundBox", {height: 4, width: ground_x, depth: ground_y}, scene);
@@ -15,21 +13,27 @@ var initGround = function(scene, ground_x, ground_y) {
 
         ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0, friction: 10000, restitution: 0.1 }, scene);
         ground.checkCollisions = true;
+
+        var grounds = [ground, groundBox];
+
+        var metheorite_num = 10;
+
+        for (var ii = 0; ii < metheorite_num; ii++) {
+            createMetheorite(grounds, scene);
+        }
+
+        // If metheorite 20 below the ground it starts again from the sky
+        scene.registerBeforeRender(function () {
+            scene.meshes.forEach(function (m) {
+                if (m.name=="metheorite" && m.position.y < -20) {
+                    m.dispose();
+                    createMetheorite(grounds, scene);
+                }
+            })
+        });
     });
 
-    for (var ii = 0; ii < metheorite_num; ii++) {
-        createMetheorite([ground, groundBox], scene);
-    }
 
-    // If metheorite 20 below the ground it starts again from the sky
-    scene.registerBeforeRender(function () {
-        scene.meshes.forEach(function (m) {
-            if (m.name=="metheorite" && m.position.y < -20) {
-                m.dispose();
-                createMetheorite([ground, groundBox], scene);
-            }
-        })
-    });
 
     return [ground, groundBox];
 };
