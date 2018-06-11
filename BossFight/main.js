@@ -53,6 +53,8 @@ var start=function () {
     // Attach the camera to the canvas
     camera.attachControl(canvas, true);
 
+    initHealtMana(scene);
+
     var array= initLight(scene);
     var light=array[0];
     var shadowGenerator=array[1];

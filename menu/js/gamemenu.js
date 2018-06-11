@@ -67,17 +67,37 @@ $(document).ready(function(e){
 		});
 		mainMenu.fadeIn("slow");
 	};
-	
+
+
+	var started=false;
 	//Configuration vars
 	var config = {
 		timeoutLoadingTime:4000,
 		mainMenu:{
 			startGame:{
 				id:"opt-start-game",
-				title: "Start Game",
+				title: "Start New Game",
 				callback:function(){
+					started=true;
                     start();
+
 				}
+			},
+
+			continue:{
+				id:"continue",
+				title:"Continue",
+                enabled:started,
+
+                callback:function () {
+					if (started){
+						hideMenu();
+					}
+					else{
+						started=true;
+						start();
+					}
+                },
 			},
 
 			options:{
@@ -167,6 +187,23 @@ $(document).ready(function(e){
 	
 	//On load
 	$(window).on("load", function(e){
+
+
+        var canvas = document.getElementById("renderCanvas");
+
+
+
+
+        // add listener for jump
+        canvas.addEventListener("p", Pause, false);
+        function Pause(event) {
+            switch (event.keyCode) {
+                case 80:
+                    canvas.style.display="none";
+                    showMainMenu();
+                    break;
+            }
+        }
 
        // audio.sfx.background.play();
         showMainMenu();
