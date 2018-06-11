@@ -336,7 +336,7 @@ var createFireball = function (scene, camera) {
     });
 };
 
-var camera1;
+var fireballID = -1;
 
 var fireFireball = function (scene, camera, ground) {
 
@@ -352,6 +352,10 @@ var fireFireball = function (scene, camera, ground) {
     pSystem = null;
 
     var bulletFireball = BABYLON.Mesh.CreateSphere('bulletFireball', 3, 0.1, scene);
+    bulletFireball.subID = fireballID;
+    fireballID -= 1;
+
+    if (fireballID < -1000) fireballID = -1;
 
     bulletFireball.scaling.x = scalingX;
     bulletFireball.scaling.y = scalingY;

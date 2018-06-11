@@ -9,9 +9,9 @@ var ambient_fog = false;
 var water_color = "#0f38da";
 var snow_flag=false;
 
+var metheoriteID = 0;
+
 var mapInit = function (scene, light, shadow, camera) {
-
-
     //###############################
     //          SKYBOX
     //###############################
@@ -65,6 +65,10 @@ var mapInit = function (scene, light, shadow, camera) {
     var createShape = function (grounds) {
 
         var b = BABYLON.Mesh.CreateSphere("metheorite", 3, 3, scene);
+        b.subID = metheoriteID;
+        metheoriteID += 1;
+        if (metheoriteID > 1000) metheoriteID = 0;
+
         var max = 5;
         var min = 0.1;
         var rnd = Math.random() * (max - min) + min;
