@@ -7,6 +7,7 @@ var texture_scale = 8;//bigger values apply more texture on ground (becomes smal
 var subdivisions = 124; // allows you to increase the complexity of your mesh in order to improve the visual quality of it
 var ambient_fog = false;
 var water_color = "#0f38da";
+var snow_flag=false;
 
 var mapInit = function (scene, light, shadow, camera) {
 
@@ -276,6 +277,41 @@ var mapInit = function (scene, light, shadow, camera) {
     //###############################
     //          SNOW
     //###############################
+
+    if (snow_flag) {
+        snow(scene, skybox);
+    }
+    d
+    //###############################
+    //          WATER
+    //###############################
+
+    var waterMesh = BABYLON.Mesh.CreateGround("waterMesh", ground_x, ground_y, 1, scene, false);
+
+    var water = new BABYLON.WaterMaterial("water", scene);
+    water.bumpTexture = new BABYLON.Texture("Resources/map/ground_texture/water2.png", scene);
+
+    // Water properties
+    water.windForce = 10;
+    water.waveHeight = 0.5;
+    water.windDirection = new BABYLON.Vector2(1, 1);
+    water.waterColor = new BABYLON.Color3.FromHexString(water_color);
+    water.colorBlendFactor = 0.3;
+    water.bumpHeight = 0.001;
+    water.waveLength = 0.01;
+
+    // Add skybox and ground to the reflection and refraction
+    water.addToRenderList(skybox);
+    water.addToRenderList(ground);
+
+    // Assign the water material
+    waterMesh.material = water;
+
+    return [ground, groundBox];
+};
+
+
+var snow=function (scene, skybox) {
     // Create a particle system
     var particleSystem = new BABYLON.ParticleSystem("particles", 50000, scene);
 
@@ -326,30 +362,4 @@ var mapInit = function (scene, light, shadow, camera) {
     particleSystem.start();
 
 
-    //###############################
-    //          WATER
-    //###############################
-
-    var waterMesh = BABYLON.Mesh.CreateGround("waterMesh", ground_x, ground_y, 1, scene, false);
-
-    var water = new BABYLON.WaterMaterial("water", scene);
-    water.bumpTexture = new BABYLON.Texture("Resources/map/ground_texture/water2.png", scene);
-
-    // Water properties
-    water.windForce = 10;
-    water.waveHeight = 0.5;
-    water.windDirection = new BABYLON.Vector2(1, 1);
-    water.waterColor = new BABYLON.Color3.FromHexString(water_color);
-    water.colorBlendFactor = 0.3;
-    water.bumpHeight = 0.001;
-    water.waveLength = 0.01;
-
-    // Add skybox and ground to the reflection and refraction
-    water.addToRenderList(skybox);
-    water.addToRenderList(ground);
-
-    // Assign the water material
-    waterMesh.material = water;
-
-    return [ground, groundBox];
-};
+}
