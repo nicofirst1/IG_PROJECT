@@ -6,7 +6,14 @@ var explosionAnimation = function(scene, pSystem, mesh, texture_path, r, g, b, m
     var posAbs = mesh.getAbsolutePosition();
     var pos = new BABYLON.Vector3(posAbs.x, posAbs.y, posAbs.z);
 
-    var restObject = BABYLON.Mesh.CreateSphere('restObject', 3, 3, scene);
+    var restObject = BABYLON.Mesh.CreateSphere('restObject', 12, 3, scene);
+
+    if (metheoriteBool) {
+        restObject.scaling.x = mesh.scaling.x;
+        restObject.scaling.y = mesh.scaling.y;
+        restObject.scaling.z = mesh.scaling.z;
+    }
+
     restObject.checkCollisions = true;
     restObject.physicsImpostor = new BABYLON.PhysicsImpostor(restObject, BABYLON.PhysicsImpostor.SphereImpostor, {
         mass: 0,
@@ -21,8 +28,6 @@ var explosionAnimation = function(scene, pSystem, mesh, texture_path, r, g, b, m
     }
 
     mesh.dispose();
-
-    console.log('MESH DISPOSED');
 
     var pSystem2 = new BABYLON.ParticleSystem("particles", 2000, scene);
     pSystem2.emitter = restObject;

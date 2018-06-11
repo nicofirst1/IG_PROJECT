@@ -16,7 +16,7 @@ var initGround = function(scene, ground_x, ground_y) {
 
         var grounds = [ground, groundBox];
 
-        var metheorite_num = 10;
+        var metheorite_num = 25;
 
         for (var ii = 0; ii < metheorite_num; ii++) {
             createMetheorite(grounds, scene);

@@ -1,4 +1,5 @@
 var metheoriteID = 0;
+var seed = 1;
 
 var createMetheorite = function (grounds, scene) {
 
@@ -9,20 +10,21 @@ var createMetheorite = function (grounds, scene) {
 
     var max = 15;
     var min = 3;
-    var rnd = Math.random() * (max - min) + min;
+    var rnd = Math.random(seed++) * (max - min) + min;
     b.scaling.x = rnd;
     b.scaling.y = rnd;
     b.scaling.z = rnd;
-    b.physicsImpostor = new BABYLON.PhysicsImpostor(b, BABYLON.PhysicsImpostor.SphereImpostor, { mass: rnd , friction: 1000, restitution: 0 });
+    b.physicsImpostor = new BABYLON.PhysicsImpostor(b, BABYLON.PhysicsImpostor.SphereImpostor, { mass: rnd / 3 , friction: 1000, restitution: 0 });
     b.checkCollisions = true;
 
-    var minPos = -500;
-    var maxPos = 0;
+    var minPos = -250;
+    var maxPos = 250;
     b.position.y = 1000;
-    b.position.x =  Math.random() * (maxPos - minPos) + minPos;
-    b.position.z = Math.random() * (maxPos - minPos) + minPos;
+    b.position.x =  Math.random(seed++) * (maxPos - minPos) + minPos;
+    b.position.z = Math.random(seed++) * (maxPos - minPos) + minPos;
 
-    var impulseDir = new BABYLON.Vector3(400, 0, 400);
+    var impulseDir = new BABYLON.Vector3(0, 0, 0);
+    impulseDir.y = 1000;
     b.physicsImpostor.applyImpulse(impulseDir, b.getAbsolutePosition());
 
     var fireballMaterial = new BABYLON.StandardMaterial("material", scene);
