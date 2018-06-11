@@ -103,7 +103,8 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
         }
         manaConsumptionFlag=true;
         manaInterval= setInterval(function () {
-            if (mana_value == 0) {
+            if (mana_value <= 0) {
+                mana_value = 0;
                 var evt = document.createEvent("MouseEvents");
                 evt.initEvent("mouseup", true, true);
                 document.body.dispatchEvent(evt);
