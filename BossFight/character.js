@@ -420,7 +420,7 @@ var fireFireball = function (scene, camera, ground) {
         var pos = new BABYLON.Vector3(posAbs.x, posAbs.y, posAbs.z);
         bulletFireball.dispose();
 
-        var bulletFireballRest = BABYLON.Mesh.CreateSphere('bulletFireballRest', 3, 1.6, scene);
+        var bulletFireballRest = BABYLON.Mesh.CreateSphere('bulletFireballRestWater', 3, 1.6, scene);
         bulletFireballRest.checkCollisions = true;
         bulletFireballRest.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireballRest, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, friction: 1000, restitution: 0 });
         bulletFireballRest.position = pos;

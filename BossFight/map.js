@@ -73,7 +73,7 @@ var mapInit = function (scene, light, shadow, camera) {
         b.scaling.z = rnd;
         b.physicsImpostor = new BABYLON.PhysicsImpostor(b, BABYLON.PhysicsImpostor.SphereImpostor, { mass: rnd, friction: 1000, restitution: 0 });
         b.checkCollisions = true;
-        
+
         var minPos = -500;
         var maxPos = 0;
         b.position.y = 1000;
@@ -130,7 +130,7 @@ var mapInit = function (scene, light, shadow, camera) {
             var pos = new BABYLON.Vector3(posAbs.x, posAbs.y, posAbs.z);
             b.dispose();
 
-            var bulletFireballRest = BABYLON.Mesh.CreateSphere('bulletFireballRest', 3, 3, scene);
+            var bulletFireballRest = BABYLON.Mesh.CreateSphere('bulletFireballRestWater', 3, 3, scene);
             bulletFireballRest.checkCollisions = true;
             bulletFireballRest.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireballRest, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, friction: 1000, restitution: 0 });
             bulletFireballRest.position = pos;
