@@ -374,8 +374,9 @@ var fireFireball = function (scene, camera, ground) {
     bulletFireball.scaling.y = scalingY;
     bulletFireball.scaling.z = scalingZ;
 
+
     bulletFireball.checkCollisions = true;
-    bulletFireball.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireball, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, friction: 0, restitution: 0 });
+    bulletFireball.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireball, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1*scalingX, friction: 0, restitution: 0 });
 
     var invView = new BABYLON.Matrix();
     camera.getViewMatrix().invertToRef(invView);
@@ -424,9 +425,9 @@ var fireFireball = function (scene, camera, ground) {
     bulletFireball.psystem = pSystem2;
 
     var impulseDir = new BABYLON.Vector3(0.0, 0.0, 0.0);
-    impulseDir.x = direction.x * 70;
-    impulseDir.y = direction.y * 70;
-    impulseDir.z = direction.z * 70;
+    impulseDir.x = direction.x * 500;
+    impulseDir.y = direction.y * 500;
+    impulseDir.z = direction.z * 500;
 
     bulletFireball.physicsImpostor.applyImpulse(impulseDir, bulletFireball.getAbsolutePosition());
     bulletFireball.collisionsCount = 0;
