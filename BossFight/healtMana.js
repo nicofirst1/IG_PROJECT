@@ -9,6 +9,11 @@ var mana_text;
 
 
 var ignoreCollision=["ground","arm","groundBox"]; //meshes to ignore for collisions
+var damages={
+    bulletFireballRest:1,
+    metheorite:30,
+}
+
 
 var initHealtMana=function (scene, camera) {
 
@@ -20,7 +25,6 @@ var initHealtMana=function (scene, camera) {
     manaBar(scene,advancedTexture);
 
     camera.onCollide = function(collidedMesh) {
-        console.log(collidedMesh.id);
 
         //ignore collision with sepcific meshes
         for (var idx in ignoreCollision){
@@ -28,12 +32,17 @@ var initHealtMana=function (scene, camera) {
                 return;
             }
         }
+        console.log(collidedMesh.id);
 
         if (collidedMesh.id==="metheorite"){
 
-            update_healt(-30);
+            update_healt(-damages.metheorite);
 
 
+        }
+
+        if(collidedMesh.id==="bulletFireballRest"){
+            update_healt(-damages.bulletFireballRest)
         }
 
 
@@ -45,6 +54,8 @@ var initHealtMana=function (scene, camera) {
 
 var update_healt=function (value) {
     healt_value+=value;
+    healt_bar.width=5*healt_value+"px";
+    healt_text.text=healt_value+"/100";
 
 };
 
