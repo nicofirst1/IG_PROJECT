@@ -25,7 +25,7 @@ var initGround = function(scene, ground_x, ground_y) {
         // If metheorite 20 below the ground it starts again from the sky
         scene.registerBeforeRender(function () {
             scene.meshes.forEach(function (m) {
-                if (m.name=="metheorite" && m.position.y < -20) {
+                if (m.name=="metheorite" && m.position.y < -600) {
                     m.dispose();
                     createMetheorite(grounds, scene);
                 }

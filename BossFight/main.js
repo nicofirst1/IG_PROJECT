@@ -90,7 +90,6 @@ var start=function () {
     initCharacter(scene, camera, shadowGenerator, grounds);
 
 
-
     engine.runRenderLoop(function () {
         scene.render();
     });
