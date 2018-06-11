@@ -21,7 +21,7 @@ var mapInit = function (scene, light, shadow, camera) {
         snow(scene, skybox);
     }
 
-    var grounds = initGround(scene, groundSize);
+    var grounds = initGround(scene, groundSize, camera);
 
     initWater(scene, skybox, grounds);
 
