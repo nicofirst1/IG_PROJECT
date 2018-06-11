@@ -422,8 +422,6 @@ var fireFireball = function (scene, camera, ground) {
     pSystem2.updateSpeed = 0.008;
     pSystem2.start();
 
-    bulletFireball.psystem = pSystem2;
-
     var impulseDir = new BABYLON.Vector3(0.0, 0.0, 0.0);
     impulseDir.x = direction.x * 500;
     impulseDir.y = direction.y * 500;
