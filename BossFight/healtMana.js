@@ -20,6 +20,7 @@ var initHealtMana=function (scene, camera) {
     manaBar(scene,advancedTexture);
 
     camera.onCollide = function(collidedMesh) {
+        console.log(collidedMesh.id);
 
         //ignore collision with sepcific meshes
         for (var idx in ignoreCollision){
@@ -28,7 +29,13 @@ var initHealtMana=function (scene, camera) {
             }
         }
 
-        console.log(collidedMesh.id)
+        if (collidedMesh.id==="metheorite"){
+
+            update_healt(-30);
+
+
+        }
+
 
     }
 };
@@ -36,8 +43,8 @@ var initHealtMana=function (scene, camera) {
 
 
 
-var update_healt=function (new_value) {
-    healt_value=new_value;
+var update_healt=function (value) {
+    healt_value+=value;
 
 };
 
