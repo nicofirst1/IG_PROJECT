@@ -22,6 +22,8 @@ var initShield=function (scene,camera) {
 
     shield.physicsImpostor = new BABYLON.PhysicsImpostor(shield, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0, restitution: 0.1 }, scene);
 
+    shield.checkCollisions = true;
+
 
 
 };

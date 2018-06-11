@@ -1,7 +1,7 @@
 var InitCamera = function (scene) {
     var camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 10, 0), scene);
 
-    var camera_position=new BABYLON.Vector3(110, 45, 0);
+    var camera_position = new BABYLON.Vector3(110, 45, 0);
 
     camera.position = camera_position;
 
@@ -35,12 +35,12 @@ var InitCamera = function (scene) {
     function onKeyUp(event) {
         switch (event.keyCode) {
             case 32:
-                cameraJump(scene);
-                break;
+                if (!isJumping) {
+                    cameraJump(scene);
+                    break;
+                }
         }
     }
-
-
 
 
     return camera
@@ -48,9 +48,14 @@ var InitCamera = function (scene) {
 
 var fps = 13;//the speed of the jump execution
 var max_jump_heigth = 10;
+var isJumping = false;
 
 //jump animation
-var cameraJump = function(scene) {
+var cameraJump = function (scene) {
+
+
+    isJumping = true;
+
     var cam = scene.cameras[0];
 
     cam.animations = [];
@@ -89,7 +94,10 @@ var cameraJump = function(scene) {
 
     cam.animations.push(jump);
 
-    scene.beginAnimation(cam, false, fps, false);
+
+    var animatable=scene.beginAnimation(cam, false, fps, false);
+
+
 };
 
 
