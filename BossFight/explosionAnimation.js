@@ -39,8 +39,13 @@ var explosionAnimation = function(scene, pSystem, mesh, texture_path, r, g, b, m
     pSystem2.color2 = new BABYLON.Color4(0.1, 0.1, 0.1, 1.0);
     pSystem2.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
 
-    pSystem2.minSize = minSize;
-    pSystem2.maxSize = maxSize;
+    if (meteoriteBool) {
+        pSystem2.minSize = minSize / 3;
+        pSystem2.maxSize = maxSize / 3;
+    } else {
+        pSystem2.minSize = minSize;
+        pSystem2.maxSize = maxSize;
+    }
 
     pSystem2.minLifeTime = 0.3;
     pSystem2.maxLifeTime = 1.5;
@@ -67,7 +72,13 @@ var explosionAnimation = function(scene, pSystem, mesh, texture_path, r, g, b, m
         pSystem2.stop();
         setTimeout(function () {
             restObject.dispose();
-            if (meteoriteBool) createMeteorite(grounds, scene);
+            if (meteoriteBool) {
+                if (score_value % 10 && max_dim < 25) {
+                    min_dim += 1;
+                    max_dim += 1;
+                }
+                createMeteorite(grounds, scene);
+            }
         }, 4000);
     }, 3000);
 
