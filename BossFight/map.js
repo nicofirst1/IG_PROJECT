@@ -71,7 +71,7 @@ var mapInit = function (scene, light, shadow, camera) {
         b.position.z = (Math.random() * 50) * ((Math.random() < 0.5) ? -1 : 1);
     };
 
-    var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "https://upload.wikimedia.org/wikipedia/commons/5/57/Heightmap.png", 500, 500, 50, 0, 25, scene, false, function () {
+    var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/poly_HM/Heightmap.png", 500, 500, 50, 0, 25, scene, false, function () {
         ground.convertToFlatShadedMesh();
 
         ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0, friction: 10000, restitution: 0.1 }, scene);
@@ -105,7 +105,7 @@ var mapInit = function (scene, light, shadow, camera) {
     });
 
 
-    var groundBox = BABYLON.MeshBuilder.CreateBox("groundBox", {height: 0, width: ground_x, depth: ground_y}, scene);
+    var groundBox = BABYLON.MeshBuilder.CreateBox("groundBox", {height: 4, width: ground_x, depth: ground_y}, scene);
     groundBox.checkCollisions = true;
     groundBox.physicsImpostor = new BABYLON.PhysicsImpostor(groundBox, BABYLON.PhysicsImpostor.BoxImpostor, {
         mass: 0,
