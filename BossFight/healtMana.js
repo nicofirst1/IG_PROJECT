@@ -23,6 +23,9 @@ var healtRegenTimeout=2000;
 var manaRegenTimeout=2000;
 
 
+var score_value=0;
+
+
 var initHealtMana=function (scene, camera) {
 
 
@@ -32,6 +35,7 @@ var initHealtMana=function (scene, camera) {
     //init healt and mana bars
     healtBar(scene,advancedTexture);
     manaBar(scene,advancedTexture);
+    scoreBar(scene,advancedTexture);
 
 
     //add mdamage function on camera
@@ -186,6 +190,46 @@ var manaBar= function (scene, advancedTexture) {
     advancedTexture.addControl(mana_bk);
     advancedTexture.addControl(mana_bar);
     advancedTexture.addControl(mana_text);
+
+
+};
+
+
+var scoreBar= function (scene, advancedTexture) {
+
+
+
+
+    var score_bk = new BABYLON.GUI.Rectangle();
+    score_bk.width = "200px";
+    score_bk.height = "40px";
+    score_bk.cornerRadius = 0;
+    score_bk.color = "#5e5e5e";
+    score_bk.thickness = 4;
+    score_bk.background = "#5e5e5e";
+    score_bk.top="10px";
+    score_bk.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    score_bk.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+
+    var score_text=new BABYLON.GUI.TextBlock();
+    score_text.text="Score: "+score_value;
+    score_text.color="white";
+    score_text.fontSize=24;
+    score_text.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    score_text.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+    score_text.paddingRight="100px";
+    score_text.paddingTop="15";
+
+    advancedTexture.addControl(score_bk);
+    advancedTexture.addControl(score_text);
+
+
+    //restore mana with timer
+    setInterval(function() {
+        score_value+=1;
+            score_text.text="Score: "+score_value;
+        }
+    , 1000);
 
 
 };
