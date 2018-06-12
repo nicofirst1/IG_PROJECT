@@ -556,7 +556,8 @@ var createFireball = function (scene, camera) {
     fireballMaterial.emissiveColor = new BABYLON.Vector3(1.0, 0.0, 0.0);
     fireball.material = fireballMaterial;
 
-    fireball.position = new BABYLON.Vector3(0.0, -2, 6);
+    if (useThirdP) fireball.position = new BABYLON.Vector3(0.0, -2, 6);
+    else fireball.position = new BABYLON.Vector3(0.0, -0.5, 6);
     fireball.parent = camera;
 
     pSystem = new BABYLON.ParticleSystem("particles", 2000, scene);

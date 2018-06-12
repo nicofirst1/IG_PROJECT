@@ -19,7 +19,7 @@ var createMeteorite = function (grounds, scene) {
     b.scaling.x = rnd;
     b.scaling.y = rnd;
     b.scaling.z = rnd;
-    b.physicsImpostor = new BABYLON.PhysicsImpostor(b, BABYLON.PhysicsImpostor.SphereImpostor, { mass: rnd / 3 , friction: 1000, restitution: 0 });
+    b.physicsImpostor = new BABYLON.PhysicsImpostor(b, BABYLON.PhysicsImpostor.SphereImpostor, { mass: rnd * 1000 , friction: 1000, restitution: 0 });
     b.checkCollisions = true;
 
     var minPos = -groundSize/2;
@@ -29,7 +29,7 @@ var createMeteorite = function (grounds, scene) {
     b.position.z = Math.random(seed++) * (maxPos - minPos) + minPos;
 
     var impulseDir = new BABYLON.Vector3(0, 0, 0);
-    impulseDir.y = -100;
+    impulseDir.y = -10;
     b.physicsImpostor.applyImpulse(impulseDir, b.getAbsolutePosition());
 
     var fireballMaterial = new BABYLON.StandardMaterial("material", scene);

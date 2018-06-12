@@ -77,11 +77,14 @@ var InitCamera = function (scene) {
                 if (useThirdP) {
                     scene.activeCameras=remove_item(scene.activeCameras, camera1);
                     useThirdP = false;
+                    upperArmRight.position = new BABYLON.Vector3(4, -0.5, 5);
+                    upperArmLeft.position = new BABYLON.Vector3(-4, -0.5, 5);
                 }
                 else {
                     scene.activeCameras.push(camera1);
                     useThirdP = true;
-
+                    upperArmRight.position = new BABYLON.Vector3(2, 0.5, 0.5);
+                    upperArmLeft.position = new BABYLON.Vector3(-2, 0.5, 0.5);
                 }
                 break;
             case 88:
