@@ -14,7 +14,7 @@ var InitCamera = function (scene) {
     camera.ellipsoidOffset = new BABYLON.Vector3(0, -0.2, 0);
     camera.checkCollisions = true;
     camera.applyGravity = true;
-    camera._needMoveForGravity = true;
+    camera._needMoveForGravity = false;
 
 
     // WASD
@@ -28,7 +28,7 @@ var InitCamera = function (scene) {
     Camera parameters
     -----------------------------------
     */
-    camera.speed = 20.0;
+    camera.speed = 10.0;
     camera.inertia = 0.0;
     camera.angularInertia = 0.3;
     camera.angularSensibility = 100;

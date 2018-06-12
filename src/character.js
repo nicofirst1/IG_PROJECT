@@ -4,6 +4,8 @@ var upperArmLeft;
 var lowerArmLeft;
 
 var movementBool = true;
+var body;
+var head;
 
 
 var initCharacter = function (scene, camera, shadowGenerator, ground) {
@@ -21,6 +23,7 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
     body.material = bodyMaterial;
 
     body.parent = camera;
+    body.position.y = -0.5;
 
     // Head
     head = BABYLON.Mesh.CreateBox("arm", 1.2, scene);
@@ -680,9 +683,9 @@ var fireFireball = function (scene, camera, ground) {
     pSystem2.start();
 
     var impulseDir = new BABYLON.Vector3(0.0, 0.0, 0.0);
-    impulseDir.x = direction.x * 500;
-    impulseDir.y = direction.y * 500;
-    impulseDir.z = direction.z * 500;
+    impulseDir.x = direction.x * 1000;
+    impulseDir.y = direction.y * 1000;
+    impulseDir.z = direction.z * 1000;
 
     bulletFireball.physicsImpostor.applyImpulse(impulseDir, bulletFireball.getAbsolutePosition());
     bulletFireball.collisionsCount = 0;
