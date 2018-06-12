@@ -89,6 +89,8 @@ var start=function () {
 
     initCharacter(scene, camera, shadowGenerator, grounds);
 
+    initSounds(scene);
+
     //initShield(scene,camera);
 
     engine.runRenderLoop(function () {

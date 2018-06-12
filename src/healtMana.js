@@ -43,6 +43,7 @@ var initHealtMana = function (scene, camera) {
     manaBar(scene, advancedTexture);
     scoreBar(scene, advancedTexture);
     gameOver(scene, advancedTexture);
+    musicCheckbox(advancedTexture);
 
 
     //add mdamage function on camera
@@ -305,3 +306,40 @@ var gameOver = function (scene, advancedTexture) {
 
 };
 
+
+var playMusicFlag=true;
+var musicCheckbox=function (adcancedTexture) {
+
+
+
+    var audio=document.getElementById("sfx-background");
+
+    // add listener for jump
+    window.addEventListener("keyup", playMusic, false);
+
+    function playMusic(event) {
+        switch (event.keyCode) {
+            case 77:
+                if(playMusicFlag){
+                    audio.pause();
+                    playMusicFlag=false
+                }
+                else{
+                    audio.play();
+                    playMusicFlag=true;
+                }
+        }
+    }
+
+
+    var header = new BABYLON.GUI.TextBlock();
+    header.text = "Play/pause music with 'M'";
+    header.width = "250px";
+    header.color = "yellow";
+    header.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    header.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+    header.paddingTop="750px";
+
+    adcancedTexture.addControl(header);
+
+};

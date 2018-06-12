@@ -121,6 +121,10 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
         armsMovementRelease(scene, lowerArmLeft, true, false, camera, ground);
         clearInterval(manaInterval);
         manaConsumptionFlag=false;
+
+        //play random sound
+        fireballSound[Math.floor(Math.random()*fireballSound.length)].play();
+
     };
 };
 

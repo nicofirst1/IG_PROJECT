@@ -163,7 +163,7 @@ $(document).ready(function(e){
             }
         }
 
-       // audio.sfx.background.play();
+        audio.sfx.background.play();
         showMainMenu();
 	});
 	
