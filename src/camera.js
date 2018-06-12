@@ -1,3 +1,6 @@
+
+var camera1;
+
 var InitCamera = function (scene) {
     var camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 10, 0), scene);
 
@@ -34,7 +37,7 @@ var InitCamera = function (scene) {
 
     var posCamera1 = new BABYLON.Vector3(0, -3, 0);
 
-    var camera1 = new BABYLON.ArcRotateCamera("Camera1", scene);
+    camera1 = new BABYLON.ArcRotateCamera("thirdPCamera", scene);
     //camera1.position = posCamera1;
     camera1.alpha = -Math.PI / 2;
     camera1.beta = 1; // 0 for above
@@ -43,7 +46,7 @@ var InitCamera = function (scene) {
     camera1.layerMask = 2;
     camera1.parent = camera;
     camera1.applyGravity = true;
-    camera1.checkCollisions = true;
+    //camera1.checkCollisions = true;
 
 
     // var rt1 = new BABYLON.RenderTargetTexture("depth", 1024, scene, true, true);
@@ -54,6 +57,8 @@ var InitCamera = function (scene) {
     scene.activeCameras.push(camera);
     scene.activeCameras.push(camera1);
 
+    var useThirdP = true;
+    var up=false;
 
     // add listener for jump
     window.addEventListener("keyup", onKeyUp, false);
@@ -63,14 +68,52 @@ var InitCamera = function (scene) {
             case 32:
                 if (!isJumping) {
                     cameraJump(scene);
-                    break;
                 }
+                break;
+
+
+            case 86:
+                if (useThirdP) {
+                    scene.activeCameras=remove_item(scene.activeCameras, camera1);
+                    useThirdP = false;
+                }
+                else {
+                    scene.activeCameras.push(camera1);
+                    useThirdP = true;
+
+                }
+                break;
+            case 88:
+                if(!up){
+                    camera1.beta=0;
+                    camera1.radius=500;
+                    up=true
+                }
+                else{
+                    camera1.beta = 1;
+                    camera1.radius = 7;
+
+                    up=false
+                }
+                break;
+
+
         }
     }
 
 
     return camera
 };
+
+function remove_item(arr, value) {
+    for (b in arr) {
+        if (arr[b] == value) {
+            arr.splice(b, 1);
+            break;
+        }
+    }
+    return arr;
+}
 
 var fps = 13;//the speed of the jump execution
 var max_jump_heigth = 10;
@@ -121,7 +164,7 @@ var cameraJump = function (scene) {
     cam.animations.push(jump);
 
 
-    var animatable=scene.beginAnimation(cam, false, fps, false);
+    var animatable = scene.beginAnimation(cam, false, fps, false);
 
 
 };
