@@ -27,8 +27,8 @@ var InitCamera = function (scene) {
     Camera parameters
     -----------------------------------
     */
-    camera.speed = 15.0;
-    camera.inertia = 0.2;
+    camera.speed = 20.0;
+    camera.inertia = 0.0;
     camera.angularInertia = 0.3;
     camera.angularSensibility = 100;
 
