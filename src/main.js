@@ -1,4 +1,4 @@
-
+var canvas;
 
 var hide_menu=function () {
     //
@@ -28,11 +28,11 @@ var start=function () {
 
     hide_menu();
 
-    var gravity= new BABYLON.Vector3(0, -0.6, 0);
+    var gravity= new BABYLON.Vector3(0, -9.81, 0);
 
     // BABYLON.OBJFileLoader.OPTIMIZE_WITH_UV = true;
 
-    var canvas = document.getElementById("renderCanvas");
+    canvas = document.getElementById("renderCanvas");
 
     var engine = new BABYLON.Engine(canvas, true);
     //disable online support (remove warnings)
@@ -51,7 +51,6 @@ var start=function () {
 
     var camera =InitCamera(scene);
     // Attach the camera to the canvas
-    camera.attachControl(canvas, true);
 
     initHealtMana(scene,camera );
 
@@ -81,7 +80,6 @@ var start=function () {
     var grounds = mapInit(scene, light,shadowGenerator, camera);
 
 
-    scene.gravity = new BABYLON.Vector3(0, -0.5, 0);
     camera.applyGravity = true;
     camera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
 
