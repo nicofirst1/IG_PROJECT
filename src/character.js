@@ -226,35 +226,35 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
 
     window.addEventListener("keydown", onKeyDown, false);
 
+    var keyVec = [83, 87, 65 ,68];
+
     function onKeyDown(event) {
-        switch (event.keyCode) {
-            case 87:
-                if (movementBool) {
-                    movementBool = false;
-                    legMovement(scene, upperLegLeft, 2.5, true, camera, true);
-                    legMovement(scene, lowerLegLeft, 2.5, true, camera, false);
-                    legMovement(scene, upperLegRight, 2.5, false, camera, true);
-                    legMovement(scene, lowerLegRight, 2.5, false, camera, false);
-                }
+        if(keyVec.indexOf(event.keyCode) >= 0) {
+            if (movementBool) {
+                movementBool = false;
+                legMovement(scene, upperLegLeft, 2.5, true, camera, true);
+                legMovement(scene, lowerLegLeft, 2.5, true, camera, false);
+                legMovement(scene, upperLegRight, 2.5, false, camera, true);
+                legMovement(scene, lowerLegRight, 2.5, false, camera, false);
+            }
         }
     }
 
     window.addEventListener("keyup", onKeyUp, false);
 
     function onKeyUp(event) {
-        switch (event.keyCode) {
-            case 87:
-                scene.stopAnimation(upperLegLeft);
-                scene.stopAnimation(lowerLegLeft);
-                scene.stopAnimation(upperLegRight);
-                scene.stopAnimation(lowerLegRight);
+        if(keyVec.indexOf(event.keyCode) >= 0) {
+            scene.stopAnimation(upperLegLeft);
+            scene.stopAnimation(lowerLegLeft);
+            scene.stopAnimation(upperLegRight);
+            scene.stopAnimation(lowerLegRight);
 
-                upperLegLeft.rotation.x = Math.PI / 2;
-                lowerLegLeft.rotation.x = Math.PI / 2;
-                upperLegRight.rotation.x = Math.PI / 2;
-                lowerLegRight.rotation.x = Math.PI / 2;
+            upperLegLeft.rotation.x = Math.PI / 2;
+            lowerLegLeft.rotation.x = Math.PI / 2;
+            upperLegRight.rotation.x = Math.PI / 2;
+            lowerLegRight.rotation.x = Math.PI / 2;
 
-                movementBool = true;
+            movementBool = true;
         }
     }
 };
@@ -556,7 +556,7 @@ var createFireball = function (scene, camera) {
     fireballMaterial.emissiveColor = new BABYLON.Vector3(1.0, 0.0, 0.0);
     fireball.material = fireballMaterial;
 
-    fireball.position = new BABYLON.Vector3(0.0, -0.5, 6);
+    fireball.position = new BABYLON.Vector3(0.0, -2, 6);
     fireball.parent = camera;
 
     pSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
