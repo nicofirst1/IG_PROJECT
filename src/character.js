@@ -635,6 +635,10 @@ var fireFireball = function (scene, camera, ground) {
     var direction = BABYLON.Vector3.TransformNormal(new BABYLON.Vector3(0, 0, 1), invView);
     direction.normalize();
 
+    if (useThirdP) {
+        direction.y -= 0.25;
+    }
+
     var startPos = new BABYLON.Vector3(camera.position.x, camera.position.y, camera.position.z);
     startPos.x += direction.x * 3;
     startPos.y += direction.y * 3;

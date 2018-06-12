@@ -1,4 +1,5 @@
-
+var useThirdP = true;
+var up=false;
 var camera1;
 
 var InitCamera = function (scene) {
@@ -57,8 +58,8 @@ var InitCamera = function (scene) {
     scene.activeCameras.push(camera);
     scene.activeCameras.push(camera1);
 
-    var useThirdP = true;
-    var up=false;
+    useThirdP = true;
+    up=false;
 
     // add listener for jump
     window.addEventListener("keyup", onKeyUp, false);
