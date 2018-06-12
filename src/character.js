@@ -6,93 +6,188 @@ var lowerArmLeft;
 
 var initCharacter = function (scene, camera, shadowGenerator, ground) {
 
-    // var cameraPS = new BABYLON.ParticleSystem("particles", 2000, scene);
-    // cameraPS.emitter = camera;
-    // cameraPS.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-    // cameraPS.light = new BABYLON.PointLight("Omni1", camera.position, scene);
-    // cameraPS.light.diffuse = new BABYLON.Color3(1, 1, 1);
-    // cameraPS.light.range = 15;
-    //
-    // cameraPS.minEmitBox = new BABYLON.Vector3(0, 0, 0);
-    // cameraPS.maxEmitBox = new BABYLON.Vector3(0, .2, 0);
-    // cameraPS.color1 = new BABYLON.Color4(1, 1, 1, .9);
-    // cameraPS.color2 = new BABYLON.Color4(1, 1, 1, .9);
-    // cameraPS.colorDead = new BABYLON.Color4(1, 1, 1, .5);
-    // cameraPS.minSize = 1.75;
-    // cameraPS.maxSize = 2.0;
-    // cameraPS.minLifeTime = 0.075;
-    // cameraPS.maxLifeTime = 0.1;
-    // cameraPS.emitRate = 400;
-    // cameraPS.gravity = new BABYLON.Vector3(0, 0, 0);
-    // cameraPS.direction1 = new BABYLON.Vector3(0, .05, 0);
-    // cameraPS.direction2 = new BABYLON.Vector3(0, -.05, 0);
-    // cameraPS.minAngularSpeed = 1.5;
-    // cameraPS.maxAngularSpeed = 2.5;
-    // cameraPS.minEmitPower = 0.4;
-    // cameraPS.maxEmitPower = 0.75;
-    // cameraPS.updateSpeed = 0.008;
-    // cameraPS.start();
+
+
+    // Body
+    body = BABYLON.Mesh.CreateBox("arm", 2, scene);
+    body.scaling.x = 0.25;
+    body.scaling.y = 0.4;
+    body.scaling.z = 0.25;
+
+    var bodyMaterial = new BABYLON.StandardMaterial("material", scene);
+    bodyMaterial.diffuseTexture = new BABYLON.Texture("Resources/armor/armor.jpg", scene);
+    body.material = bodyMaterial;
+
+    body.parent = camera;
+
+    // Head
+    head = BABYLON.Mesh.CreateBox("arm", 1.2, scene);
+
+    var headMaterial = new BABYLON.StandardMaterial("material", scene);
+    headMaterial.diffuseTexture = new BABYLON.Texture("Resources/fire/fire.jpg", scene);
+    head.material = headMaterial;
+    head.scaling.y = 0.6;
+
+
+    head.parent = body;
+    head.position = new BABYLON.Vector3(0, 1.5, 0);
+
+    var cameraPS = new BABYLON.ParticleSystem("particles", 2000, scene);
+    cameraPS.emitter = body;
+    cameraPS.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+    cameraPS.light = new BABYLON.PointLight("Omni1", camera.position, scene);
+    cameraPS.light.diffuse = new BABYLON.Color3(0.196, 0.804, 0.196);
+    cameraPS.light.range = 6;
+
+    cameraPS.minEmitBox = new BABYLON.Vector3(0, 0, 0);
+    cameraPS.maxEmitBox = new BABYLON.Vector3(0, .2, 0);
+    cameraPS.color1 = new BABYLON.Color4(1, 1, 1, .9);
+    cameraPS.color2 = new BABYLON.Color4(1, 1, 1, .9);
+    cameraPS.colorDead = new BABYLON.Color4(1, 1, 1, .5);
+    cameraPS.minSize = 1.75;
+    cameraPS.maxSize = 2.0;
+    cameraPS.minLifeTime = 0.075;
+    cameraPS.maxLifeTime = 0.1;
+    cameraPS.emitRate = 400;
+    cameraPS.gravity = new BABYLON.Vector3(0, 0, 0);
+    cameraPS.direction1 = new BABYLON.Vector3(0, .05, 0);
+    cameraPS.direction2 = new BABYLON.Vector3(0, -.05, 0);
+    cameraPS.minAngularSpeed = 1.5;
+    cameraPS.maxAngularSpeed = 2.5;
+    cameraPS.minEmitPower = 0.4;
+    cameraPS.maxEmitPower = 0.75;
+    cameraPS.updateSpeed = 0.008;
+    cameraPS.start();
+
 
     // UPPER RIGHT
-    upperArmRight = BABYLON.Mesh.CreateBox("arm", 1, scene);
-    upperArmRight.scaling.x = 0.3;
-    upperArmRight.scaling.y = 0.3;
-    upperArmRight.scaling.z = 0.5;
+    upperArmRight = BABYLON.Mesh.CreateBox("arm", 3, scene);
+    upperArmRight.scaling.x = 0.2;
+    upperArmRight.scaling.y = 0.15;
+    upperArmRight.scaling.z = 0.6;
 
     var upperArmRightMaterial = new BABYLON.StandardMaterial("material", scene);
     upperArmRightMaterial.diffuseTexture = new BABYLON.Texture("Resources/armor/armor.jpg", scene);
     upperArmRight.material = upperArmRightMaterial;
 
-    upperArmRight.position = new BABYLON.Vector3(1.1, -0.5, 1.2);
-    upperArmRight.parent = camera;
+    upperArmRight.position = new BABYLON.Vector3(2, 0.5, 0.5);
+    upperArmRight.parent = body;
 
     // LOWER RIGHT
-    lowerArmRight = BABYLON.Mesh.CreateBox("arm", 2, scene);
-    lowerArmRight.scaling.x = 0.5;
-    lowerArmRight.scaling.y = 0.5;
-    lowerArmRight.scaling.z = 0.5;
+    lowerArmRight = BABYLON.Mesh.CreateBox("arm", 3, scene);
+    lowerArmRight.scaling.x = 0.8;
+    lowerArmRight.scaling.y = 0.8;
+    lowerArmRight.scaling.z = 0.8;
 
     var lowerArmRightMaterial = new BABYLON.StandardMaterial("material", scene);
     lowerArmRightMaterial.diffuseTexture = new BABYLON.Texture("Resources/armor/armor.jpg", scene);
     lowerArmRight.material = lowerArmRightMaterial;
 
-    lowerArmRight.position.y = upperArmRight.position.y + 0.45;
-    lowerArmRight.position.z = upperArmRight.position.z ;
-
     lowerArmRight.parent = upperArmRight;
 
+    lowerArmRight.position = new BABYLON.Vector3(0, 0, 3);
+
+
     // UPPER LEFT
-    upperArmLeft = BABYLON.Mesh.CreateBox("arm", 1, scene);
-    upperArmLeft.scaling.x = 0.3;
-    upperArmLeft.scaling.y = 0.3;
-    upperArmLeft.scaling.z = 0.5;
+    upperArmLeft = BABYLON.Mesh.CreateBox("arm", 3, scene);
+    upperArmLeft.scaling.x = 0.2;
+    upperArmLeft.scaling.y = 0.15;
+    upperArmLeft.scaling.z = 0.6;
 
     var upperArmLeftMaterial = new BABYLON.StandardMaterial("material", scene);
     upperArmLeftMaterial.diffuseTexture = new BABYLON.Texture("Resources/armor/armor.jpg", scene);
     upperArmLeft.material = upperArmLeftMaterial;
 
-    upperArmLeft.position = new BABYLON.Vector3(-1.1, -0.5, 1.2);
-    upperArmLeft.parent = camera;
+    upperArmLeft.position = new BABYLON.Vector3(-2, 0.5, 0.5);
+    upperArmLeft.parent = body;
 
     // LOWER LEFT
-    lowerArmLeft = BABYLON.Mesh.CreateBox("arm", 2, scene);
-    lowerArmLeft.scaling.x = 0.5;
-    lowerArmLeft.scaling.y = 0.5;
-    lowerArmLeft.scaling.z = 0.5;
+    lowerArmLeft = BABYLON.Mesh.CreateBox("arm", 3, scene);
+    lowerArmLeft.scaling.x = 0.8;
+    lowerArmLeft.scaling.y = 0.8;
+    lowerArmLeft.scaling.z = 0.8;
 
     var lowerArmLeftMaterial = new BABYLON.StandardMaterial("material", scene);
     lowerArmLeftMaterial.diffuseTexture = new BABYLON.Texture("Resources/armor/armor.jpg", scene);
     lowerArmLeft.material = lowerArmLeftMaterial;
 
-    lowerArmLeft.position.y = upperArmLeft.position.y + 0.45;
-    lowerArmLeft.position.z = upperArmLeft.position.z;
-
     lowerArmLeft.parent = upperArmLeft;
+
+    lowerArmLeft.position = new BABYLON.Vector3(0, 0, 3);
+
 
     upperArmLeft.checkCollisions = true;
     upperArmRight.checkCollisions = true;
     lowerArmLeft.checkCollisions = true;
     lowerArmRight.checkCollisions = true;
+
+    // LEGS
+    // UPPER RIGHT
+    upperLegRight = BABYLON.Mesh.CreateBox("arm", 3, scene);
+    upperLegRight.scaling.x = 0.3;
+    upperLegRight.scaling.y = 0.3;
+    upperLegRight.scaling.z = 0.4;
+
+    var upperLegRightMaterial = new BABYLON.StandardMaterial("material", scene);
+    upperLegRightMaterial.diffuseTexture = new BABYLON.Texture("Resources/armor/armor.jpg", scene);
+    upperLegRight.material = upperLegRightMaterial;
+
+    upperLegRight.parent = body;
+
+    upperLegRight.rotation.x = Math.PI / 2;
+
+    upperLegRight.position = new BABYLON.Vector3(0.5, -1.75, 0);
+
+    // LOWER RIGHT
+    lowerLegRight = BABYLON.Mesh.CreateBox("arm", 3, scene);
+    lowerLegRight.scaling.x = 0.8;
+    lowerLegRight.scaling.y = 0.8;
+    lowerLegRight.scaling.z = 1;
+
+    var lowerLegRightMaterial = new BABYLON.StandardMaterial("material", scene);
+    lowerLegRightMaterial.diffuseTexture = new BABYLON.Texture("Resources/armor/armor.jpg", scene);
+    lowerLegRight.material = lowerLegRightMaterial;
+
+    lowerLegRight.parent = upperLegRight;
+
+    lowerLegRight.position = new BABYLON.Vector3(0, 0, 3.25);
+
+
+    // UPPER LEFT
+    upperLegLeft = BABYLON.Mesh.CreateBox("arm", 3, scene);
+    upperLegLeft.scaling.x = 0.3;
+    upperLegLeft.scaling.y = 0.3;
+    upperLegLeft.scaling.z = 0.4;
+
+    var upperLegLeftMaterial = new BABYLON.StandardMaterial("material", scene);
+    upperLegLeftMaterial.diffuseTexture = new BABYLON.Texture("Resources/armor/armor.jpg", scene);
+    upperLegLeft.material = upperLegLeftMaterial;
+
+    upperLegLeft.parent = body;
+
+    upperLegLeft.rotation.x = Math.PI / 2;
+
+    upperLegLeft.position = new BABYLON.Vector3(-0.5, -1.75, 0);
+
+    // LOWER RIGHT
+    lowerLegLeft = BABYLON.Mesh.CreateBox("arm", 3, scene);
+    lowerLegLeft.scaling.x = 0.8;
+    lowerLegLeft.scaling.y = 0.8;
+    lowerLegLeft.scaling.z = 1;
+
+    var lowerLegLeftMaterial = new BABYLON.StandardMaterial("material", scene);
+    lowerLegLeftMaterial.diffuseTexture = new BABYLON.Texture("Resources/armor/armor.jpg", scene);
+    lowerLegLeft.material = lowerLegLeftMaterial;
+
+    lowerLegLeft.parent = upperLegLeft;
+
+    lowerLegLeft.position = new BABYLON.Vector3(0, 0, 3.25);
+
+
+    upperLegLeft.checkCollisions = true;
+    upperLegRight.checkCollisions = true;
+    lowerLegLeft.checkCollisions = true;
+    lowerLegRight.checkCollisions = true;
 
     document.body.onmousedown = function onClickLeft(event) {
         if (upperArmRight.rotation.y < 0.0001) {

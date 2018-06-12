@@ -28,7 +28,7 @@ var start=function () {
 
     hide_menu();
 
-    var gravity= new BABYLON.Vector3(0, -0.6, 0);
+    var gravity= new BABYLON.Vector3(0, -9.81, 0);
 
     // BABYLON.OBJFileLoader.OPTIMIZE_WITH_UV = true;
 
@@ -80,7 +80,6 @@ var start=function () {
     var grounds = mapInit(scene, light,shadowGenerator, camera);
 
 
-    scene.gravity = new BABYLON.Vector3(0, -0.5, 0);
     camera.applyGravity = true;
     camera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
 
