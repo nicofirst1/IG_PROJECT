@@ -29,6 +29,31 @@ var InitCamera = function (scene) {
     camera.angularInertia = 0.3;
     camera.angularSensibility = 100;
 
+
+    camera.attachControl(canvas, true);
+
+    var posCamera1 = new BABYLON.Vector3(0, -3, 0);
+
+    var camera1 = new BABYLON.ArcRotateCamera("Camera1", scene);
+    //camera1.position = posCamera1;
+    camera1.alpha = -Math.PI / 2;
+    camera1.beta = 1; // 0 for above
+    camera1.radius = 7; // 100 for above
+
+    camera1.layerMask = 2;
+    camera1.parent = camera;
+
+    // var rt1 = new BABYLON.RenderTargetTexture("depth", 1024, scene, true, true);
+    // scene.customRenderTargets.push(rt1);
+    // rt1.activeCamera = camera1;
+    // rt1.renderList = scene.meshes;
+
+    scene.activeCameras.push(camera);
+    scene.activeCameras.push(camera1);
+
+
+
+
     // add listener for jump
     window.addEventListener("keyup", onKeyUp, false);
 

@@ -1,4 +1,4 @@
-
+var canvas;
 
 var hide_menu=function () {
     //
@@ -32,7 +32,7 @@ var start=function () {
 
     // BABYLON.OBJFileLoader.OPTIMIZE_WITH_UV = true;
 
-    var canvas = document.getElementById("renderCanvas");
+    canvas = document.getElementById("renderCanvas");
 
     var engine = new BABYLON.Engine(canvas, true);
     //disable online support (remove warnings)
@@ -51,7 +51,6 @@ var start=function () {
 
     var camera =InitCamera(scene);
     // Attach the camera to the canvas
-    camera.attachControl(canvas, true);
 
     initHealtMana(scene,camera );
 
