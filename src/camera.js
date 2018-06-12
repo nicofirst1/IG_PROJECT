@@ -1,6 +1,8 @@
 var useThirdP = true;
 var up=false;
 var camera1;
+var legsCharge = true;
+
 
 var InitCamera = function (scene) {
     var camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 10, 0), scene);
@@ -14,7 +16,7 @@ var InitCamera = function (scene) {
     camera.ellipsoidOffset = new BABYLON.Vector3(0, -0.2, 0);
     camera.checkCollisions = true;
     camera.applyGravity = true;
-    camera._needMoveForGravity = false;
+    camera._needMoveForGravity = true;
 
 
     // WASD
@@ -61,14 +63,28 @@ var InitCamera = function (scene) {
     useThirdP = true;
     up=false;
 
+    window.addEventListener("keydown", onKeyDown, false);
+
+    function onKeyDown(event) {
+        switch (event.keyCode) {
+            case 32:
+                if (legsCharge  && !isJumping) {
+                    legsCharge = false;
+                    legsJumpCharge(upperLegRight, scene, true);
+                    legsJumpCharge(upperLegLeft, scene, false);
+                }
+        }
+    }
+
     // add listener for jump
     window.addEventListener("keyup", onKeyUp, false);
 
     function onKeyUp(event) {
         switch (event.keyCode) {
             case 32:
-                if (!isJumping) {
-                    cameraJump(scene);
+                if (!legsCharge) {
+                    legsJumpRelease(upperLegRight, scene, true);
+                    legsJumpRelease(upperLegLeft, scene, false);
                 }
                 break;
 
@@ -120,7 +136,7 @@ function remove_item(arr, value) {
 }
 
 var fps = 13;//the speed of the jump execution
-var max_jump_heigth = 10;
+var max_jump_heigth = 4.5;
 var isJumping = false;
 
 //jump animation
@@ -148,11 +164,11 @@ var cameraJump = function (scene) {
     keys.push({frame: 0, value: current_position});
 
     for (i = 1; i < max_jump_heigth; i++) {
-        current_position += 1;
+        current_position += 2;
         keys.push({frame: i, value: current_position});
     }
 
-    for (; i < max_jump_heigth + 2; i++) {
+    for (; i < max_jump_heigth + 1; i++) {
         keys.push({frame: i, value: current_position});
     }
 
@@ -169,7 +185,141 @@ var cameraJump = function (scene) {
 
 
     var animatable = scene.beginAnimation(cam, false, fps, false);
+    animatable.onAnimationEnd = function () {
+        animatable.animationStarted = false;
+        legsCharge = true;
+    };
 
+};
+
+
+
+var legsJumpCharge = function(leg, scene) {
+
+    var legsMov = new BABYLON.Animation(
+        "legsMov",
+        "rotation.x", fps,
+        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+
+    // Animation keys
+    var keys = [];
+
+    var curr_rot = Math.PI / 2;
+
+    var inc = 0.4;
+
+    keys.push({frame: 0, value: curr_rot});
+
+    for (var i = 1; curr_rot <= 2.5; i++) {
+        curr_rot += inc;
+        keys.push({frame: i, value: curr_rot});
+    }
+
+
+
+    legsMov.setKeys(keys);
+
+    leg.animations = [];
+    leg.animations.push(legsMov);
+
+    scene.beginAnimation(leg, false, i, false);
+
+    var cam = scene.cameras[0];
+
+    cam.animations = [];
+
+    var jump = new BABYLON.Animation(
+        "jump",
+        "position.y", fps,
+        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+
+    // Animation keys
+    var keys = [];
+
+    var current_position = cam.position.y;
+
+    keys.push({frame: 0, value: current_position});
+
+    for (var j = 1; j < i; j++) {
+        current_position -= 0.25;
+        keys.push({frame: j, value: current_position});
+    }
+
+
+    jump.setKeys(keys);
+
+    cam.animations.push(jump);
+
+
+    var animatable = scene.beginAnimation(cam, false, fps, false);
+
+};
+
+var legsJumpRelease = function(leg, scene, bodyTodo) {
+
+    var legsMov = new BABYLON.Animation(
+        "legsMov",
+        "rotation.x", fps,
+        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+
+    // Animation keys
+    var keys = [];
+
+    var curr_rot = leg.rotation.x;
+
+    var inc = 0.4;
+
+    keys.push({frame: 0, value: curr_rot});
+
+    for (var i = 1; curr_rot > Math.PI / 2; i++) {
+        curr_rot -= inc;
+        keys.push({frame: i, value: curr_rot});
+    }
+
+    legsMov.setKeys(keys);
+
+    leg.animations = [];
+    leg.animations.push(legsMov);
+
+    scene.beginAnimation(leg, false, i, false);
+
+    var cam = scene.cameras[0];
+
+    cam.animations = [];
+
+    var jump = new BABYLON.Animation(
+        "jump",
+        "position.y", fps,
+        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+
+    // Animation keys
+    var keys = [];
+
+    var current_position = cam.position.y;
+
+    keys.push({frame: 0, value: current_position});
+
+    for (var j = 1; j < i; j++) {
+        current_position += 0.25;
+        keys.push({frame: j, value: current_position});
+    }
+
+
+    jump.setKeys(keys);
+
+    cam.animations.push(jump);
+
+
+    var animatable = scene.beginAnimation(cam, false, fps, false);
+
+    animatable.onAnimationEnd = function () {
+        animatable.animationStarted = false;
+        cameraJump(scene);
+    };
 
 };
 

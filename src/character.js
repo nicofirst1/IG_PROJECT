@@ -3,6 +3,11 @@ var lowerArmRight;
 var upperArmLeft;
 var lowerArmLeft;
 
+var upperLegRight;
+var lowerLegRight;
+var upperLegLeft;
+var lowerLegLeft;
+
 var movementBool = true;
 var body;
 var head;
@@ -233,6 +238,13 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
 
     function onKeyDown(event) {
         if(keyVec.indexOf(event.keyCode) >= 0) {
+            if (!legsCharge) {
+                scene.stopAnimation(camera);
+                scene.stopAnimation(upperLegRight);
+                scene.stopAnimation(upperLegLeft);
+                camera.position.y += 3.46 - 0.25;
+                legsCharge = true;
+            }
             if (movementBool) {
                 movementBool = false;
                 legMovement(scene, upperLegLeft, 2.5, true, camera, true);
