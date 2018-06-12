@@ -3,6 +3,8 @@ var lowerArmRight;
 var upperArmLeft;
 var lowerArmLeft;
 
+var movementBool = true;
+
 
 var initCharacter = function (scene, camera, shadowGenerator, ground) {
 
@@ -116,10 +118,10 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
     lowerArmLeft.position = new BABYLON.Vector3(0, 0, 3);
 
 
-    upperArmLeft.checkCollisions = true;
-    upperArmRight.checkCollisions = true;
-    lowerArmLeft.checkCollisions = true;
-    lowerArmRight.checkCollisions = true;
+    //upperArmLeft.checkCollisions = true;
+   // upperArmRight.checkCollisions = true;
+    //lowerArmLeft.checkCollisions = true;
+    //lowerArmRight.checkCollisions = true;
 
     // LEGS
     // UPPER RIGHT
@@ -169,7 +171,7 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
 
     upperLegLeft.position = new BABYLON.Vector3(-0.5, -1.75, 0);
 
-    // LOWER RIGHT
+    // LOWER LEFT
     lowerLegLeft = BABYLON.Mesh.CreateBox("arm", 3, scene);
     lowerLegLeft.scaling.x = 0.8;
     lowerLegLeft.scaling.y = 0.8;
@@ -184,10 +186,10 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
     lowerLegLeft.position = new BABYLON.Vector3(0, 0, 3.25);
 
 
-    upperLegLeft.checkCollisions = true;
-    upperLegRight.checkCollisions = true;
-    lowerLegLeft.checkCollisions = true;
-    lowerLegRight.checkCollisions = true;
+    //upperLegLeft.checkCollisions = true;
+    //upperLegRight.checkCollisions = true;
+    //lowerLegLeft.checkCollisions = true;
+    //lowerLegRight.checkCollisions = true;
 
     document.body.onmousedown = function onClickLeft(event) {
         if (upperArmRight.rotation.y < 0.0001) {
@@ -221,6 +223,40 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
         fireballSound[Math.floor(Math.random()*fireballSound.length)].play();
 
     };
+
+    window.addEventListener("keydown", onKeyDown, false);
+
+    function onKeyDown(event) {
+        switch (event.keyCode) {
+            case 87:
+                if (movementBool) {
+                    movementBool = false;
+                    legMovement(scene, upperLegLeft, 2.5, true, camera, true);
+                    legMovement(scene, lowerLegLeft, 2.5, true, camera, false);
+                    legMovement(scene, upperLegRight, 2.5, false, camera, true);
+                    legMovement(scene, lowerLegRight, 2.5, false, camera, false);
+                }
+        }
+    }
+
+    window.addEventListener("keyup", onKeyUp, false);
+
+    function onKeyUp(event) {
+        switch (event.keyCode) {
+            case 87:
+                scene.stopAnimation(upperLegLeft);
+                scene.stopAnimation(lowerLegLeft);
+                scene.stopAnimation(upperLegRight);
+                scene.stopAnimation(lowerLegRight);
+
+                upperLegLeft.rotation.x = Math.PI / 2;
+                lowerLegLeft.rotation.x = Math.PI / 2;
+                upperLegRight.rotation.x = Math.PI / 2;
+                lowerLegRight.rotation.x = Math.PI / 2;
+                
+                movementBool = true;
+        }
+    }
 };
 
 var fps = 30;
@@ -229,6 +265,123 @@ var frames2 = 2;
 
 var fireball = null;
 var pSystem = null;
+
+var legMovement = function(scene, leg, max, ccw, camera, upperLeg) {
+
+    var legsMov = new BABYLON.Animation(
+        "legsMov",
+        "rotation.x", fps,
+        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+
+    // Animation keys
+    var keys = [];
+
+    var curr_rot = Math.PI / 2;
+
+    var inc = 0.2;
+
+    keys.push({frame: 0, value: curr_rot});
+
+    if (ccw) {
+        if (upperLeg) {
+            for (var i = 1; curr_rot <= max; i++) {
+                curr_rot += inc;
+                keys.push({frame: i, value: curr_rot});
+            }
+
+            for (; curr_rot >= Math.PI / 2; i++) {
+                curr_rot -= inc;
+                keys.push({frame: i, value: curr_rot});
+            }
+
+            for (; curr_rot >= Math.PI / 6; i++) {
+                curr_rot -= inc;
+                keys.push({frame: i, value: curr_rot});
+            }
+
+            for (; curr_rot <= Math.PI / 2; i++) {
+                curr_rot += inc;
+                keys.push({frame: i, value: curr_rot});
+            }
+        } else {
+            for (var i = 1; curr_rot <= max; i++) {
+                curr_rot += inc;
+                keys.push({frame: i, value: curr_rot});
+            }
+
+            for (; curr_rot >= Math.PI / 2; i++) {
+                curr_rot -= inc;
+                keys.push({frame: i, value: curr_rot});
+            }
+
+            for (; curr_rot >= Math.PI / 6; i++) {
+                curr_rot -= inc;
+                keys.push({frame: i, value: Math.PI / 2});
+            }
+
+            for (; curr_rot <= Math.PI / 2; i++) {
+                curr_rot += inc;
+                keys.push({frame: i, value: Math.PI / 2});
+            }
+        }
+    } else {
+        if (upperLeg) {
+            for (var i = 1; curr_rot >= Math.PI / 6; i++) {
+                curr_rot -= inc;
+                keys.push({frame: i, value: curr_rot});
+            }
+
+            for (; curr_rot <= Math.PI / 2; i++) {
+                curr_rot += inc;
+                keys.push({frame: i, value: curr_rot});
+            }
+
+            for (; curr_rot <= max; i++) {
+                curr_rot += inc;
+                keys.push({frame: i, value: curr_rot});
+            }
+
+            for (; curr_rot >= Math.PI / 2; i++) {
+                curr_rot -= inc;
+                keys.push({frame: i, value: curr_rot});
+            }
+
+        } else {
+
+
+            for (var i = 1; curr_rot >= Math.PI / 6; i++) {
+                curr_rot -= inc;
+                keys.push({frame: i, value: Math.PI / 2});
+            }
+
+            for (; curr_rot <= Math.PI / 2; i++) {
+                curr_rot += inc;
+                keys.push({frame: i, value: Math.PI / 2});
+            }
+
+            for (; curr_rot <= max; i++) {
+                curr_rot += inc;
+                keys.push({frame: i, value: curr_rot});
+            }
+
+            for (; curr_rot >= Math.PI / 2; i++) {
+                curr_rot -= inc;
+                keys.push({frame: i, value: curr_rot});
+            }
+
+        }
+
+    }
+
+    legsMov.setKeys(keys);
+
+    leg.animations = [];
+    leg.animations.push(legsMov);
+
+    scene.beginAnimation(leg, false, i, true);
+
+};
 
 var armsMovementCharge = function(scene, arm, max, ccw, camera, todoFireball) {
 
