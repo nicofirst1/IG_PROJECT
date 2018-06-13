@@ -91,6 +91,8 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
 
     document.body.onmousedown = function onClickLeft(event) {
 
+        createFireballAnimation(scene);
+
         chargeArmsAnimationInterval=setInterval(function () {
                 armsChargeAnimation(scene,camera,true);
             }, armsChargeAnimationTime);
@@ -110,6 +112,9 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
     };
 
     document.body.onmouseup = function onReleaseLeft(event) {
+
+        fireFireball(scene, camera, ground);
+
 
         dischargeArmsAnimationInterval=setInterval(function () {
             armsDischargeAnimation(scene,camera,true);
@@ -165,40 +170,9 @@ var fireball = null;
 var pSystem = null;
 
 
-var armsMovementCharge = function(scene, arm, max, ccw, camera, todoFireball) {
+var createFireballAnimation = function(scene) {
 
-    var armsMov = new BABYLON.Animation(
-        "armsMov",
-        "rotation.y", fps,
-        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-
-    // Animation keys
-    var keys = [];
-
-    var curr_rot = arm.rotation.y;
-
-    keys.push({frame: 0, value: curr_rot});
-
-    var inc = max / (frames1);
-
-    for (var i = 1; i <= frames1 ; i++) {
-        if (ccw) curr_rot += inc;
-        else curr_rot -= inc;
-        //window.alert(i + " - " + curr_rot);
-        keys.push({frame: i, value: curr_rot});
-    }
-
-    armsMov.setKeys(keys);
-
-    arm.animations = [];
-    arm.animations.push(armsMov);
-
-    scene.beginAnimation(arm, false, fps, false);
-
-    if (todoFireball) {
-        createFireball(scene, camera)
-    }
+    createFireball(scene, camera);
 
     var max_scaling = 15;
 
@@ -338,9 +312,10 @@ var createFireball = function (scene, camera) {
     fireballMaterial.emissiveColor = new BABYLON.Vector3(1.0, 0.0, 0.0);
     fireball.material = fireballMaterial;
 
-    if (useThirdP) fireball.position = new BABYLON.Vector3(0.0, -2, 6);
-    else fireball.position = new BABYLON.Vector3(0.0, -0.5, 6);
     fireball.parent = camera;
+
+    if (useThirdP) fireball.position = new BABYLON.Vector3(0.0, -0.5, 6);
+    else fireball.position = new BABYLON.Vector3(0.0, -0.5, 6);
 
     pSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
     pSystem.emitter = fireball;

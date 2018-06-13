@@ -2,7 +2,7 @@ var metheoriteID = 0;
 var seed = 1;
 var max_dim = 3;
 var min_dim = 0.5;
-var meteorite_number = 10;
+var meteorite_number = 0;
 var meteoriteProb=0.0;
 
 var createMeteorite = function (grounds, scene) {
