@@ -30,6 +30,9 @@ var start=function () {
 
     hide_menu();
 
+
+    BABYLON.Animation.AllowMatricesInterpolation = true;
+
     var gravity= new BABYLON.Vector3(0, -2.1, 0);
 
 
@@ -65,7 +68,6 @@ var start=function () {
 
 
 
-    BABYLON.Animation.AllowMatricesInterpolation = true;
 
     //add the camera to the scene
     scene.addCamera(camera);
@@ -74,8 +76,6 @@ var start=function () {
     var grounds = mapInit(scene, light,shadowGenerator, camera);
 
 
-    camera.applyGravity = true;
-    camera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
 
     window.addEventListener("resize", function () { engine.resize();});
 
