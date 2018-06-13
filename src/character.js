@@ -8,6 +8,11 @@ var lowerLegRight;
 var upperLegLeft;
 var lowerLegLeft;
 
+var upperLegRightInit;
+var lowerLegRightInit;
+var upperLegLeftInit;
+var lowerLegLeftInit;
+
 var movementBool = true;
 var body;
 var head;
@@ -50,6 +55,10 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
         upperLegRight.rotate(BABYLON.Axis.Y, -0.15);
         upperLegLeft.rotate(BABYLON.Axis.Y, 0.15);
 
+        upperLegRightInit = upperLegRight.getRotation();
+        upperLegLeftInit = upperLegLeft.getRotation();
+        lowerLegRightInit = lowerLegRight.getRotation();
+        lowerLegLeftInit = lowerLegLeft.getRotation();
 
     });
 

@@ -4,10 +4,10 @@ var phase2 = false;
 var phase3 = false;
 var phase4 = false;
 
-var maxUpper = 0.7;
-var maxLower = 0.7;
+var maxUpper = 0.6;
+var maxLower = 0.8;
 
-var legMovement = function(scene, leg, max, ccw, camera, upperLeg) {
+var legMovement = function (scene, leg, max, ccw, camera, upperLeg) {
     moveLegs = true;
 
     var angleUpperRight = 0;
@@ -30,14 +30,16 @@ var legMovement = function(scene, leg, max, ccw, camera, upperLeg) {
                     phase2 = true;
                 }
 
-                if (angleUpperLeft >= -maxUpper) {
-                    angleUpperLeft -= inc;
-                    upperLegLeft.rotate(BABYLON.Axis.Z, -inc);
-                }
+                if (phase1) {
+                    if (angleUpperLeft >= -maxUpper) {
+                        angleUpperLeft -= inc;
+                        upperLegLeft.rotate(BABYLON.Axis.Z, -inc);
+                    }
 
-                if (angleLowerLeft >= -maxLower) {
-                    angleLowerLeft -= inc;
-                    lowerLegLeft.rotate(BABYLON.Axis.Z, -inc);
+                    if (angleLowerLeft >= -maxLower) {
+                        angleLowerLeft -= inc;
+                        lowerLegLeft.rotate(BABYLON.Axis.Z, -inc);
+                    }
                 }
             }
 
@@ -50,14 +52,16 @@ var legMovement = function(scene, leg, max, ccw, camera, upperLeg) {
                     phase3 = true;
                 }
 
-                if (angleUpperLeft <= 0) {
-                    angleUpperLeft += inc;
-                    upperLegLeft.rotate(BABYLON.Axis.Z, inc);
-                }
+                if(phase2) {
+                    if (angleUpperLeft <= 0) {
+                        angleUpperLeft += inc;
+                        upperLegLeft.rotate(BABYLON.Axis.Z, inc);
+                    }
 
-                if (angleLowerLeft <= 0) {
-                    angleLowerLeft += inc;
-                    lowerLegLeft.rotate(BABYLON.Axis.Z, inc);
+                    if (angleLowerLeft <= 0) {
+                        angleLowerLeft += inc;
+                        lowerLegLeft.rotate(BABYLON.Axis.Z, inc);
+                    }
                 }
             }
 
@@ -70,14 +74,16 @@ var legMovement = function(scene, leg, max, ccw, camera, upperLeg) {
                     phase4 = true;
                 }
 
-                if (angleUpperLeft <= maxUpper) {
-                    angleUpperLeft += inc;
-                    upperLegLeft.rotate(BABYLON.Axis.Z, inc);
-                }
+                if (phase3) {
+                    if (angleUpperLeft <= maxUpper) {
+                        angleUpperLeft += inc;
+                        upperLegLeft.rotate(BABYLON.Axis.Z, inc);
+                    }
 
-                if (angleLowerRight >= -maxLower) {
-                    angleLowerRight -= inc;
-                    lowerLegRight.rotate(BABYLON.Axis.Z, -inc);
+                    if (angleLowerRight >= -maxLower) {
+                        angleLowerRight -= inc;
+                        lowerLegRight.rotate(BABYLON.Axis.Z, -inc);
+                    }
                 }
             }
 
@@ -90,44 +96,45 @@ var legMovement = function(scene, leg, max, ccw, camera, upperLeg) {
                     phase1 = true;
                 }
 
-                if (angleUpperLeft >= 0) {
-                    angleUpperLeft -= inc;
-                    upperLegLeft.rotate(BABYLON.Axis.Z, -inc);
-                }
+                if (phase4) {
+                    if (angleUpperLeft >= 0) {
+                        angleUpperLeft -= inc;
+                        upperLegLeft.rotate(BABYLON.Axis.Z, -inc);
+                    }
 
-                if (angleLowerRight <= 0) {
-                    angleLowerRight += inc;
-                    lowerLegRight.rotate(BABYLON.Axis.Z, inc);
+                    if (angleLowerRight <= 0) {
+                        angleLowerRight += inc;
+                        lowerLegRight.rotate(BABYLON.Axis.Z, inc);
+                    }
                 }
             }
         } else {
-            if (angleUpperRight > 0.0001) {
-                angleUpperRight -= inc * 2;
+
+            if (angleUpperRight > 0.1) {
+                angleUpperRight -= inc;
 
                 upperLegRight.rotate(BABYLON.Axis.Z, -inc);
                 upperLegLeft.rotate(BABYLON.Axis.Z, inc);
-            } else if (angleUpperRight < 0.0001){
-                angleUpperRight += inc * 2;
+            } else if (angleUpperRight < -0.1) {
+                angleUpperRight += inc;
                 upperLegRight.rotate(BABYLON.Axis.Z, inc);
                 upperLegLeft.rotate(BABYLON.Axis.Z, -inc);
+
+            } else {
+                upperLegRight.setRotation(upperLegRightInit);
+                upperLegLeft.setRotation(upperLegLeftInit);
+                lowerLegRight.setRotation(lowerLegRightInit);
+                lowerLegLeft.setRotation(lowerLegLeftInit);
             }
 
-            if (angleLowerRight >  0.0001) {
-                angleLowerRight -= inc * 2;
+            if (angleLowerRight > 0.1) {
+                angleLowerRight -= inc;
                 lowerLegRight.rotate(BABYLON.Axis.Z, -inc);
-            } else if (angleLowerRight < 0.0001){
-                angleLowerRight += inc * 2;
-                lowerLegRight.rotate(BABYLON.Axis.Z, inc);
             }
-
-            if (angleLowerLeft > 0.0001) {
-                angleLowerLeft -= inc * 2;
+            if (angleLowerLeft > 0.1) {
+                angleLowerLeft -= inc;
                 lowerLegLeft.rotate(BABYLON.Axis.Z, -inc);
-            } else if (angleLowerLeft < 0.0001){
-                angleLowerLeft += inc * 2;
-                lowerLegLeft.rotate(BABYLON.Axis.Z, inc);
             }
-
         }
 
     }
