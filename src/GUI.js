@@ -43,7 +43,7 @@ var initGui = function (scene, camera) {
     manaBar(scene, advancedTexture);
     scoreBar(scene, advancedTexture);
     gameOver(scene, advancedTexture);
-    musicCheckbox(advancedTexture);
+    writtenInfos(advancedTexture);
 
 
     //add mdamage function on camera
@@ -349,10 +349,10 @@ var gameOver = function (scene, advancedTexture) {
 
 
 var playMusicFlag=true;
-var header2;
+var currentPov;
 var audio;
 
-var musicCheckbox=function (adcancedTexture) {
+var writtenInfos=function (adcancedTexture) {
     audio=document.getElementById("sfx-background");
 
     var header = new BABYLON.GUI.TextBlock();
@@ -373,18 +373,18 @@ var musicCheckbox=function (adcancedTexture) {
     header1.paddingTop="700px";
 
 
-    header2 = new BABYLON.GUI.TextBlock();
-    header2.text = "Current POV is TP";
-    header2.width = "250px";
-    header2.color = "magenta";
-    header2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-    header2.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
-    header2.paddingTop="750px";
+    currentPov = new BABYLON.GUI.TextBlock();
+    currentPov.text = "Current POV is TP";
+    currentPov.width = "250px";
+    currentPov.color = "magenta";
+    currentPov.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+    currentPov.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+    currentPov.paddingTop="750px";
 
 
 
     adcancedTexture.addControl(header);
     adcancedTexture.addControl(header1);
-    adcancedTexture.addControl(header2);
+    adcancedTexture.addControl(currentPov);
 
 };

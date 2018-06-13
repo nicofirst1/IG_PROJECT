@@ -109,7 +109,7 @@ var onKeyUp=function(event) {
                 switchFPS(scene);
                 modeSwitch = 1;
                 useThirdP=false;
-                header2.text="Current POV is FP"
+                currentPov.text="Current POV is FP"
 
 
             }
@@ -117,14 +117,14 @@ var onKeyUp=function(event) {
                 switchTPS(scene,false);
                 modeSwitch = 2;
                 useThirdP=true;
-                header2.text="Current POV is TP"
+                currentPov.text="Current POV is TP"
 
             }
             else if (modeSwitch===2){
                 switchTPS(scene,true);
                 modeSwitch = 0;
                 useThirdP=true;
-                header2.text="Current POV is 2D"
+                currentPov.text="Current POV is 2D"
 
             }
             else{
