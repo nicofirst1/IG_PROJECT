@@ -1,4 +1,6 @@
 var canvas;
+var scene;
+
 
 var hide_menu=function () {
     //
@@ -40,7 +42,7 @@ var start=function () {
     engine.doNotHandleContextLost = true;
 
 
-    var scene = new BABYLON.Scene(engine);
+    scene = new BABYLON.Scene(engine);
     scene.enablePhysics();
     scene.gravity = gravity;
     scene.collisionsEnabled = true;

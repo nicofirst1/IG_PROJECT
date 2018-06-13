@@ -4,6 +4,7 @@ var camera1;
 var legsCharge = true;
 var camera;
 
+var falling = true;
 var jumpKeyRelease = false;
 
 var InitCamera = function (scene) {
@@ -169,7 +170,7 @@ function remove_item(arr, value) {
 
 var fps = 13;//the speed of the jump execution
 var max_jump_heigth = 8;
-var isJumping = false;
+var isJumping = true;
 
 //jump animation
 var cameraJump = function (scene) {
@@ -238,6 +239,7 @@ var cameraJump = function (scene) {
         animatable.animationStarted = false;
         movementBool = true;
         canCharge = true;
+        falling = true;
 
         angleUpperRight0 = 0;
         angleUpperRight1 = 0;

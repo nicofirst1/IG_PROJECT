@@ -89,10 +89,37 @@ var inflictDamage = function (collidedMesh) {
     }
 
     if(collidedMesh.id==="groundBox"||collidedMesh.id==="ground"){
-        if (isJumping) {
+        if (isJumping && falling) {
             upperLegLeft.rotation.x = Math.PI / 2;
             upperLegRight.rotation.x = Math.PI / 2;
+
+
+            var angleUpperRight00 = 0;
+            var angleUpperRight11 = 0;
+            var inc = 0.07;
+
+            scene.beforeRender = function () {
+                if (angleUpperRight00 >= -maxUpper) {
+                    angleUpperRight00 -= inc;
+                    upperLegRight.rotate(BABYLON.Axis.Z, -inc);
+                    lowerLegRight.rotate(BABYLON.Axis.Z, -inc);
+                    upperLegLeft.rotate(BABYLON.Axis.Z, -inc);
+                    lowerLegLeft.rotate(BABYLON.Axis.Z, -inc);
+                    bodyMesh.position.y -= inc * 0.5;
+                } else {
+                    if (angleUpperRight11 >= -maxUpper) {
+                        angleUpperRight11 -= inc;
+                        upperLegRight.rotate(BABYLON.Axis.Z, inc);
+                        lowerLegRight.rotate(BABYLON.Axis.Z, inc);
+                        upperLegLeft.rotate(BABYLON.Axis.Z, inc);
+                        lowerLegLeft.rotate(BABYLON.Axis.Z, inc);
+                        bodyMesh.position.y += inc * 0.5;
+                    }
+                }
+            };
+
             isJumping = false;
+            falling = false;
         }
 
         return;
