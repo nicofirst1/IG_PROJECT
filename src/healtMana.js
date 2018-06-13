@@ -347,7 +347,7 @@ var musicCheckbox=function (adcancedTexture) {
 
 
     var header1 = new BABYLON.GUI.TextBlock();
-    header1.text = "Switch from 3th to 1th with 'V'";
+    header1.text = "Switch POV with 'V'";
     header1.width = "250px";
     header1.color = "yellow";
     header1.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
@@ -355,16 +355,9 @@ var musicCheckbox=function (adcancedTexture) {
     header1.paddingTop="700px";
 
 
-    var header2 = new BABYLON.GUI.TextBlock();
-    header2.text = "Switch from 2d to 3d with 'X'";
-    header2.width = "250px";
-    header2.color = "yellow";
-    header2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
-    header2.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
-    header2.paddingTop="650px";
+    
 
     adcancedTexture.addControl(header);
     adcancedTexture.addControl(header1);
-    adcancedTexture.addControl(header2);
 
 };

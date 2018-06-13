@@ -61,6 +61,7 @@ var InitCamera = function (scene) {
     scene.activeCameras.push(camera1);
 
     useThirdP = true;
+    var modeSwitch=0;
     up=false;
 
     window.addEventListener("keydown", onKeyDown, false);
@@ -89,31 +90,28 @@ var InitCamera = function (scene) {
                 break;
 
 
-            case 86:
-                if (useThirdP) {
-                    scene.activeCameras=remove_item(scene.activeCameras, camera1);
-                    useThirdP = false;
-                    upperArmRight.position = new BABYLON.Vector3(4, -0.5, 5);
-                    upperArmLeft.position = new BABYLON.Vector3(-4, -0.5, 5);
+            case 86://V
+                if (modeSwitch===0) {
+                    switchFPS(scene);
+                    modeSwitch = 1;
+                    useThirdP=false;
+
+
                 }
-                else {
-                    scene.activeCameras.push(camera1);
-                    useThirdP = true;
-                    upperArmRight.position = new BABYLON.Vector3(2, 0.5, 0.5);
-                    upperArmLeft.position = new BABYLON.Vector3(-2, 0.5, 0.5);
+                else if(modeSwitch===1) {
+                    switchTPS(scene,false);
+                    modeSwitch = 2;
+                    useThirdP=true;
+
                 }
-                break;
-            case 88:
-                if(!up){
-                    camera1.beta=0;
-                    camera1.radius=500;
-                    up=true
+                else if (modeSwitch===2){
+                    switchTPS(scene,true);
+                    modeSwitch = 0;
+                    useThirdP=true;
+
                 }
                 else{
-                    camera1.beta = 1;
-                    camera1.radius = 7;
-
-                    up=false
+                    modeSwitch=0;
                 }
                 break;
 
@@ -123,6 +121,33 @@ var InitCamera = function (scene) {
 
 
     return camera
+};
+
+var switchFPS=function (scene) {
+
+    scene.activeCameras=remove_item(scene.activeCameras, camera1);
+    upperArmRight.position = new BABYLON.Vector3(4, -0.5, 5);
+    upperArmLeft.position = new BABYLON.Vector3(-4, -0.5, 5);
+
+};
+
+var switchTPS=function (scene, is2d) {
+
+    if (is2d){
+        camera1.beta=0;
+        camera1.radius=500;
+    }
+    else{
+        camera1.beta=1;
+        camera1.radius=7;
+
+        scene.activeCameras.push(camera1);
+        upperArmRight.position = new BABYLON.Vector3(2, 0.5, 0.5);
+        upperArmLeft.position = new BABYLON.Vector3(-2, 0.5, 0.5);
+
+    }
+
+
 };
 
 function remove_item(arr, value) {
