@@ -164,46 +164,4 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
 
 
 
-var armsMovementRelease = function(scene, arm, ccw, todoFireball, camera, ground) {
-
-    var max = Math.abs(arm.rotation.y);
-
-    var armsMov = new BABYLON.Animation(
-        "armsMov",
-        "rotation.y", fps,
-        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-
-    // Animation keys
-    var keys = [];
-
-    var curr_rot = arm.rotation.y;
-
-    var inc = max / (frames2);
-
-    for (var i = 0; i < frames2; i++) {
-        if (ccw) curr_rot -= inc;
-        else curr_rot += inc;
-        //window.alert(i + " - " + curr_rot);
-        keys.push({frame: i, value: curr_rot});
-    }
-
-    keys.push({frame: i, value: 0});
-
-    armsMov.setKeys(keys);
-
-    arm.animations = [];
-    arm.animations.push(armsMov);
-
-    scene.stopAnimation(arm);
-
-    var animatable = scene.beginAnimation(arm, false, fps, false);
-
-    if (todoFireball && fireball != null) {
-        animatable.onAnimationEnd = function () {
-            animatable.animationStarted = false;
-            fireFireball(scene, camera, ground);
-        };
-    }
-};
 
