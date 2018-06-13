@@ -171,6 +171,5 @@ var windowListener=function () {
 // Set full screen
 var setFullScreen = function () {
     engine.isPointerLock = true;
-    window.removeEventListener('click', setFullScreen);
     canvas.requestPointerLock();
 };
