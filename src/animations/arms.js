@@ -4,7 +4,7 @@ var phase2Arms = false;
 
 
 var armAngle = 0;
-var armInc = -0.1;
+var armInc = -0.085;
 
 
 var chargedForJump = false;
@@ -39,8 +39,8 @@ var beforeRenderArms=function () {
         }
 
 
-        upperArmRight.rotate(BABYLON.Axis.Z, armInc);
-        upperArmLeft.rotate(BABYLON.Axis.Z, -armInc);
+        upperArmLeft.rotate(BABYLON.Axis.Z, armInc);
+        upperArmRight.rotate(BABYLON.Axis.Z, -armInc);
         armAngle += armInc;
 
     }
@@ -49,14 +49,14 @@ var beforeRenderArms=function () {
 
         if(armAngle>0){
             if(armInc>0) armInc=-armInc;
-            upperArmRight.rotate(BABYLON.Axis.Z, armInc);
-            upperArmLeft.rotate(BABYLON.Axis.Z, -armInc);
+            upperArmLeft.rotate(BABYLON.Axis.Z, armInc);
+            upperArmRight.rotate(BABYLON.Axis.Z, -armInc);
             armAngle += armInc;
         }
         else if(armAngle<0){
             if(armInc<0) armInc=-armInc;
-            upperArmRight.rotate(BABYLON.Axis.Z, armInc);
-            upperArmLeft.rotate(BABYLON.Axis.Z, -armInc);
+            upperArmLeft.rotate(BABYLON.Axis.Z, armInc);
+            upperArmRight.rotate(BABYLON.Axis.Z, -armInc);
             armAngle += armInc;
         }
 
