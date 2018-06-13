@@ -4,7 +4,7 @@ var phase2Arms = false;
 
 
 var armRunAngle = 0;
-var armRunInc = -0.1;
+var armRunInc = -0.085;
 
 
 var beforeRenderArms = function () {
