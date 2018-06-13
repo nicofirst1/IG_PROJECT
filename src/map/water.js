@@ -1,5 +1,4 @@
 var water_hight=0.1;
-var water_color = "#0f38da";
 var water;
 
 var initWater = function(scene, skybox, grounds) {
