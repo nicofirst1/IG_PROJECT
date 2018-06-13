@@ -164,6 +164,7 @@ var onKeyDown= function(event) {
 var windowListener=function () {
 
     window.addEventListener('click', setFullScreen);
+    window.addEventListener("resize", function () { engine.resize();});
 
 
 };

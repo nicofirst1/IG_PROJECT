@@ -77,7 +77,6 @@ var start=function () {
 
 
 
-    window.addEventListener("resize", function () { engine.resize();});
 
     initCharacter(scene, camera, shadowGenerator, grounds);
 
