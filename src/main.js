@@ -95,13 +95,13 @@ var start=function () {
     scene.registerBeforeRender(function () {
 
         if (useThirdP) {
-            body.rotation.x = -camera.rotation.x;
-            body.rotation.z = -camera.rotation.z;
-            body.position.y = -0.5;
+            //body.rotation.x = -camera.rotation.x;
+            //body.rotation.z = -camera.rotation.z;
+            //body.position.y = -0.5;
         } else {
-            body.rotation.x = 0;
-            body.rotation.z = 0;
-            body.position.y = -0.2;
+            //body.rotation.x = 0;
+            //body.rotation.z = 0;
+            //body.position.y = -0.2;
         }
 
         if (camera.position.y < -100) displayGameOver();
