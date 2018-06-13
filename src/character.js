@@ -32,6 +32,8 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
 
     BABYLON.SceneLoader.ImportMesh("", "Models/dude/", "Dude.babylon", scene,importModel );
 
+
+    //todo: move these into eventsLister
     document.body.onmousedown = function onClickLeft(event) {
 
         createFireballAnimation(scene);
