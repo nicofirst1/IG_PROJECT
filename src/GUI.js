@@ -354,10 +354,7 @@ var audio=document.getElementById("sfx-background");
 
 var musicCheckbox=function (adcancedTexture) {
 
-
-
-
-
+    
     var header = new BABYLON.GUI.TextBlock();
     header.text = "Play/pause music with 'M'";
     header.width = "250px";
