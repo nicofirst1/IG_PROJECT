@@ -1,17 +1,17 @@
 var useThirdP = true;
 var up=false;
-var camera1;
+var TPcamera;
 var legsCharge = true;
 var camera;
 
 var falling = true;
 var jumpKeyRelease = false;
 var modeSwitch=0;
+var camera_position = new BABYLON.Vector3(110, 35, 0);
 
 var InitCamera = function (scene) {
     camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 10, 0), scene);
 
-    var camera_position = new BABYLON.Vector3(110, 35, 0);
 
     camera.position = camera_position;
 
@@ -42,27 +42,22 @@ var InitCamera = function (scene) {
 
     camera.attachControl(canvas, true);
 
-    var posCamera1 = new BABYLON.Vector3(0, -3, 0);
 
-    camera1 = new BABYLON.ArcRotateCamera("thirdPCamera", scene);
-    //camera1.position = posCamera1;
-    camera1.alpha = -Math.PI / 2;
-    camera1.beta = 1; // 0 for above
-    camera1.radius = 10; // 100 for above
+    TPcamera = new BABYLON.ArcRotateCamera("thirdPCamera", scene);
+    //TPcamera.position = posCamera1;
+    TPcamera.alpha = -Math.PI / 2;
+    TPcamera.beta = 1; // 0 for above
+    TPcamera.radius = 10; // 100 for above
 
-    camera1.layerMask = 2;
-    camera1.parent = camera;
-    camera1.applyGravity = true;
-    //camera1.checkCollisions = true;
+    TPcamera.layerMask = 2;
+    TPcamera.parent = camera;
+    TPcamera.applyGravity = true;
+    //TPcamera.checkCollisions = true;
 
 
-    // var rt1 = new BABYLON.RenderTargetTexture("depth", 1024, scene, true, true);
-    // scene.customRenderTargets.push(rt1);
-    // rt1.activeCamera = camera1;
-    // rt1.renderList = scene.meshes;
 
     scene.activeCameras.push(camera);
-    scene.activeCameras.push(camera1);
+    scene.activeCameras.push(TPcamera);
 
     useThirdP = true;
     up=false;
@@ -74,7 +69,7 @@ var InitCamera = function (scene) {
 
 var switchFPS=function (scene) {
 
-    scene.activeCameras=remove_item(scene.activeCameras, camera1);
+    scene.activeCameras=remove_item(scene.activeCameras, TPcamera);
     upperArmRight.position = new BABYLON.Vector3(4, -0.5, 5);
     upperArmLeft.position = new BABYLON.Vector3(-4, -0.5, 5);
 
@@ -83,14 +78,14 @@ var switchFPS=function (scene) {
 var switchTPS=function (scene, is2d) {
 
     if (is2d){
-        camera1.beta=0;
-        camera1.radius=500;
+        TPcamera.beta=0;
+        TPcamera.radius=500;
     }
     else{
-        camera1.beta=1;
-        camera1.radius=7;
+        TPcamera.beta=1;
+        TPcamera.radius=7;
 
-        scene.activeCameras.push(camera1);
+        scene.activeCameras.push(TPcamera);
         upperArmRight.position = new BABYLON.Vector3(2, 0.5, 0.5);
         upperArmLeft.position = new BABYLON.Vector3(-2, 0.5, 0.5);
 
@@ -108,103 +103,3 @@ function remove_item(arr, value) {
     }
     return arr;
 }
-
-var fps = 13;//the speed of the jump execution
-var max_jump_heigth = 8;
-var isJumping = true;
-
-//jump animation
-var cameraJump = function (scene) {
-
-
-    isJumping = true;
-
-    var cam = scene.cameras[0];
-
-    cam.animations = [];
-
-    var jump = new BABYLON.Animation(
-        "jump",
-        "position.y", fps,
-        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-
-    // Animation keys
-    var keys = [];
-
-    var i;
-    var current_position = cam.position.y;
-
-    keys.push({frame: 0, value: current_position});
-
-    for (i = 1; i < max_jump_heigth; i++) {
-        current_position += 2;
-        keys.push({frame: i, value: current_position});
-    }
-
-    for (; i < max_jump_heigth + 1; i++) {
-        keys.push({frame: i, value: current_position});
-    }
-
-
-    jump.setKeys(keys);
-    /*
-
-        var easingFunction = new BABYLON.CircleEase();
-        easingFunction.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
-        jump.setEasingFunction(easingFunction);
-    */
-
-    cam.animations.push(jump);
-
-
-
-
-    var animatable = scene.beginAnimation(cam, false, fps, false);
-
-
-    var angleUpperRight2 = 0;
-
-    var inc2 = 0.05;
-
-    scene.beforeRender = function () {
-        if (angleUpperRight2 >= -maxUpper) {
-            angleUpperRight2 -= inc2;
-            upperLegRight.rotate(BABYLON.Axis.Y, inc2 / 2);
-            upperLegLeft.rotate(BABYLON.Axis.Y, -inc2 / 2);
-        }
-
-    };
-
-    animatable.onAnimationEnd = function () {
-        animatable.animationStarted = false;
-        movementBool = true;
-        canCharge = true;
-        falling = true;
-
-        angleUpperRight0 = 0;
-        angleUpperRight1 = 0;
-
-        var angleRot = 0;
-        var inc = 0.05;
-
-        scene.beforeRender = function () {
-            if (angleRot >= -0.3) {
-                angleRot -= inc;
-
-                upperLegRight.rotate(BABYLON.Axis.Y, -inc );
-                upperLegLeft.rotate(BABYLON.Axis.Y, inc);
-
-            } else {
-                upperLegRight.setRotation(upperLegRightInit);
-                upperLegLeft.setRotation(upperLegLeftInit);
-            }
-
-        };
-    };
-
-};
-
-
-
-

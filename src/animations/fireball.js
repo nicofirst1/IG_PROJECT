@@ -156,16 +156,15 @@ var fireFireball = function (scene, camera, ground) {
 };
 
 
-var fps = 30;
-var frames1 = 15;
-var frames2 = 2;
+
+
 
 var fireball = null;
 var pSystem = null;
 
 
 var createFireballAnimation = function(scene) {
-
+    var fps = 30;
     createFireball(scene, camera);
 
     var max_scaling = 15;
