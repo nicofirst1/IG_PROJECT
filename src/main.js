@@ -70,8 +70,6 @@ var start=function () {
 
 
 
-    //----ENGINE
-    addKeyboardListeners();
 
 
     BABYLON.Animation.AllowMatricesInterpolation = true;
@@ -115,6 +113,9 @@ var start=function () {
             }
         })
     });
+
+    //----ENGINE
+    addKeyboardListeners();
 
     engine.runRenderLoop(function () {
         scene.render();

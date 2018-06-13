@@ -21,7 +21,7 @@ var InitCamera = function (scene) {
     camera.checkCollisions = true;
     camera.applyGravity = true;
     camera._needMoveForGravity = true;
- 
+
 
     // WASD
     camera.keysUp = [87];    // W
@@ -66,15 +66,6 @@ var InitCamera = function (scene) {
 
     useThirdP = true;
     up=false;
-
-    window.addEventListener("keydown", onKeyDown, false);
-
-    function onKeyDown(event) {
-        switch (event.keyCode) {
-            case 32:
-                legsJumpCharge(scene);
-        }
-    }
 
 
 

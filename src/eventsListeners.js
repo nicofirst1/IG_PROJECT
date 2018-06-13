@@ -145,4 +145,7 @@ var onKeyDown= function(event) {
             legMovement(scene, upperLegLeft, 2.5, true, camera, true);
         }
     }
+    if (event.keyCode===32) {
+            legsJumpCharge(scene);
+    }
 }
