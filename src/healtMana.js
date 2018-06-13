@@ -89,7 +89,12 @@ var inflictDamage = function (collidedMesh) {
     }
 
     if(collidedMesh.id==="groundBox"||collidedMesh.id==="ground"){
-        isJumping=false;
+        if (isJumping) {
+            upperLegLeft.rotation.x = Math.PI / 2;
+            upperLegRight.rotation.x = Math.PI / 2;
+            isJumping = false;
+        }
+
         return;
     }
 

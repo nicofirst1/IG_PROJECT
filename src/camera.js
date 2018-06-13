@@ -2,10 +2,10 @@ var useThirdP = true;
 var up=false;
 var camera1;
 var legsCharge = true;
-
+var camera;
 
 var InitCamera = function (scene) {
-    var camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 10, 0), scene);
+    camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 10, 0), scene);
 
     var camera_position = new BABYLON.Vector3(110, 45, 0);
 
@@ -136,7 +136,7 @@ function remove_item(arr, value) {
 }
 
 var fps = 13;//the speed of the jump execution
-var max_jump_heigth = 4.5;
+var max_jump_heigth = 8;
 var isJumping = false;
 
 //jump animation
@@ -168,7 +168,7 @@ var cameraJump = function (scene) {
         keys.push({frame: i, value: current_position});
     }
 
-    for (; i < max_jump_heigth + 1; i++) {
+    for (; i < max_jump_heigth + 2; i++) {
         keys.push({frame: i, value: current_position});
     }
 
@@ -188,139 +188,11 @@ var cameraJump = function (scene) {
     animatable.onAnimationEnd = function () {
         animatable.animationStarted = false;
         legsCharge = true;
+        movementBool = true;
     };
 
 };
 
 
-
-var legsJumpCharge = function(leg, scene) {
-
-    var legsMov = new BABYLON.Animation(
-        "legsMov",
-        "rotation.x", fps,
-        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-
-    // Animation keys
-    var keys = [];
-
-    var curr_rot = Math.PI / 2;
-
-    var inc = 0.4;
-
-    keys.push({frame: 0, value: curr_rot});
-
-    for (var i = 1; curr_rot <= 2.5; i++) {
-        curr_rot += inc;
-        keys.push({frame: i, value: curr_rot});
-    }
-
-
-
-    legsMov.setKeys(keys);
-
-    leg.animations = [];
-    leg.animations.push(legsMov);
-
-    scene.beginAnimation(leg, false, i, false);
-
-    var cam = scene.cameras[0];
-
-    cam.animations = [];
-
-    var jump = new BABYLON.Animation(
-        "jump",
-        "position.y", fps,
-        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-
-    // Animation keys
-    var keys = [];
-
-    var current_position = cam.position.y;
-
-    keys.push({frame: 0, value: current_position});
-
-    for (var j = 1; j < i; j++) {
-        current_position -= 0.25;
-        keys.push({frame: j, value: current_position});
-    }
-
-
-    jump.setKeys(keys);
-
-    cam.animations.push(jump);
-
-
-    var animatable = scene.beginAnimation(cam, false, fps, false);
-
-};
-
-var legsJumpRelease = function(leg, scene, bodyTodo) {
-
-    var legsMov = new BABYLON.Animation(
-        "legsMov",
-        "rotation.x", fps,
-        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-
-    // Animation keys
-    var keys = [];
-
-    var curr_rot = leg.rotation.x;
-
-    var inc = 0.4;
-
-    keys.push({frame: 0, value: curr_rot});
-
-    for (var i = 1; curr_rot > Math.PI / 2; i++) {
-        curr_rot -= inc;
-        keys.push({frame: i, value: curr_rot});
-    }
-
-    legsMov.setKeys(keys);
-
-    leg.animations = [];
-    leg.animations.push(legsMov);
-
-    scene.beginAnimation(leg, false, i, false);
-
-    var cam = scene.cameras[0];
-
-    cam.animations = [];
-
-    var jump = new BABYLON.Animation(
-        "jump",
-        "position.y", fps,
-        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-
-    // Animation keys
-    var keys = [];
-
-    var current_position = cam.position.y;
-
-    keys.push({frame: 0, value: current_position});
-
-    for (var j = 1; j < i; j++) {
-        current_position += 0.25;
-        keys.push({frame: j, value: current_position});
-    }
-
-
-    jump.setKeys(keys);
-
-    cam.animations.push(jump);
-
-
-    var animatable = scene.beginAnimation(cam, false, fps, false);
-
-    animatable.onAnimationEnd = function () {
-        animatable.animationStarted = false;
-        cameraJump(scene);
-    };
-
-};
 
 
