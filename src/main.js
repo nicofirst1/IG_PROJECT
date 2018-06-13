@@ -114,7 +114,3 @@ var start=function () {
     });
 
 };
-
-function renderFunction() {
-
-}
