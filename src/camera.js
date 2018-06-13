@@ -6,6 +6,7 @@ var camera;
 
 var falling = true;
 var jumpKeyRelease = false;
+var modeSwitch=0;
 
 var InitCamera = function (scene) {
     camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 10, 0), scene);
@@ -20,7 +21,7 @@ var InitCamera = function (scene) {
     camera.checkCollisions = true;
     camera.applyGravity = true;
     camera._needMoveForGravity = true;
-
+ 
 
     // WASD
     camera.keysUp = [87];    // W
@@ -64,7 +65,6 @@ var InitCamera = function (scene) {
     scene.activeCameras.push(camera1);
 
     useThirdP = true;
-    var modeSwitch=0;
     up=false;
 
     window.addEventListener("keydown", onKeyDown, false);
@@ -76,56 +76,6 @@ var InitCamera = function (scene) {
         }
     }
 
-    // add listener for jump
-    window.addEventListener("keyup", onKeyUp, false);
-
-    function onKeyUp(event) {
-        switch (event.keyCode) {
-            case 32:
-                jumpKeyRelease = true;
-                legsJumpRelease(scene);
-
-                if (!chargedForJump) {
-                    upperLegRight.setRotation(upperLegRightInit);
-                    upperLegLeft.setRotation(upperLegLeftInit);
-                    lowerLegRight.setRotation(lowerLegRightInit);
-                    lowerLegLeft.setRotation(lowerLegLeftInit);
-                    bodyMesh.position.y = -2;
-                }
-                break;
-
-
-            case 86://V
-                if (modeSwitch===0) {
-                    switchFPS(scene);
-                    modeSwitch = 1;
-                    useThirdP=false;
-                    header2.text="Current POV is FP"
-
-
-                }
-                else if(modeSwitch===1) {
-                    switchTPS(scene,false);
-                    modeSwitch = 2;
-                    useThirdP=true;
-                    header2.text="Current POV is TP"
-
-                }
-                else if (modeSwitch===2){
-                    switchTPS(scene,true);
-                    modeSwitch = 0;
-                    useThirdP=true;
-                    header2.text="Current POV is 2D"
-
-                }
-                else{
-                    modeSwitch=0;
-                }
-                break;
-
-
-        }
-    }
 
 
     return camera

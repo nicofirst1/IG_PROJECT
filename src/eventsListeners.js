@@ -5,13 +5,13 @@ var addClickListeners=function () {
 
         createFireballAnimation(scene);
 
-        chargeArmsAnimationInterval=setInterval(function () {
-            armsChargeAnimation(scene,camera,true);
+        chargeArmsAnimationInterval = setInterval(function () {
+            armsChargeAnimation(scene, camera, true);
         }, armsChargeAnimationTime);
 
 
-        manaConsumptionFlag=true;
-        manaInterval= setInterval(function () {
+        manaConsumptionFlag = true;
+        manaInterval = setInterval(function () {
             if (mana_value <= 0) {
                 mana_value = 0;
                 var evt = document.createEvent("MouseEvents");
@@ -23,9 +23,24 @@ var addClickListeners=function () {
         }, manaConsumptionInterval);
     };
 
+    document.body.onmouseup = function onReleaseLeft(event) {
+
+        fireFireball(scene, camera, ground);
 
 
-    document.body.onmouseup = mouseup(event)
+        dischargeArmsAnimationInterval = setInterval(function () {
+            armsDischargeAnimation(scene, camera, true);
+        }, armsDischargeAnimationTime);
+
+
+        clearInterval(manaInterval);
+        clearInterval(chargeArmsAnimationInterval);
+        manaConsumptionFlag = false;
+
+        //play random sound
+        fireballSound[Math.floor(Math.random() * fireballSound.length)].play();
+
+    };
 
 
 };
@@ -68,9 +83,54 @@ var onKeyUp=function(event) {
         moveArms = false;
         movementBool = true;
     }
+    switch (event.keyCode) {
+        case 32:
+            jumpKeyRelease = true;
+            legsJumpRelease(scene);
+
+            if (!chargedForJump) {
+                upperLegRight.setRotation(upperLegRightInit);
+                upperLegLeft.setRotation(upperLegLeftInit);
+                lowerLegRight.setRotation(lowerLegRightInit);
+                lowerLegLeft.setRotation(lowerLegLeftInit);
+                bodyMesh.position.y = -2;
+            }
+            break;
+
+
+        case 86://V
+            if (modeSwitch===0) {
+                switchFPS(scene);
+                modeSwitch = 1;
+                useThirdP=false;
+                header2.text="Current POV is FP"
+
+
+            }
+            else if(modeSwitch===1) {
+                switchTPS(scene,false);
+                modeSwitch = 2;
+                useThirdP=true;
+                header2.text="Current POV is TP"
+
+            }
+            else if (modeSwitch===2){
+                switchTPS(scene,true);
+                modeSwitch = 0;
+                useThirdP=true;
+                header2.text="Current POV is 2D"
+
+            }
+            else{
+                modeSwitch=0;
+            }
+            break;
+
+
+    }
 };
 
-var  onKeyDown= function(event) {
+var onKeyDown= function(event) {
     if(keyVec.indexOf(event.keyCode) >= 0) {
         if (chargedForJump) {
             scene.stopAnimation(camera);
