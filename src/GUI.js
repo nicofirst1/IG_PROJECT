@@ -33,7 +33,7 @@ var manaInterval;
 var manaConsumptionFlag = false;
 var manaConsumptionInterval=100;
 
-var initHealtMana = function (scene, camera) {
+var initGui = function (scene, camera) {
 
 
     advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("gameUI", true, scene);
@@ -350,11 +350,11 @@ var gameOver = function (scene, advancedTexture) {
 
 var playMusicFlag=true;
 var header2;
-var audio=document.getElementById("sfx-background");
+var audio;
 
 var musicCheckbox=function (adcancedTexture) {
+    audio=document.getElementById("sfx-background");
 
-    
     var header = new BABYLON.GUI.TextBlock();
     header.text = "Play/pause music with 'M'";
     header.width = "250px";

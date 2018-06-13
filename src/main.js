@@ -39,7 +39,7 @@ var start=function () {
     scene.addCamera(camera);
 
 
-    initHealtMana(scene,camera );
+    initGui(scene,camera );
 
     var array= initLight(scene);
     var light=array[0];

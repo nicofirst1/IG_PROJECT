@@ -131,7 +131,8 @@ var onKeyUp=function(event) {
                 modeSwitch=0;
             }
             break;
-        case 77:
+
+        case 77://music with M
             if(playMusicFlag){
                 audio.pause();
                 playMusicFlag=false
