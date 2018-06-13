@@ -1,6 +1,6 @@
 var canvas;
 var scene;
-
+var engine;
 
 var hide_menu=function () {
     //
@@ -30,13 +30,13 @@ var start=function () {
 
     hide_menu();
 
-    var gravity= new BABYLON.Vector3(0, -0.6, 0);
+    var gravity= new BABYLON.Vector3(0, -2.1, 0);
 
     // BABYLON.OBJFileLoader.OPTIMIZE_WITH_UV = true;
 
     canvas = document.getElementById("renderCanvas");
 
-    var engine = new BABYLON.Engine(canvas, true);
+    engine = new BABYLON.Engine(canvas, true);
     //disable online support (remove warnings)
     engine.enableOfflineSupport=false;
     engine.doNotHandleContextLost = true;
@@ -120,3 +120,7 @@ var start=function () {
     });
 
 };
+
+function renderFunction() {
+
+}

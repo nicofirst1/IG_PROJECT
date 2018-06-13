@@ -26,6 +26,7 @@ var bodyMesh;
 var initCharacter = function (scene, camera, shadowGenerator, ground) {
 
     BABYLON.SceneLoader.ImportMesh("", "Models/dude/", "Dude.babylon", scene, function (newMeshes, particleSystems, skeletons) {
+
         dude = newMeshes[0];
         skeleton = skeletons[0];
         dude.scaling = new BABYLON.Vector3(0.02,0.02,0.02);

@@ -89,7 +89,7 @@ var inflictDamage = function (collidedMesh) {
     }
 
     if(collidedMesh.id==="groundBox"||collidedMesh.id==="ground"){
-        if (isJumping && falling) {
+        if (isJumping && falling && upperLegRight) {
             upperLegLeft.rotation.x = Math.PI / 2;
             upperLegRight.rotation.x = Math.PI / 2;
 
@@ -113,10 +113,19 @@ var inflictDamage = function (collidedMesh) {
                         lowerLegRight.rotate(BABYLON.Axis.Z, inc);
                         upperLegLeft.rotate(BABYLON.Axis.Z, inc);
                         lowerLegLeft.rotate(BABYLON.Axis.Z, inc);
+
+                        upperLegRight.rotate(BABYLON.Axis.Y, -inc/7);
+                        upperLegLeft.rotate(BABYLON.Axis.Y, inc/7);
+
                         bodyMesh.position.y += inc * 0.5;
+                    } else {
+                        upperLegRight.setRotation(upperLegRightInit);
+                        upperLegLeft.setRotation(upperLegLeftInit);
                     }
                 }
             };
+
+
 
             isJumping = false;
             falling = false;
