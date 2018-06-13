@@ -47,6 +47,10 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
         upperLegLeft = skeleton.bones[54];
         lowerLegLeft = skeleton.bones[55];
 
+        upperLegRight.rotate(BABYLON.Axis.Y, -0.15);
+        upperLegLeft.rotate(BABYLON.Axis.Y, 0.15);
+
+
     });
 
    //  // Body
@@ -274,15 +278,12 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
                 scene.stopAnimation(camera);
                 scene.stopAnimation(upperLegRight);
                 scene.stopAnimation(upperLegLeft);
-                //camera.position.y += 3.46 - 0.25;
                 legsCharge = true;
             }
             if (movementBool && !isJumping) {
                 movementBool = false;
+                moveLegs = true;
                 legMovement(scene, upperLegLeft, 2.5, true, camera, true);
-                legMovement(scene, lowerLegLeft, 2.5, true, camera, false);
-                legMovement(scene, upperLegRight, 2.5, false, camera, true);
-                legMovement(scene, lowerLegRight, 2.5, false, camera, false);
             }
         }
     }
@@ -293,10 +294,10 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
         if(keyVec.indexOf(event.keyCode) >= 0) {
             moveLegs = false;
 
-            upperLegLeft.rotation.z = Math.PI / 2;
-            lowerLegLeft.rotation.z = Math.PI / 2;
-            upperLegRight.rotation.z = Math.PI / 2;
-            lowerLegRight.rotation.z = Math.PI / 2;
+            //upperLegLeft.rotation.z = Math.PI / 2;
+            //lowerLegLeft.rotation.z = Math.PI / 2;
+            ///upperLegRight.rotation.z = Math.PI / 2;
+            //lowerLegRight.rotation.z = Math.PI / 2;
 
             movementBool = true;
         }
