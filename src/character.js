@@ -61,11 +61,18 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
         lowerLegRightInit = lowerLegRight.getRotation();
         lowerLegLeftInit = lowerLegLeft.getRotation();
 
-        upperArmRight.rotate(BABYLON.Axis.Y, -0.6);
-        upperArmLeft.rotate(BABYLON.Axis.Y, 0.6);
+        upperArmRight.rotate(BABYLON.Axis.Y, -0.7);
+        upperArmLeft.rotate(BABYLON.Axis.Y, 0.7);
 
-        upperArmRight.translate(new BABYLON.Vector3(2,0,4));
-        upperArmLeft.translate(new BABYLON.Vector3(2,0,-4));
+        lowerArmRight.rotate(BABYLON.Axis.Z, -1.5);
+        lowerArmLeft.rotate(BABYLON.Axis.Z, -1.5);
+
+
+        lowerArmRight.rotate(BABYLON.Axis.X, 0.3);
+        lowerArmLeft.rotate(BABYLON.Axis.X, -0.3);
+
+        upperArmRight.translate(new BABYLON.Vector3(3,0,4));
+        upperArmLeft.translate(new BABYLON.Vector3(3,0,-4));
 
     });
 
