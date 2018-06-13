@@ -8,6 +8,7 @@ var maxUpper = 0.8;
 var maxLower = 1.2;
 
 var chargedForJump = false;
+var releaseJump = false;
 
 var legMovement = function (scene, leg, max, ccw, camera, upperLeg) {
     moveLegs = true;
@@ -141,5 +142,54 @@ var legMovement = function (scene, leg, max, ccw, camera, upperLeg) {
 
     }
 
+
+};
+
+var legsJumpCharge = function (scene) {
+
+    var angleUpperRight = 0;
+
+    var inc = 0.05;
+
+    scene.beforeRender = function () {
+        if (angleUpperRight >= -maxUpper) {
+            angleUpperRight -= inc;
+            upperLegRight.rotate(BABYLON.Axis.Z, -inc);
+            lowerLegRight.rotate(BABYLON.Axis.Z, -inc);
+            upperLegLeft.rotate(BABYLON.Axis.Z, -inc);
+            lowerLegLeft.rotate(BABYLON.Axis.Z, -inc);
+            bodyMesh.position.y -= inc * 0.5;
+        }
+        else {
+            chargedForJump = true;
+        }
+
+    };
+
+};
+
+var legsJumpRelease = function (scene) {
+
+    var angleUpperRight = 0;
+
+    var inc = 0.05;
+
+    scene.beforeRender = function () {
+        if (chargedForJump && releaseJump) {
+            if (angleUpperRight >= -maxUpper) {
+                angleUpperRight += inc;
+                upperLegRight.rotate(BABYLON.Axis.Z, inc);
+                lowerLegRight.rotate(BABYLON.Axis.Z, inc);
+                upperLegLeft.rotate(BABYLON.Axis.Z, inc);
+                lowerLegLeft.rotate(BABYLON.Axis.Z, inc);
+                bodyMesh.position.y += inc * 0.5;
+            } else {
+                chargedForJump = false;
+                releaseJump = false;
+                cameraJump(scene);
+            }
+        }
+
+    };
 
 };
