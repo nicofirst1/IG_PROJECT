@@ -2,27 +2,8 @@ var canvas;
 var scene;
 var engine;
 
-var hide_menu=function () {
-    //
-    // var menu_items=[];
-    // menu_items.push(document.getElementById("main-menu"));
-    //
-    // for (var elem in menu_items){
-    //     elem.style.display='none';
-    //     elem.style.visibility = 'hidden';
-    //
-    // }
-    //
-    var menu=document.getElementById("main-menu");
-    menu.style.display='none';
-    menu=document.getElementById("loading");
-    menu.style.display='none';
-    menu=document.getElementById("menu-title");
-    menu.style.display='none';
 
-
-
-};
+var gravity= new BABYLON.Vector3(0, -2.1, 0);
 
 var start=function () {
 
@@ -33,7 +14,6 @@ var start=function () {
 
     BABYLON.Animation.AllowMatricesInterpolation = true;
 
-    var gravity= new BABYLON.Vector3(0, -2.1, 0);
 
 
     canvas = document.getElementById("renderCanvas");
@@ -55,6 +35,9 @@ var start=function () {
 
 
     var camera =InitCamera(scene);
+    //add the camera to the scene
+    scene.addCamera(camera);
+
 
     initHealtMana(scene,camera );
 
@@ -67,11 +50,6 @@ var start=function () {
 
 
 
-
-
-    //add the camera to the scene
-    scene.addCamera(camera);
-    //scene.registerBeforeRender(beforeRenderFunction);
 
     var grounds = mapInit(scene, light,shadowGenerator, camera);
 
@@ -112,5 +90,28 @@ var start=function () {
     engine.runRenderLoop(function () {
         scene.render();
     });
+
+};
+
+
+var hide_menu=function () {
+    //
+    // var menu_items=[];
+    // menu_items.push(document.getElementById("main-menu"));
+    //
+    // for (var elem in menu_items){
+    //     elem.style.display='none';
+    //     elem.style.visibility = 'hidden';
+    //
+    // }
+    //
+    var menu=document.getElementById("main-menu");
+    menu.style.display='none';
+    menu=document.getElementById("loading");
+    menu.style.display='none';
+    menu=document.getElementById("menu-title");
+    menu.style.display='none';
+
+
 
 };
