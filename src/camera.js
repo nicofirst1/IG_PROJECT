@@ -69,10 +69,8 @@ var InitCamera = function (scene) {
     function onKeyDown(event) {
         switch (event.keyCode) {
             case 32:
-                if (legsCharge  && !isJumping) {
-                    legsCharge = false;
-                    legsJumpCharge(upperLegRight, scene, true);
-                    legsJumpCharge(upperLegLeft, scene, false);
+                if (!chargedForJump  && !isJumping) {
+                    legsJumpCharge(scene);
                 }
         }
     }
@@ -83,9 +81,8 @@ var InitCamera = function (scene) {
     function onKeyUp(event) {
         switch (event.keyCode) {
             case 32:
-                if (!legsCharge) {
-                    legsJumpRelease(upperLegRight, scene, true);
-                    legsJumpRelease(upperLegLeft, scene, false);
+                if (chargedForJump) {
+                    legsJumpRelease(scene);
                 }
                 break;
 
@@ -215,7 +212,7 @@ var cameraJump = function (scene) {
     var animatable = scene.beginAnimation(cam, false, fps, false);
     animatable.onAnimationEnd = function () {
         animatable.animationStarted = false;
-        legsCharge = true;
+        chargedForJump = true;
         movementBool = true;
     };
 
