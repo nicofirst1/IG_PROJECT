@@ -6,7 +6,7 @@ var ambient_fog = false;
 var snow_flag=false;
 
 
-var mapInit = function (scene, light, shadow, camera) {
+var initMap = function (scene, light, shadow, camera) {
 
     var skybox = initSkybox(scene, sky_size);
 
@@ -18,7 +18,7 @@ var mapInit = function (scene, light, shadow, camera) {
 
 
     if (snow_flag) {
-        snow(scene, skybox); 
+        snow(scene, skybox);
     }
 
     var grounds = initGround(scene, groundSize);

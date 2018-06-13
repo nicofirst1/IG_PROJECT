@@ -31,7 +31,7 @@ var start=function () {
     scene.collisionsEnabled = true;
 
 
-    var optimizer=initOptimizer(scene);
+    initOptimizer(scene);
 
 
     var camera =InitCamera(scene);
@@ -46,21 +46,18 @@ var start=function () {
     var shadowGenerator=array[1];
 
 
-    windowListener();
 
 
 
 
-    var grounds = mapInit(scene, light,shadowGenerator, camera);
+    var grounds = initMap(scene, light,shadowGenerator, camera);
 
 
 
 
     initCharacter(scene, camera, shadowGenerator, grounds);
-
     initSounds(scene);
 
-    //initShield(scene,camera);
 
     // If meteorite 20 below the ground it starts again from the sky
     scene.registerBeforeRender(function () {
@@ -84,8 +81,9 @@ var start=function () {
         })
     });
 
-    //----ENGINE
+    //----LISTENERS
     addKeyboardListeners();
+    windowListener();
 
     engine.runRenderLoop(function () {
         scene.render();
