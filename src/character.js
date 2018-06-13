@@ -90,12 +90,12 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
     });
 
     document.body.onmousedown = function onClickLeft(event) {
-        if (upperArmRight.rotation.y < 0.0001) {
-            armsMovementCharge(scene, upperArmRight, 1, true, camera, true);
-            armsMovementCharge(scene, lowerArmRight, 1, false, camera, false);
-            armsMovementCharge(scene, upperArmLeft, 1, false, camera, false);
-            armsMovementCharge(scene, lowerArmLeft, 1, true, camera, false);
-        }
+
+        chargeArmsAnimationInterval=setInterval(function () {
+                armsChargeAnimation(scene,camera,true);
+            }, armsChargeAnimationTime);
+
+
         manaConsumptionFlag=true;
         manaInterval= setInterval(function () {
             if (mana_value <= 0) {
@@ -110,11 +110,14 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
     };
 
     document.body.onmouseup = function onReleaseLeft(event) {
-        armsMovementRelease(scene, upperArmRight, true, true, camera, ground);
-        armsMovementRelease(scene, lowerArmRight, false, false, camera, ground);
-        armsMovementRelease(scene, upperArmLeft, false, false, camera, ground);
-        armsMovementRelease(scene, lowerArmLeft, true, false, camera, ground);
+
+        dischargeArmsAnimationInterval=setInterval(function () {
+            armsDischargeAnimation(scene,camera,true);
+        }, armsDischargeAnimationTime);
+
+
         clearInterval(manaInterval);
+        clearInterval(chargeArmsAnimationInterval);
         manaConsumptionFlag=false;
 
         //play random sound
