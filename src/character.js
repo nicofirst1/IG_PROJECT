@@ -61,6 +61,19 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
         lowerLegRightInit = lowerLegRight.getRotation();
         lowerLegLeftInit = lowerLegLeft.getRotation();
 
+        upperArmRight.rotate(BABYLON.Axis.Y, -0.7);
+        upperArmLeft.rotate(BABYLON.Axis.Y, 0.7);
+
+        lowerArmRight.rotate(BABYLON.Axis.Z, -1.5);
+        lowerArmLeft.rotate(BABYLON.Axis.Z, -1.5);
+
+
+        lowerArmRight.rotate(BABYLON.Axis.X, 0.3);
+        lowerArmLeft.rotate(BABYLON.Axis.X, -0.3);
+
+        upperArmRight.translate(new BABYLON.Vector3(3,0,4));
+        upperArmLeft.translate(new BABYLON.Vector3(3,0,-4));
+
     });
 
     document.body.onmousedown = function onClickLeft(event) {
@@ -452,4 +465,50 @@ var fireFireball = function (scene, camera, ground) {
     });
 };
 
+
+
+
+var legsJumpCharge = function(scene) {
+
+    var angleUpperRight = 0;
+
+    var inc = 0.05;
+
+    scene.beforeRender = function () {
+        if (angleUpperRight >= -maxUpper) {
+            angleUpperRight -= inc;
+            upperLegRight.rotate(BABYLON.Axis.Z, -inc);
+            lowerLegRight.rotate(BABYLON.Axis.Z, -inc);
+            upperLegLeft.rotate(BABYLON.Axis.Z, -inc);
+            lowerLegLeft.rotate(BABYLON.Axis.Z, -inc);
+            bodyMesh.position.y += -inc * 0.5;
+        } else {
+            chargedForJump = true;
+        }
+    };
+
+};
+
+var legsJumpRelease = function(scene) {
+
+    var angleUpperRight = 0;
+
+    var inc = 0.05;
+
+    scene.beforeRender = function () {
+        if (chargedForJump) {
+            if (angleUpperRight >= -maxUpper) {
+                angleUpperRight -= inc;
+                upperLegRight.rotate(BABYLON.Axis.Z, inc);
+                lowerLegRight.rotate(BABYLON.Axis.Z, inc);
+                upperLegLeft.rotate(BABYLON.Axis.Z, inc);
+                lowerLegLeft.rotate(BABYLON.Axis.Z, inc);
+                bodyMesh.position.y += inc * 0.5;
+            } else {
+                cameraJump(scene);
+            }
+        }
+    };
+
+};
 

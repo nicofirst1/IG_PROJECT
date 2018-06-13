@@ -81,8 +81,7 @@ var InitCamera = function (scene) {
     function onKeyUp(event) {
         switch (event.keyCode) {
             case 32:
-                if (chargedForJump && !isJumping) {
-                    releaseJump = true;
+                if (chargedForJump) {
                     legsJumpRelease(scene);
                 }
                 break;
@@ -213,6 +212,7 @@ var cameraJump = function (scene) {
     var animatable = scene.beginAnimation(cam, false, fps, false);
     animatable.onAnimationEnd = function () {
         animatable.animationStarted = false;
+        chargedForJump = true;
         movementBool = true;
     };
 
