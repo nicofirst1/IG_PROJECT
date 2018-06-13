@@ -13,6 +13,11 @@ var lowerLegRightInit;
 var upperLegLeftInit;
 var lowerLegLeftInit;
 
+var upperArmRightInit;
+var lowerArmRightInit;
+var upperArmLeftInit;
+var lowerArmLeftInit;
+
 var movementBool = true;
 var body;
 var head;
@@ -56,10 +61,7 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
         upperLegRight.rotate(BABYLON.Axis.Y, -0.15);
         upperLegLeft.rotate(BABYLON.Axis.Y, 0.15);
 
-        upperLegRightInit = upperLegRight.getRotation();
-        upperLegLeftInit = upperLegLeft.getRotation();
-        lowerLegRightInit = lowerLegRight.getRotation();
-        lowerLegLeftInit = lowerLegLeft.getRotation();
+
 
         upperArmRight.rotate(BABYLON.Axis.Y, -0.7);
         upperArmLeft.rotate(BABYLON.Axis.Y, 0.7);
@@ -73,6 +75,16 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
 
         upperArmRight.translate(new BABYLON.Vector3(3,0,4));
         upperArmLeft.translate(new BABYLON.Vector3(3,0,-4));
+
+        upperLegRightInit = upperLegRight.getRotation();
+        upperLegLeftInit = upperLegLeft.getRotation();
+        lowerLegRightInit = lowerLegRight.getRotation();
+        lowerLegLeftInit = lowerLegLeft.getRotation();
+
+        upperArmRightInit = upperArmRight.getRotation();
+        upperArmLeftInit = upperArmLeft.getRotation();
+        lowerArmRightInit = lowerArmRight.getRotation();
+        lowerArmLeftInit = lowerArmLeft.getRotation();
 
     });
 
@@ -124,6 +136,7 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
             if (movementBool && !isJumping) {
                 movementBool = false;
                 moveLegs = true;
+                moveArms = true;
                 legMovement(scene, upperLegLeft, 2.5, true, camera, true);
             }
         }
@@ -134,6 +147,7 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
     function onKeyUp(event) {
         if(keyVec.indexOf(event.keyCode) >= 0) {
             moveLegs = false;
+            moveArms = false;
             movementBool = true;
         }
     }

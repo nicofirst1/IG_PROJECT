@@ -144,6 +144,8 @@ var legMovement = function (scene, leg, max, ccw, camera, upperLeg) {
             }
         }
 
+        beforeRenderArms();
+
     }
 
 
