@@ -30,7 +30,7 @@ var bodyMesh;
 
 var initCharacter = function (scene, camera, shadowGenerator, ground) {
 
-    BABYLON.SceneLoader.ImportMesh("", "Models/dude/", "Dude.babylon", scene, importModel);
+    BABYLON.SceneLoader.ImportMesh("", "Models/dudemagma/", "Dude.babylon", scene, importModel);
 
 
     //todo: move these into eventsLister
