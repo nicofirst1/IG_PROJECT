@@ -313,6 +313,7 @@ var gameOver = function (scene, advancedTexture) {
 
 
 var playMusicFlag=true;
+var header2;
 var musicCheckbox=function (adcancedTexture) {
 
 
@@ -355,9 +356,18 @@ var musicCheckbox=function (adcancedTexture) {
     header1.paddingTop="700px";
 
 
-    
+    header2 = new BABYLON.GUI.TextBlock();
+    header2.text = "Current POV is TP";
+    header2.width = "250px";
+    header2.color = "magenta";
+    header2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+    header2.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+    header2.paddingTop="750px";
+
+
 
     adcancedTexture.addControl(header);
     adcancedTexture.addControl(header1);
+    adcancedTexture.addControl(header2);
 
 };

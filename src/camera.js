@@ -95,6 +95,7 @@ var InitCamera = function (scene) {
                     switchFPS(scene);
                     modeSwitch = 1;
                     useThirdP=false;
+                    header2.text="Current POV is FP"
 
 
                 }
@@ -102,12 +103,14 @@ var InitCamera = function (scene) {
                     switchTPS(scene,false);
                     modeSwitch = 2;
                     useThirdP=true;
+                    header2.text="Current POV is TP"
 
                 }
                 else if (modeSwitch===2){
                     switchTPS(scene,true);
                     modeSwitch = 0;
                     useThirdP=true;
+                    header2.text="Current POV is 2D"
 
                 }
                 else{
