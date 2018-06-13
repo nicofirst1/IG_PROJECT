@@ -61,6 +61,12 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
         lowerLegRightInit = lowerLegRight.getRotation();
         lowerLegLeftInit = lowerLegLeft.getRotation();
 
+        upperArmRight.rotate(BABYLON.Axis.Y, -0.6);
+        upperArmLeft.rotate(BABYLON.Axis.Y, 0.6);
+
+        upperArmRight.translate(new BABYLON.Vector3(2,0,4));
+        upperArmLeft.translate(new BABYLON.Vector3(2,0,-4));
+
     });
 
     document.body.onmousedown = function onClickLeft(event) {
