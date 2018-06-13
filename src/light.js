@@ -19,7 +19,7 @@ var initLight= function (scene) {
     var flare00 = new BABYLON.LensFlare(0.3, 0, new BABYLON.Color3.FromHexString(moon_color), "Resources/map/flares/flare.png", lensFlareSystem);
 
 
-    //scene.ambientColor = new BABYLON.Color3(0.3, 0.15, 0.3);
+    scene.ambientColor = new BABYLON.Color3(0.7, 0.8, 0.8);
 
 
     var shadowGenerator = new BABYLON.ShadowGenerator(1024, light);
