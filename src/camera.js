@@ -4,6 +4,8 @@ var camera1;
 var legsCharge = true;
 var camera;
 
+var jumpKeyRelease = false;
+
 var InitCamera = function (scene) {
     camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 10, 0), scene);
 
@@ -70,7 +72,7 @@ var InitCamera = function (scene) {
         switch (event.keyCode) {
             case 32:
                 if (!chargedForJump  && !isJumping) {
-                    legsJumpCharge(scene);
+                    if (canCharge) legsJumpCharge(scene);
                 }
         }
     }
@@ -81,9 +83,11 @@ var InitCamera = function (scene) {
     function onKeyUp(event) {
         switch (event.keyCode) {
             case 32:
+                jumpKeyRelease = true;
                 if (chargedForJump) {
                     legsJumpRelease(scene);
                 }
+                canCharge = true;
                 break;
 
 
@@ -212,7 +216,9 @@ var cameraJump = function (scene) {
     var animatable = scene.beginAnimation(cam, false, fps, false);
     animatable.onAnimationEnd = function () {
         animatable.animationStarted = false;
-        chargedForJump = true;
+        chargedForJump = false;
+        canSetRelease = true;
+        canSetCharged = true;
         movementBool = true;
     };
 

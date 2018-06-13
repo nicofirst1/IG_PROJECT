@@ -8,6 +8,11 @@ var maxUpper = 0.8;
 var maxLower = 1.2;
 
 var chargedForJump = false;
+var releaseJump = false;
+var canSetCharged = true;
+var canSetRelease = true;
+
+var canCharge = true;
 
 var legMovement = function (scene, leg, max, ccw, camera, upperLeg) {
     moveLegs = true;
@@ -54,7 +59,7 @@ var legMovement = function (scene, leg, max, ccw, camera, upperLeg) {
                     phase3 = true;
                 }
 
-                if(phase2) {
+                if (phase2) {
                     if (angleUpperLeft <= 0) {
                         angleUpperLeft += inc;
                         upperLegLeft.rotate(BABYLON.Axis.Z, inc);
@@ -151,17 +156,24 @@ var legsJumpCharge = function (scene) {
     var inc = 0.05;
 
     scene.beforeRender = function () {
-        if (angleUpperRight >= -maxUpper) {
-            angleUpperRight -= inc;
-            upperLegRight.rotate(BABYLON.Axis.Z, -inc);
-            lowerLegRight.rotate(BABYLON.Axis.Z, -inc);
-            upperLegLeft.rotate(BABYLON.Axis.Z, -inc);
-            lowerLegLeft.rotate(BABYLON.Axis.Z, -inc);
-            bodyMesh.position.y -= inc * 0.5;
+        if (canCharge) {
+            if (angleUpperRight >= -maxUpper) {
+                angleUpperRight -= inc;
+                upperLegRight.rotate(BABYLON.Axis.Z, -inc);
+                lowerLegRight.rotate(BABYLON.Axis.Z, -inc);
+                upperLegLeft.rotate(BABYLON.Axis.Z, -inc);
+                lowerLegLeft.rotate(BABYLON.Axis.Z, -inc);
+                bodyMesh.position.y -= inc * 0.5;
+            }
+            else {
+                if (canSetCharged) {
+                    canCharge = false;
+                    canSetCharged = false;
+                    chargedForJump = true;
+                }
+            }
         }
-        else {
-            chargedForJump = true;
-        }
+
 
     };
 
@@ -175,18 +187,23 @@ var legsJumpRelease = function (scene) {
     var inc = 0.05;
 
     scene.beforeRender = function () {
-        if (chargedForJump) {
+        if (chargedForJump && jumpKeyRelease) {
             if (angleUpperRight >= -maxUpper) {
-                angleUpperRight += inc;
+                angleUpperRight -= inc;
                 upperLegRight.rotate(BABYLON.Axis.Z, inc);
                 lowerLegRight.rotate(BABYLON.Axis.Z, inc);
                 upperLegLeft.rotate(BABYLON.Axis.Z, inc);
                 lowerLegLeft.rotate(BABYLON.Axis.Z, inc);
                 bodyMesh.position.y += inc * 0.5;
-            } else {
-                chargedForJump = false;
+            } else if (releaseJump) {
                 releaseJump = false;
+                jumpKeyRelease = false;
                 cameraJump(scene);
+            } else {
+                if (canSetRelease) {
+                    canSetRelease = false;
+                    releaseJump = true;
+                }
             }
         }
 
