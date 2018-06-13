@@ -1,4 +1,6 @@
 var canvas;
+var scene;
+
 
 var hide_menu=function () {
     //
@@ -28,7 +30,7 @@ var start=function () {
 
     hide_menu();
 
-    var gravity= new BABYLON.Vector3(0, -2.1, 0);
+    var gravity= new BABYLON.Vector3(0, -0.6, 0);
 
     // BABYLON.OBJFileLoader.OPTIMIZE_WITH_UV = true;
 
@@ -40,7 +42,7 @@ var start=function () {
     engine.doNotHandleContextLost = true;
 
 
-    var scene = new BABYLON.Scene(engine);
+    scene = new BABYLON.Scene(engine);
     scene.enablePhysics();
     scene.gravity = gravity;
     scene.collisionsEnabled = true;

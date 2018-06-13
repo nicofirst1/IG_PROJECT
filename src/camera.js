@@ -4,6 +4,7 @@ var camera1;
 var legsCharge = true;
 var camera;
 
+var falling = true;
 var jumpKeyRelease = false;
 
 var InitCamera = function (scene) {
@@ -71,9 +72,7 @@ var InitCamera = function (scene) {
     function onKeyDown(event) {
         switch (event.keyCode) {
             case 32:
-                if (!chargedForJump  && !isJumping) {
-                    if (canCharge) legsJumpCharge(scene);
-                }
+                legsJumpCharge(scene);
         }
     }
 
@@ -84,10 +83,15 @@ var InitCamera = function (scene) {
         switch (event.keyCode) {
             case 32:
                 jumpKeyRelease = true;
-                if (chargedForJump) {
-                    legsJumpRelease(scene);
+                legsJumpRelease(scene);
+
+                if (!chargedForJump) {
+                    upperLegRight.setRotation(upperLegRightInit);
+                    upperLegLeft.setRotation(upperLegLeftInit);
+                    lowerLegRight.setRotation(lowerLegRightInit);
+                    lowerLegLeft.setRotation(lowerLegLeftInit);
+                    bodyMesh.position.y = -2;
                 }
-                canCharge = true;
                 break;
 
 
@@ -166,7 +170,7 @@ function remove_item(arr, value) {
 
 var fps = 13;//the speed of the jump execution
 var max_jump_heigth = 8;
-var isJumping = false;
+var isJumping = true;
 
 //jump animation
 var cameraJump = function (scene) {
@@ -197,7 +201,7 @@ var cameraJump = function (scene) {
         keys.push({frame: i, value: current_position});
     }
 
-    for (; i < max_jump_heigth + 2; i++) {
+    for (; i < max_jump_heigth + 1; i++) {
         keys.push({frame: i, value: current_position});
     }
 
@@ -213,13 +217,49 @@ var cameraJump = function (scene) {
     cam.animations.push(jump);
 
 
+
+
     var animatable = scene.beginAnimation(cam, false, fps, false);
+
+
+    var angleUpperRight2 = 0;
+
+    var inc2 = 0.05;
+
+    scene.beforeRender = function () {
+        if (angleUpperRight2 >= -maxUpper) {
+            angleUpperRight2 -= inc2;
+            upperLegRight.rotate(BABYLON.Axis.Y, inc2 / 2);
+            upperLegLeft.rotate(BABYLON.Axis.Y, -inc2 / 2);
+        }
+
+    };
+
     animatable.onAnimationEnd = function () {
         animatable.animationStarted = false;
-        chargedForJump = false;
-        canSetRelease = true;
-        canSetCharged = true;
         movementBool = true;
+        canCharge = true;
+        falling = true;
+
+        angleUpperRight0 = 0;
+        angleUpperRight1 = 0;
+
+        var angleRot = 0;
+        var inc = 0.05;
+
+        scene.beforeRender = function () {
+            if (angleRot >= -0.3) {
+                angleRot -= inc;
+
+                upperLegRight.rotate(BABYLON.Axis.Y, -inc );
+                upperLegLeft.rotate(BABYLON.Axis.Y, inc);
+
+            } else {
+                upperLegRight.setRotation(upperLegRightInit);
+                upperLegLeft.setRotation(upperLegLeftInit);
+            }
+
+        };
     };
 
 };
