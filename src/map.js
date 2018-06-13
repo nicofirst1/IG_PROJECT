@@ -18,10 +18,10 @@ var mapInit = function (scene, light, shadow, camera) {
 
 
     if (snow_flag) {
-        snow(scene, skybox);
+        snow(scene, skybox); 
     }
 
-    var grounds = initGround(scene, groundSize, camera);
+    var grounds = initGround(scene, groundSize);
 
     initWater(scene, skybox, grounds);
 
