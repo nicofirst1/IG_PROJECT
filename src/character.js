@@ -34,16 +34,16 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
 
         dude = newMeshes[0];
         skeleton = skeletons[0];
-        dude.scaling = new BABYLON.Vector3(0.02,0.02,0.02);
+        dude.scaling = new BABYLON.Vector3(0.02, 0.02, 0.02);
         dude.position = new BABYLON.Vector3(0, 0, 0);
         skeleton.position = new BABYLON.Vector3(0, 0, 0);
-        skeleton.scaling = new BABYLON.Vector3(0.02,0.02,0.02);
+        skeleton.scaling = new BABYLON.Vector3(0.02, 0.02, 0.02);
         initMat = skeleton.bones[7].getLocalMatrix().clone();
 
 
         bodyMesh = newMeshes[0];
         bodyMesh.position.y = -2;
-        bodyMesh.scaling = new BABYLON.Vector3(0.05,0.05,0.05);
+        bodyMesh.scaling = new BABYLON.Vector3(0.05, 0.05, 0.05);
         bodyMesh.parent = camera;
 
         body = skeleton.bones[0];
@@ -63,7 +63,6 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
         upperLegLeft.rotate(BABYLON.Axis.Y, 0.15);
 
 
-
         upperArmRight.rotate(BABYLON.Axis.Y, -0.7);
         upperArmLeft.rotate(BABYLON.Axis.Y, 0.7);
 
@@ -74,8 +73,8 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
         lowerArmRight.rotate(BABYLON.Axis.X, 0.3);
         lowerArmLeft.rotate(BABYLON.Axis.X, -0.3);
 
-        upperArmRight.translate(new BABYLON.Vector3(3,0,4));
-        upperArmLeft.translate(new BABYLON.Vector3(3,0,-4));
+        upperArmRight.translate(new BABYLON.Vector3(3, 0, 4));
+        upperArmLeft.translate(new BABYLON.Vector3(3, 0, -4));
 
         upperLegRightInit = upperLegRight.getRotation();
         upperLegLeftInit = upperLegLeft.getRotation();
@@ -93,13 +92,13 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
 
         createFireballAnimation(scene);
 
-        chargeArmsAnimationInterval=setInterval(function () {
-                armsChargeAnimation(scene,camera,true);
-            }, armsChargeAnimationTime);
+        chargeArmsAnimationInterval = setInterval(function () {
+            armsChargeAnimation(scene, camera, true);
+        }, armsChargeAnimationTime);
 
 
-        manaConsumptionFlag=true;
-        manaInterval= setInterval(function () {
+        manaConsumptionFlag = true;
+        manaInterval = setInterval(function () {
             if (mana_value <= 0) {
                 mana_value = 0;
                 var evt = document.createEvent("MouseEvents");
@@ -116,51 +115,21 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
         fireFireball(scene, camera, ground);
 
 
-        dischargeArmsAnimationInterval=setInterval(function () {
-            armsDischargeAnimation(scene,camera,true);
+        dischargeArmsAnimationInterval = setInterval(function () {
+            armsDischargeAnimation(scene, camera, true);
         }, armsDischargeAnimationTime);
 
 
         clearInterval(manaInterval);
         clearInterval(chargeArmsAnimationInterval);
-        manaConsumptionFlag=false;
+        manaConsumptionFlag = false;
 
         //play random sound
-        fireballSound[Math.floor(Math.random()*fireballSound.length)].play();
+        fireballSound[Math.floor(Math.random() * fireballSound.length)].play();
 
     };
 
-    window.addEventListener("keydown", onKeyDown, false);
-
-    var keyVec = [83, 87, 65 ,68];
-
-    function onKeyDown(event) {
-        if(keyVec.indexOf(event.keyCode) >= 0) {
-            if (chargedForJump) {
-                scene.stopAnimation(camera);
-                scene.stopAnimation(upperLegRight);
-                scene.stopAnimation(upperLegLeft);
-                legsCharge = true;
-            }
-            if (movementBool && !isJumping) {
-                movementBool = false;
-                moveLegs = true;
-                moveArms = true;
-                legMovement(scene, upperLegLeft, 2.5, true, camera, true);
-            }
-        }
-    }
-
-    window.addEventListener("keyup", onKeyUp, false);
-
-    function onKeyUp(event) {
-        if(keyVec.indexOf(event.keyCode) >= 0) {
-            moveLegs = false;
-            moveArms = false;
-            movementBool = true;
-        }
-    }
-};
+}
 
 
 

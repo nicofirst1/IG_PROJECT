@@ -71,6 +71,7 @@ var start=function () {
 
 
     //----ENGINE
+    addKeyboardListeners();
 
 
     BABYLON.Animation.AllowMatricesInterpolation = true;
