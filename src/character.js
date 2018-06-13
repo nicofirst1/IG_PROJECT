@@ -108,7 +108,7 @@ var initCharacter = function (scene, camera, shadowGenerator, ground) {
 
     function onKeyDown(event) {
         if(keyVec.indexOf(event.keyCode) >= 0) {
-            if (!legsCharge) {
+            if (chargedForJump) {
                 scene.stopAnimation(camera);
                 scene.stopAnimation(upperLegRight);
                 scene.stopAnimation(upperLegLeft);
@@ -461,138 +461,47 @@ var fireFireball = function (scene, camera, ground) {
 
 
 
-var legsJumpCharge = function(leg, scene) {
+var legsJumpCharge = function(scene) {
 
-    var legsMov = new BABYLON.Animation(
-        "legsMov",
-        "rotation.x", fps,
-        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var angleUpperRight = 0;
 
-    // Animation keys
-    var keys = [];
+    var inc = 0.05;
 
-    var curr_rot = Math.PI / 2;
-
-    var inc = 0.4;
-
-    keys.push({frame: 0, value: curr_rot});
-
-    for (var i = 1; curr_rot <= 2.5; i++) {
-        curr_rot += inc;
-        keys.push({frame: i, value: curr_rot});
-    }
-
-
-
-    legsMov.setKeys(keys);
-
-    leg.animations = [];
-    leg.animations.push(legsMov);
-
-    scene.beginAnimation(leg, false, i, false);
-
-    var cam = scene.cameras[0];
-
-    cam.animations = [];
-
-    var jump = new BABYLON.Animation(
-        "jump",
-        "position.y", fps,
-        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-
-    // Animation keys
-    var keys = [];
-
-    var current_position = cam.position.y;
-
-    keys.push({frame: 0, value: current_position});
-
-    for (var j = 1; j < i; j++) {
-        current_position -= 0.25;
-        keys.push({frame: j, value: current_position});
-    }
-
-
-    jump.setKeys(keys);
-
-    cam.animations.push(jump);
-
-
-    var animatable = scene.beginAnimation(cam, false, fps, false);
+    scene.beforeRender = function () {
+        if (angleUpperRight >= -maxUpper) {
+            angleUpperRight -= inc;
+            upperLegRight.rotate(BABYLON.Axis.Z, -inc);
+            lowerLegRight.rotate(BABYLON.Axis.Z, -inc);
+            upperLegLeft.rotate(BABYLON.Axis.Z, -inc);
+            lowerLegLeft.rotate(BABYLON.Axis.Z, -inc);
+            bodyMesh.position.y += -inc * 0.5;
+        } else {
+            chargedForJump = true;
+        }
+    };
 
 };
 
-var legsJumpRelease = function(leg, scene, bodyTodo) {
+var legsJumpRelease = function(scene) {
 
-    var legsMov = new BABYLON.Animation(
-        "legsMov",
-        "rotation.x", fps,
-        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    var angleUpperRight = 0;
 
-    // Animation keys
-    var keys = [];
+    var inc = 0.05;
 
-    var curr_rot = leg.rotation.x;
-
-    var inc = 0.4;
-
-    keys.push({frame: 0, value: curr_rot});
-
-    for (var i = 1; curr_rot > Math.PI / 2; i++) {
-        curr_rot -= inc;
-        keys.push({frame: i, value: curr_rot});
-    }
-
-    legsMov.setKeys(keys);
-
-    leg.animations = [];
-    leg.animations.push(legsMov);
-
-    scene.beginAnimation(leg, false, i, false);
-
-    var cam = scene.cameras[0];
-
-    cam.animations = [];
-
-    var jump = new BABYLON.Animation(
-        "jump",
-        "position.y", fps,
-        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-        BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-
-    // Animation keys
-    var keys = [];
-
-    var current_position = cam.position.y;
-
-    keys.push({frame: 0, value: current_position});
-
-    for (var j = 1; j < i; j++) {
-        current_position += 0.25;
-        keys.push({frame: j, value: current_position});
-    }
-
-
-    jump.setKeys(keys);
-
-    cam.animations.push(jump);
-
-
-    var animatable = scene.beginAnimation(cam, false, fps, false);
-
-    if (bodyTodo) {
-        animatable.onAnimationEnd = function () {
-            animatable.animationStarted = false;
-            scene.stopAnimation(upperLegRight);
-            scene.stopAnimation(upperLegLeft);
-            scene.stopAnimation(lowerLegRight);
-            scene.stopAnimation(lowerLegLeft);
-            cameraJump(scene);
-        };
-    }
+    scene.beforeRender = function () {
+        if (chargedForJump) {
+            if (angleUpperRight >= -maxUpper) {
+                angleUpperRight -= inc;
+                upperLegRight.rotate(BABYLON.Axis.Z, inc);
+                lowerLegRight.rotate(BABYLON.Axis.Z, inc);
+                upperLegLeft.rotate(BABYLON.Axis.Z, inc);
+                lowerLegLeft.rotate(BABYLON.Axis.Z, inc);
+                bodyMesh.position.y += inc * 0.5;
+            } else {
+                cameraJump(scene);
+            }
+        }
+    };
 
 };
 

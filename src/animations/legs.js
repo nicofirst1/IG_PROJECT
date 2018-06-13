@@ -7,6 +7,8 @@ var phase4 = false;
 var maxUpper = 0.8;
 var maxLower = 1.2;
 
+var chargedForJump = false;
+
 var legMovement = function (scene, leg, max, ccw, camera, upperLeg) {
     moveLegs = true;
 
