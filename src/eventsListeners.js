@@ -131,6 +131,16 @@ var onKeyUp=function(event) {
                 modeSwitch=0;
             }
             break;
+        case 77:
+            if(playMusicFlag){
+                audio.pause();
+                playMusicFlag=false
+            }
+            else{
+                audio.play();
+                playMusicFlag=true;
+            }
+            break;
 
 
     }

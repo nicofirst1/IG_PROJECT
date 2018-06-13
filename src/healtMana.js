@@ -350,28 +350,12 @@ var gameOver = function (scene, advancedTexture) {
 
 var playMusicFlag=true;
 var header2;
+var audio=document.getElementById("sfx-background");
+
 var musicCheckbox=function (adcancedTexture) {
 
 
 
-    var audio=document.getElementById("sfx-background");
-
-    // add listener for jump
-    window.addEventListener("keyup", playMusic, false);
-
-    function playMusic(event) {
-        switch (event.keyCode) {
-            case 77:
-                if(playMusicFlag){
-                    audio.pause();
-                    playMusicFlag=false
-                }
-                else{
-                    audio.play();
-                    playMusicFlag=true;
-                }
-        }
-    }
 
 
     var header = new BABYLON.GUI.TextBlock();
