@@ -1,4 +1,4 @@
-var initOptimizer=function (scene) {
+var initOptimizer = function (scene) {
 
 
     var options = new BABYLON.SceneOptimizerOptions();

@@ -2,7 +2,7 @@
 //         MOUSE
 //########################
 
-var addClickListeners=function () {
+var addClickListeners = function () {
 
 
     document.body.onmousedown = function onClickLeft(event) {
@@ -49,22 +49,22 @@ var addClickListeners=function () {
 
 };
 
-var mouseup=function(event,ground) {
+var mouseup = function (event, ground) {
 
     fireFireball(scene, camera, ground);
 
 
-    dischargeArmsAnimationInterval=setInterval(function () {
-        armsDischargeAnimation(scene,camera,true);
+    dischargeArmsAnimationInterval = setInterval(function () {
+        armsDischargeAnimation(scene, camera, true);
     }, armsDischargeAnimationTime);
 
 
     clearInterval(manaInterval);
     clearInterval(chargeArmsAnimationInterval);
-    manaConsumptionFlag=false;
+    manaConsumptionFlag = false;
 
     //play random sound
-    fireballSound[Math.floor(Math.random()*fireballSound.length)].play();
+    fireballSound[Math.floor(Math.random() * fireballSound.length)].play();
 
 };
 
@@ -72,7 +72,7 @@ var mouseup=function(event,ground) {
 //########################
 //         KEYBOARD
 //########################
-var addKeyboardListeners=function () {
+var addKeyboardListeners = function () {
 
     window.addEventListener("keyup", onKeyUp, false);
 
@@ -80,11 +80,11 @@ var addKeyboardListeners=function () {
 
 }
 
-var keyVec = [83, 87, 65 ,68];//WASD
+var keyVec = [83, 87, 65, 68];//WASD
 
 
-var onKeyUp=function(event) {
-    if(keyVec.indexOf(event.keyCode) >= 0) {
+var onKeyUp = function (event) {
+    if (keyVec.indexOf(event.keyCode) >= 0) {
         moveLegs = false;
         moveArms = false;
         movementBool = true;
@@ -105,41 +105,41 @@ var onKeyUp=function(event) {
 
 
         case 86://V
-            if (modeSwitch===0) {
+            if (modeSwitch === 0) {
                 switchFPS(scene);
                 modeSwitch = 1;
-                useThirdP=false;
-                currentPov.text="Current POV is FP"
+                useThirdP = false;
+                currentPov.text = "Current POV is FP"
 
 
             }
-            else if(modeSwitch===1) {
-                switchTPS(scene,false);
+            else if (modeSwitch === 1) {
+                switchTPS(scene, false);
                 modeSwitch = 2;
-                useThirdP=true;
-                currentPov.text="Current POV is TP"
+                useThirdP = true;
+                currentPov.text = "Current POV is TP"
 
             }
-            else if (modeSwitch===2){
-                switchTPS(scene,true);
+            else if (modeSwitch === 2) {
+                switchTPS(scene, true);
                 modeSwitch = 0;
-                useThirdP=true;
-                currentPov.text="Current POV is 2D"
+                useThirdP = true;
+                currentPov.text = "Current POV is 2D"
 
             }
-            else{
-                modeSwitch=0;
+            else {
+                modeSwitch = 0;
             }
             break;
 
         case 77://music with M
-            if(playMusicFlag){
+            if (playMusicFlag) {
                 audio.pause();
-                playMusicFlag=false
+                playMusicFlag = false
             }
-            else{
+            else {
                 audio.play();
-                playMusicFlag=true;
+                playMusicFlag = true;
             }
             break;
 
@@ -147,8 +147,8 @@ var onKeyUp=function(event) {
     }
 };
 
-var onKeyDown= function(event) {
-    if(keyVec.indexOf(event.keyCode) >= 0) {
+var onKeyDown = function (event) {
+    if (keyVec.indexOf(event.keyCode) >= 0) {
         if (chargedForJump) {
             scene.stopAnimation(camera);
             scene.stopAnimation(upperLegRight);
@@ -162,8 +162,8 @@ var onKeyDown= function(event) {
             legMovement(scene, upperLegLeft, 2.5, true, camera, true);
         }
     }
-    if (event.keyCode===32) {
-            legsJumpCharge(scene);
+    if (event.keyCode === 32) {
+        legsJumpCharge(scene);
     }
 }
 
@@ -172,10 +172,12 @@ var onKeyDown= function(event) {
 //         WINDOW
 //########################
 
-var windowListener=function () {
+var windowListener = function () {
 
     window.addEventListener('click', setFullScreen);
-    window.addEventListener("resize", function () { engine.resize();});
+    window.addEventListener("resize", function () {
+        engine.resize();
+    });
 
 
 };

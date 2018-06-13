@@ -1,4 +1,4 @@
-var snow=function (scene, skybox) {
+var snow = function (scene, skybox) {
     // Create a particle system
     var particleSystem = new BABYLON.ParticleSystem("particles", 50000, scene);
 

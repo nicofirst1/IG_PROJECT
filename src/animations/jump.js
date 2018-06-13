@@ -1,4 +1,3 @@
-
 var max_jump_heigth = 8;
 var isJumping = true;
 
@@ -48,8 +47,6 @@ var cameraJump = function (scene) {
     cam.animations.push(jump);
 
 
-
-
     var animatable = scene.beginAnimation(cam, false, fps, false);
 
 
@@ -82,7 +79,7 @@ var cameraJump = function (scene) {
             if (angleRot >= -0.3) {
                 angleRot -= inc;
 
-                upperLegRight.rotate(BABYLON.Axis.Y, -inc );
+                upperLegRight.rotate(BABYLON.Axis.Y, -inc);
                 upperLegLeft.rotate(BABYLON.Axis.Y, inc);
 
             } else {

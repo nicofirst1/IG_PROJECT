@@ -1,12 +1,12 @@
 var useThirdP = true;
-var up=false;
+var up = false;
 var TPcamera;
 var legsCharge = true;
 var camera;
 
 var falling = true;
 var jumpKeyRelease = false;
-var modeSwitch=0;
+var modeSwitch = 0;
 var camera_position = new BABYLON.Vector3(110, 35, 0);
 
 var InitCamera = function (scene) {
@@ -16,7 +16,7 @@ var InitCamera = function (scene) {
     camera.position = camera_position;
 
     // This attaches the camera to the canvas
-    camera.ellipsoid = new BABYLON.Vector3(1, 1,1);
+    camera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
     camera.ellipsoidOffset = new BABYLON.Vector3(0, -0.2, 0);
     camera.checkCollisions = true;
     camera.applyGravity = true;
@@ -55,35 +55,33 @@ var InitCamera = function (scene) {
     //TPcamera.checkCollisions = true;
 
 
-
     scene.activeCameras.push(camera);
     scene.activeCameras.push(TPcamera);
 
     useThirdP = true;
-    up=false;
-
+    up = false;
 
 
     return camera
 };
 
-var switchFPS=function (scene) {
+var switchFPS = function (scene) {
 
-    scene.activeCameras=remove_item(scene.activeCameras, TPcamera);
+    scene.activeCameras = remove_item(scene.activeCameras, TPcamera);
     upperArmRight.position = new BABYLON.Vector3(4, -0.5, 5);
     upperArmLeft.position = new BABYLON.Vector3(-4, -0.5, 5);
 
 };
 
-var switchTPS=function (scene, is2d) {
+var switchTPS = function (scene, is2d) {
 
-    if (is2d){
-        TPcamera.beta=0;
-        TPcamera.radius=500;
+    if (is2d) {
+        TPcamera.beta = 0;
+        TPcamera.radius = 500;
     }
-    else{
-        TPcamera.beta=1;
-        TPcamera.radius=7;
+    else {
+        TPcamera.beta = 1;
+        TPcamera.radius = 7;
 
         scene.activeCameras.push(TPcamera);
         upperArmRight.position = new BABYLON.Vector3(2, 0.5, 0.5);

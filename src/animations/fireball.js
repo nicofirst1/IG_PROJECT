@@ -83,7 +83,11 @@ var fireFireball = function (scene, camera, ground) {
 
 
     bulletFireball.checkCollisions = true;
-    bulletFireball.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireball, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1*scalingX, friction: 0, restitution: 0 });
+    bulletFireball.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireball, BABYLON.PhysicsImpostor.SphereImpostor, {
+        mass: 1 * scalingX,
+        friction: 0,
+        restitution: 0
+    });
 
     var invView = new BABYLON.Matrix();
     camera.getViewMatrix().invertToRef(invView);
@@ -142,12 +146,12 @@ var fireFireball = function (scene, camera, ground) {
     bulletFireball.collisionsCount = 0;
 
     var groundBox = ground[1];
-    bulletFireball.physicsImpostor.registerOnPhysicsCollide(groundBox.physicsImpostor, function() {
+    bulletFireball.physicsImpostor.registerOnPhysicsCollide(groundBox.physicsImpostor, function () {
         explosionAnimation(scene, pSystem2, bulletFireball, "Resources/map/flares/flare.png", 0.1, 0.1, 0.1, 0.5, 2, ground, false);
     });
 
     var ground0 = ground[0];
-    bulletFireball.physicsImpostor.registerOnPhysicsCollide(ground0.physicsImpostor, function() {
+    bulletFireball.physicsImpostor.registerOnPhysicsCollide(ground0.physicsImpostor, function () {
         bulletFireball.collisionsCount += 1;
         if (bulletFireball.collisionsCount == 3) {
             explosionAnimation(scene, pSystem2, bulletFireball, "Resources/map/flares/flare.png", 1.000, 0.271, 0.000, 0.5, 2, ground, false);
@@ -156,14 +160,11 @@ var fireFireball = function (scene, camera, ground) {
 };
 
 
-
-
-
 var fireball = null;
 var pSystem = null;
 
 
-var createFireballAnimation = function(scene) {
+var createFireballAnimation = function (scene) {
     var fps = 30;
     createFireball(scene, camera);
 
@@ -193,7 +194,7 @@ var createFireballAnimation = function(scene) {
     var keysZ = [];
 
     var curr_scale = 1;
-    for (var i = 0; curr_scale <  max_scaling; i++) {
+    for (var i = 0; curr_scale < max_scaling; i++) {
         curr_scale += 0.8;
         keysX.push({frame: i, value: curr_scale});
         keysY.push({frame: i, value: curr_scale});
@@ -232,7 +233,7 @@ var createFireballAnimation = function(scene) {
     var curr_min = pSystem.minSize;
     var cur_max = pSystem.maxSize;
 
-    for (var i = 0; cur_max <  max_scaling_fire; i++) {
+    for (var i = 0; cur_max < max_scaling_fire; i++) {
         curr_min += 0.2;
         cur_max += 0.05;
         keysMin.push({frame: i, value: curr_min});

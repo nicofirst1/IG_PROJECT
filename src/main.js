@@ -3,9 +3,9 @@ var scene;
 var engine;
 
 
-var gravity= new BABYLON.Vector3(0, -2.1, 0);
+var gravity = new BABYLON.Vector3(0, -2.1, 0);
 
-var start=function () {
+var start = function () {
 
     if (!BABYLON.Engine.isSupported()) return;
 
@@ -15,13 +15,12 @@ var start=function () {
     BABYLON.Animation.AllowMatricesInterpolation = true;
 
 
-
     canvas = document.getElementById("renderCanvas");
 
     //---ENGINE
     engine = new BABYLON.Engine(canvas, true);
     //disable online support (remove warnings)
-    engine.enableOfflineSupport=false;
+    engine.enableOfflineSupport = false;
     engine.doNotHandleContextLost = true;
 
     //---SCENE
@@ -34,25 +33,19 @@ var start=function () {
     initOptimizer(scene);
 
 
-    var camera =InitCamera(scene);
+    var camera = InitCamera(scene);
     //add the camera to the scene
     scene.addCamera(camera);
 
 
-    initGui(scene,camera );
+    initGui(scene, camera);
 
-    var array= initLight(scene);
-    var light=array[0];
-    var shadowGenerator=array[1];
-
-
+    var array = initLight(scene);
+    var light = array[0];
+    var shadowGenerator = array[1];
 
 
-
-
-    var grounds = initMap(scene, light,shadowGenerator, camera);
-
-
+    var grounds = initMap(scene, light, shadowGenerator, camera);
 
 
     initCharacter(scene, camera, shadowGenerator, grounds);
@@ -74,7 +67,7 @@ var start=function () {
 
         if (camera.position.y < -100) displayGameOver();
         scene.meshes.forEach(function (m) {
-            if (m.name=="meteorite" && m.position.y < -600) {
+            if (m.name == "meteorite" && m.position.y < -600) {
                 m.dispose();
                 createMeteorite(grounds, scene);
             }
@@ -92,7 +85,7 @@ var start=function () {
 };
 
 
-var hide_menu=function () {
+var hide_menu = function () {
     //
     // var menu_items=[];
     // menu_items.push(document.getElementById("main-menu"));
@@ -103,13 +96,12 @@ var hide_menu=function () {
     //
     // }
     //
-    var menu=document.getElementById("main-menu");
-    menu.style.display='none';
-    menu=document.getElementById("loading");
-    menu.style.display='none';
-    menu=document.getElementById("menu-title");
-    menu.style.display='none';
-
+    var menu = document.getElementById("main-menu");
+    menu.style.display = 'none';
+    menu = document.getElementById("loading");
+    menu.style.display = 'none';
+    menu = document.getElementById("menu-title");
+    menu.style.display = 'none';
 
 
 };

@@ -1,17 +1,17 @@
 var moon_position = new BABYLON.Vector3(600, -600, -700);
-var moon_color="#99C9F1";
+var moon_color = "#99C9F1";
 
-var initLight= function (scene) {
+var initLight = function (scene) {
 
     //todo: choose right condition of intensity
 
     var light = new BABYLON.DirectionalLight("Moon", moon_position, scene);
-    light.intensity=0.6;
+    light.intensity = 0.6;
     light.diffuse = new BABYLON.Color3.FromHexString(moon_color);
     light.specular = new BABYLON.Color3(0, 1, 1);
 
     var hemisferic = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(0, 1, 0), scene);
-    hemisferic.intensity=0.01;
+    hemisferic.intensity = 0.01;
     hemisferic.diffuse = new BABYLON.Color3.FromHexString(moon_color);
     hemisferic.specular = new BABYLON.Color3(0, 1, 1);
 
@@ -26,6 +26,6 @@ var initLight= function (scene) {
     shadowGenerator.useBlurExponentialShadowMap = true;
     shadowGenerator.blurKernel = 32;
 
-    return [light,shadowGenerator]
+    return [light, shadowGenerator]
 
 }

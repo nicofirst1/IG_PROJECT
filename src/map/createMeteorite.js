@@ -3,7 +3,7 @@ var seed = 1;
 var max_dim = 3;
 var min_dim = 0.5;
 var meteorite_number = 0;
-var meteoriteProb=0.0;
+var meteoriteProb = 0.0;
 
 var createMeteorite = function (grounds, scene) {
 
@@ -19,13 +19,17 @@ var createMeteorite = function (grounds, scene) {
     b.scaling.x = rnd;
     b.scaling.y = rnd;
     b.scaling.z = rnd;
-    b.physicsImpostor = new BABYLON.PhysicsImpostor(b, BABYLON.PhysicsImpostor.SphereImpostor, { mass: rnd * 1000 , friction: 1000, restitution: 0 });
+    b.physicsImpostor = new BABYLON.PhysicsImpostor(b, BABYLON.PhysicsImpostor.SphereImpostor, {
+        mass: rnd * 1000,
+        friction: 1000,
+        restitution: 0
+    });
     b.checkCollisions = true;
 
-    var minPos = -groundSize/2;
-    var maxPos = groundSize/2;
+    var minPos = -groundSize / 2;
+    var maxPos = groundSize / 2;
     b.position.y = 1000;
-    b.position.x =  Math.random(seed++) * (maxPos - minPos) + minPos;
+    b.position.x = Math.random(seed++) * (maxPos - minPos) + minPos;
     b.position.z = Math.random(seed++) * (maxPos - minPos) + minPos;
 
     var impulseDir = new BABYLON.Vector3(0, 0, 0);
@@ -77,14 +81,14 @@ var createMeteorite = function (grounds, scene) {
     // };
 
     var groundBox = grounds[1];
-    b.physicsImpostor.registerOnPhysicsCollide(groundBox.physicsImpostor, function() {
+    b.physicsImpostor.registerOnPhysicsCollide(groundBox.physicsImpostor, function () {
         if (b.position.y < 200) {
             explosionAnimation(scene, pSystem, b, "Resources/map/flares/flare.png", 0.1, 0.1, 0.1, rnd * 6, rnd * 12, grounds, true);
         }
     });
 
     var ground0 = grounds[0];
-    b.physicsImpostor.registerOnPhysicsCollide(ground0.physicsImpostor, function() {
+    b.physicsImpostor.registerOnPhysicsCollide(ground0.physicsImpostor, function () {
         if (b.position.y < 200) {
             explosionAnimation(scene, pSystem, b, "Resources/map/flares/flare.png", 1.000, 0.271, 0.000, rnd * 6, rnd * 12, grounds, true);
         }

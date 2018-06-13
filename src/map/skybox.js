@@ -1,4 +1,4 @@
-var initSkybox = function(scene, sky_size) {
+var initSkybox = function (scene, sky_size) {
     var skybox = BABYLON.Mesh.CreateBox("skyBox", sky_size, scene);
     var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
     skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("Resources/map/hw_lagoon/lagoon", scene);

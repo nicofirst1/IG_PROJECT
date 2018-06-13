@@ -10,7 +10,7 @@ var mana_bar;
 var mana_text;
 
 
-var ignoreCollision = [ "arm"]; //meshes to ignore for collisions
+var ignoreCollision = ["arm"]; //meshes to ignore for collisions
 var damages = {
     bulletFireballRest: 1,
     metheorite: 30,
@@ -31,7 +31,7 @@ var gameOverFlag = false;
 
 var manaInterval;
 var manaConsumptionFlag = false;
-var manaConsumptionInterval=100;
+var manaConsumptionInterval = 100;
 
 var initGui = function (scene, camera) {
 
@@ -42,7 +42,7 @@ var initGui = function (scene, camera) {
     healtBar(scene, advancedTexture);
     manaBar(scene, advancedTexture);
     scoreBar(scene, advancedTexture);
-    gameOver(scene, advancedTexture);
+    gameOver();
     writtenInfos(advancedTexture);
 
 
@@ -88,7 +88,7 @@ var inflictDamage = function (collidedMesh) {
         }
     }
 
-    if(collidedMesh.id==="groundBox"||collidedMesh.id==="ground"){
+    if (collidedMesh.id === "groundBox" || collidedMesh.id === "ground") {
         if (isJumping && falling && upperLegRight) {
             upperLegLeft.rotation.x = Math.PI / 2;
             upperLegRight.rotation.x = Math.PI / 2;
@@ -114,8 +114,8 @@ var inflictDamage = function (collidedMesh) {
                         upperLegLeft.rotate(BABYLON.Axis.Z, inc);
                         lowerLegLeft.rotate(BABYLON.Axis.Z, inc);
 
-                        upperLegRight.rotate(BABYLON.Axis.Y, -inc/7);
-                        upperLegLeft.rotate(BABYLON.Axis.Y, inc/7);
+                        upperLegRight.rotate(BABYLON.Axis.Y, -inc / 7);
+                        upperLegLeft.rotate(BABYLON.Axis.Y, inc / 7);
 
                         bodyMesh.position.y += inc * 0.5;
                     } else {
@@ -124,7 +124,6 @@ var inflictDamage = function (collidedMesh) {
                     }
                 }
             };
-
 
 
             isJumping = false;
@@ -164,7 +163,7 @@ var inflictDamage = function (collidedMesh) {
 
 };
 
-var displayGameOver=function () {
+var displayGameOver = function () {
     gameOverFlag = true;
 
 
@@ -328,7 +327,7 @@ var scoreBar = function (scene, advancedTexture) {
 
 };
 
-var gameOver = function (scene, advancedTexture) {
+var gameOver = function () {
 
 
     var canvas = document.getElementById("renderCanvas");
@@ -348,12 +347,12 @@ var gameOver = function (scene, advancedTexture) {
 };
 
 
-var playMusicFlag=true;
+var playMusicFlag = true;
 var currentPov;
 var audio;
 
-var writtenInfos=function (adcancedTexture) {
-    audio=document.getElementById("sfx-background");
+var writtenInfos = function (adcancedTexture) {
+    audio = document.getElementById("sfx-background");
 
     var header = new BABYLON.GUI.TextBlock();
     header.text = "Play/pause music with 'M'";
@@ -361,7 +360,7 @@ var writtenInfos=function (adcancedTexture) {
     header.color = "yellow";
     header.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
     header.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
-    header.paddingTop="750px";
+    header.paddingTop = "750px";
 
 
     var header1 = new BABYLON.GUI.TextBlock();
@@ -370,7 +369,7 @@ var writtenInfos=function (adcancedTexture) {
     header1.color = "yellow";
     header1.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
     header1.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
-    header1.paddingTop="700px";
+    header1.paddingTop = "700px";
 
 
     currentPov = new BABYLON.GUI.TextBlock();
@@ -379,8 +378,7 @@ var writtenInfos=function (adcancedTexture) {
     currentPov.color = "magenta";
     currentPov.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     currentPov.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
-    currentPov.paddingTop="750px";
-
+    currentPov.paddingTop = "750px";
 
 
     adcancedTexture.addControl(header);
