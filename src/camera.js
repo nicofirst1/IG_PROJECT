@@ -44,7 +44,7 @@ var InitCamera = function (scene) {
     //camera1.position = posCamera1;
     camera1.alpha = -Math.PI / 2;
     camera1.beta = 1; // 0 for above
-    camera1.radius = 7; // 100 for above
+    camera1.radius = 10; // 100 for above
 
     camera1.layerMask = 2;
     camera1.parent = camera;

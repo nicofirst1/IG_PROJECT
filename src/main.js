@@ -94,9 +94,9 @@ var start=function () {
     // If meteorite 20 below the ground it starts again from the sky
     scene.registerBeforeRender(function () {
 
-        if (useThirdP) {
-            //body.rotation.x = -camera.rotation.x;
-            //body.rotation.z = -camera.rotation.z;
+        if (useThirdP && bodyMesh) {
+            bodyMesh.rotation.x = -camera.rotation.x;
+            bodyMesh.rotation.z = -camera.rotation.z;
             //body.position.y = -0.5;
         } else {
             //body.rotation.x = 0;

@@ -4,8 +4,8 @@ var phase2 = false;
 var phase3 = false;
 var phase4 = false;
 
-var maxUpper = 0.6;
-var maxLower = 0.8;
+var maxUpper = 0.8;
+var maxLower = 1.2;
 
 var legMovement = function (scene, leg, max, ccw, camera, upperLeg) {
     moveLegs = true;
@@ -16,7 +16,7 @@ var legMovement = function (scene, leg, max, ccw, camera, upperLeg) {
     var angleLowerRight = 0;
 
     var incUpperRight = 0.05;
-    var inc = 0.05;
+    var inc = 0.1;
 
     scene.beforeRender = function () {
 
