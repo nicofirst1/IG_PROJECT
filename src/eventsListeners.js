@@ -1,3 +1,7 @@
+//########################
+//         MOUSE
+//########################
+
 var addClickListeners=function () {
 
 
@@ -65,7 +69,9 @@ var mouseup=function(event,ground) {
 };
 
 
-
+//########################
+//         KEYBOARD
+//########################
 var addKeyboardListeners=function () {
 
     window.addEventListener("keyup", onKeyUp, false);
@@ -149,3 +155,22 @@ var onKeyDown= function(event) {
             legsJumpCharge(scene);
     }
 }
+
+
+//########################
+//         WINDOW
+//########################
+
+var windowListener=function () {
+
+    window.addEventListener('click', setFullScreen);
+
+
+};
+
+// Set full screen
+var setFullScreen = function () {
+    engine.isPointerLock = true;
+    window.removeEventListener('click', setFullScreen);
+    canvas.requestPointerLock();
+};

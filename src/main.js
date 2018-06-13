@@ -32,16 +32,16 @@ var start=function () {
 
     var gravity= new BABYLON.Vector3(0, -2.1, 0);
 
-    // BABYLON.OBJFileLoader.OPTIMIZE_WITH_UV = true;
 
     canvas = document.getElementById("renderCanvas");
 
+    //---ENGINE
     engine = new BABYLON.Engine(canvas, true);
     //disable online support (remove warnings)
     engine.enableOfflineSupport=false;
     engine.doNotHandleContextLost = true;
 
-
+    //---SCENE
     scene = new BABYLON.Scene(engine);
     scene.enablePhysics();
     scene.gravity = gravity;
@@ -52,7 +52,6 @@ var start=function () {
 
 
     var camera =InitCamera(scene);
-    // Attach the camera to the canvas
 
     initHealtMana(scene,camera );
 
@@ -60,14 +59,8 @@ var start=function () {
     var light=array[0];
     var shadowGenerator=array[1];
 
-    // Set full screen
-    var setFullScreen = function () {
-        engine.isPointerLock = true;
-        window.removeEventListener('click', setFullScreen);
-        canvas.requestPointerLock();
-    };
-    window.addEventListener('click', setFullScreen);
 
+    windowListener();
 
 
 
