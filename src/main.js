@@ -78,9 +78,9 @@ var start = function () {
     addKeyboardListeners();
     windowListener();
 
-    engine.runRenderLoop(function () {
-        scene.render();
-    });
+    //engine.runRenderLoop(function () {
+    //   scene.render();
+    //});
 
 };
 

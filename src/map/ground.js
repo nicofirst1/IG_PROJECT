@@ -22,6 +22,13 @@ var initGround = function (scene, groundSize) {
     groundBox.material = lavaMaterial;
 
     ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/poly_HM/Heightmap.png", groundSize, groundSize, 128, 0, ground_max_z, scene, false, function () {
+
+        scene.executeWhenReady(function () {
+            engine.runRenderLoop(function () {
+                scene.render();
+            });
+        });
+
         ground.convertToFlatShadedMesh();
 
         ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.MeshImpostor, {
