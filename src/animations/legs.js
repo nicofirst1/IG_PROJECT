@@ -150,7 +150,7 @@ var angleUpperRight0 = 0;
 
 var legsJumpCharge = function (scene) {
 
-    var inc = 0.7;
+    var inc = 0.3;
 
     scene.beforeRender = function () {
         if (canCharge && !isJumping) {
@@ -191,23 +191,12 @@ function fireKeyboardEvent(event, keycode) {
 
 
 var angleUpperRight1 = 0;
-var toChange = true;
 
 var legsJumpRelease = function (scene) {
 
-    var inc = 0.7;
-
-
+    var inc = 0.3;
 
     scene.beforeRender = function () {
-        if (toChange) {
-            upperLegRight.setRotation(upperLegRightInit);
-            upperLegLeft.setRotation(upperLegLeftInit);
-            lowerLegRight.setRotation(lowerLegRightInit);
-            lowerLegLeft.setRotation(lowerLegLeftInit);
-        } else {
-            toChange = false;
-        }
         if (chargedForJump && jumpKeyRelease) {
             if (angleUpperRight1 >= -maxUpper) {
                 angleUpperRight1 -= inc;

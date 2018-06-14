@@ -151,8 +151,8 @@ var onKeyDown = function (event) {
     if (keyVec.indexOf(event.keyCode) >= 0) {
         if (chargedForJump) {
             scene.stopAnimation(camera);
-            scene.stopAnimation(upperLegRight);
-            scene.stopAnimation(upperLegLeft);
+            //scene.stopAnimation(upperLegRight);
+            //scene.stopAnimation(upperLegLeft);
             legsCharge = true;
         }
         if (movementBool && !isJumping) {

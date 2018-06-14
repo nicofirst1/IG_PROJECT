@@ -67,7 +67,6 @@ var cameraJump = function (scene) {
         movementBool = true;
         canCharge = true;
         falling = true;
-        toChange = true;
 
         angleUpperRight0 = 0;
         angleUpperRight1 = 0;
@@ -79,12 +78,16 @@ var cameraJump = function (scene) {
             if (angleRot >= -0.3) {
                 angleRot -= inc;
 
-                upperLegRight.rotate(BABYLON.Axis.Y, -inc);
-                upperLegLeft.rotate(BABYLON.Axis.Y, inc);
+                upperLegRight.rotate(BABYLON.Axis.Y, -inc/1.2);
+                upperLegLeft.rotate(BABYLON.Axis.Y, inc/1.2);
 
             } else {
-                upperLegRight.setRotation(upperLegRightInit);
-                upperLegLeft.setRotation(upperLegLeftInit);
+                //upperLegRight.setRotation(upperLegRightInit);
+                //upperLegLeft.setRotation(upperLegLeftInit);
+                //lowerLegRight.setRotation(lowerLegRightInit);
+                //lowerLegLeft.setRotation(lowerLegLeftInit);
+
+                fireKeyboardEvent("keydown", 87);
             }
 
         };

@@ -91,6 +91,13 @@ var inflictDamage = function (collidedMesh) {
 
     if (collidedMesh.id === "groundBox" || collidedMesh.id === "ground") {
 
+        if (Math.abs(camera.position.y - 5.51) < 1) {
+            scene.beforeRender = function () {
+                update_healt(-damages.lava)
+            };
+        }
+
+
         if (isJumping && falling && upperLegRight) {
             upperLegLeft.rotation.x = Math.PI / 2;
             upperLegRight.rotation.x = Math.PI / 2;
@@ -101,9 +108,6 @@ var inflictDamage = function (collidedMesh) {
             var inc = 0.07;
 
             scene.beforeRender = function () {
-                if (Math.abs(camera.position.y - 5) < 0.1 ) {
-                    update_healt(-damages.lava)
-                }
 
                 if (angleUpperRight00 >= -maxUpper) {
                     angleUpperRight00 -= inc;

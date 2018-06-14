@@ -3,7 +3,7 @@ var scene;
 var engine;
 
 
-var gravity = new BABYLON.Vector3(0, -2.1, 0);
+var gravity = new BABYLON.Vector3(0, -1.5, 0);
 
 var start = function () {
 

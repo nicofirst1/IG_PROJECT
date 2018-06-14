@@ -21,7 +21,7 @@ var initGround = function (scene, groundSize) {
     lavaMaterial.fogColor = new BABYLON.Color3(1, 0, 0);
     groundBox.material = lavaMaterial;
 
-    ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/poly_HM/Heightmap.png", groundSize, groundSize, 128, 0, ground_max_z, scene, false, function () {
+    ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/poly_HM/Heightmap.png", groundSize, groundSize, 64, 0, ground_max_z, scene, false, function () {
 
         scene.executeWhenReady(function () {
             engine.runRenderLoop(function () {
