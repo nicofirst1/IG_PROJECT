@@ -76,7 +76,8 @@ var armZchargeAngle = 0;
 var armXchargeAngle = 0;
 var chargingFireballArm = false;
 
-var armsChargeAnimation = function (scene, camera, todoFireball) {
+var armsChargeAnimation = function () {
+
 
 
     var maxZRotation = 1;
@@ -105,14 +106,20 @@ var dischargeArmsAnimationInterval;
 var armsDischargeAnimationTime = 0.001;
 
 
-var armsDischargeAnimation = function (scene, camera, todoFireball) {
+var armsDischargeAnimation = function () {
 
+    //console.log(armXchargeAngle);
 
     var inc = 0.01;
     var done = false;
 
     armZchargeAngle = round(armZchargeAngle, 3);
     armXchargeAngle = round(armXchargeAngle, 3);
+
+    if(!armZchargeAngle || ! armXchargeAngle) {
+        clearInterval(dischargeArmsAnimationInterval);
+        chargingFireballArm = false;
+    }
 
     if (armZchargeAngle > 0) {
         upperArmRight.rotate(BABYLON.Axis.Z, inc);

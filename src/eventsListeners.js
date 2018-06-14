@@ -10,7 +10,7 @@ var addClickListeners = function () {
         createFireballAnimation(scene);
 
         chargeArmsAnimationInterval = setInterval(function () {
-            armsChargeAnimation(scene, camera, true);
+            armsChargeAnimation();
         }, armsChargeAnimationTime);
 
 
@@ -33,7 +33,7 @@ var addClickListeners = function () {
 
 
         dischargeArmsAnimationInterval = setInterval(function () {
-            armsDischargeAnimation(scene, camera, true);
+            armsDischargeAnimation();
         }, armsDischargeAnimationTime);
 
 
