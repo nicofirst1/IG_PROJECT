@@ -16,6 +16,10 @@ var beforeRenderArms = function () {
         return
     }
 
+    if(isNaN(armRunAngle)){
+        armRunAngle=0;
+    }
+
 
     if (moveArms) {
 
