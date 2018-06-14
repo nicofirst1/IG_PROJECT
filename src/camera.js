@@ -19,7 +19,7 @@ var InitCamera = function (scene) {
 
     // This attaches the camera to the canvas
     camera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
-    camera.ellipsoidOffset = new BABYLON.Vector3(0, 0, 0);
+    camera.ellipsoidOffset = new BABYLON.Vector3(0, -0.5, 0);
     camera.checkCollisions = true;
     camera.applyGravity = true;
     camera._needMoveForGravity = true;
@@ -70,8 +70,8 @@ var InitCamera = function (scene) {
 var switchFPS = function (scene) {
 
     scene.activeCameras = remove_item(scene.activeCameras, TPcamera);
-    upperArmRight.position = new BABYLON.Vector3(4, -0.5, 5);
-    upperArmLeft.position = new BABYLON.Vector3(-4, -0.5, 5);
+    //upperArmRight.position = new BABYLON.Vector3(4, -0.5, 5);
+    //upperArmLeft.position = new BABYLON.Vector3(-4, -0.5, 5);
 
 };
 
@@ -86,8 +86,8 @@ var switchTPS = function (scene, is2d) {
         TPcamera.radius = 10;
 
         scene.activeCameras.push(TPcamera);
-        upperArmRight.position = new BABYLON.Vector3(2, 0.5, 0.5);
-        upperArmLeft.position = new BABYLON.Vector3(-2, 0.5, 0.5);
+        //upperArmRight.position = new BABYLON.Vector3(2, 0.5, 0.5);
+        //upperArmLeft.position = new BABYLON.Vector3(-2, 0.5, 0.5);
 
     }
 
