@@ -81,7 +81,7 @@ var switchTPS = function (scene, is2d) {
     }
     else {
         TPcamera.beta = 1;
-        TPcamera.radius = 7;
+        TPcamera.radius = 10;
 
         scene.activeCameras.push(TPcamera);
         upperArmRight.position = new BABYLON.Vector3(2, 0.5, 0.5);
