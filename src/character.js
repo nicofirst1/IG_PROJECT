@@ -133,5 +133,8 @@ var importModel = function (newMeshes, particleSystems, skeletons) {
     lowerArmRightInit = lowerArmRight.getRotation();
     lowerArmLeftInit = lowerArmLeft.getRotation();
 
+    upperLegRight.rotate(BABYLON.Axis.Y, 0.1);
+    upperLegLeft.rotate(BABYLON.Axis.Y, -0.1);
+
 };
 

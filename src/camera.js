@@ -4,8 +4,8 @@ var TPcamera;
 var legsCharge = true;
 var camera;
 
-var falling = false;
-var isJumping = false;
+var falling = true;
+var isJumping = true;
 
 var jumpKeyRelease = false;
 var modeSwitch = 0;
