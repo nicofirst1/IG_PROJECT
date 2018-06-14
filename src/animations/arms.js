@@ -64,7 +64,7 @@ var beforeRenderArms = function () {
     }
 };
 
-var armsChargeAnimationTime = 10;
+var armsChargeAnimationTime = 5;
 var chargeArmsAnimationInterval;
 
 
@@ -98,7 +98,7 @@ var armsChargeAnimation = function (scene, camera, todoFireball) {
 };
 
 var dischargeArmsAnimationInterval;
-var armsDischargeAnimationTime = 0.01;
+var armsDischargeAnimationTime = 0.001;
 
 
 var armsDischargeAnimation = function (scene, camera, todoFireball) {
