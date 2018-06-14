@@ -13,10 +13,10 @@ var lowerLegRightInit;
 var upperLegLeftInit;
 var lowerLegLeftInit;
 
-var upperArmRightInit;
-var lowerArmRightInit;
-var upperArmLeftInit;
-var lowerArmLeftInit;
+var upperArmRightOP;
+var lowerArmRightOP;
+var upperArmLeftOP;
+var lowerArmLeftOP;
 
 var movementBool = true;
 var body;
@@ -106,8 +106,26 @@ var importModel = function (newMeshes, particleSystems, skeletons) {
     upperLegLeft = skeleton.bones[54];
     lowerLegLeft = skeleton.bones[55];
 
-    upperLegRight.rotate(BABYLON.Axis.Y, -0.15);
-    upperLegLeft.rotate(BABYLON.Axis.Y, 0.15);
+
+    upperArmRightOP = Object.assign({}, upperArmRight.getLocalMatrix().m);
+    upperArmLeftOP = Object.assign({}, upperArmLeft.getLocalMatrix().m);
+    lowerArmRightOP = Object.assign({}, lowerArmRight.getLocalMatrix().m);
+    lowerArmLeftOP = Object.assign({}, lowerArmLeft.getLocalMatrix().m);
+
+    armAdjustTP();
+    legAdjust();
+
+    upperLegRightInit = upperLegRight.getRotation();
+    upperLegLeftInit = upperLegLeft.getRotation();
+    lowerLegRightInit = lowerLegRight.getRotation();
+    lowerLegLeftInit = lowerLegLeft.getRotation();
+
+
+
+
+};
+
+var armAdjustTP=function () {
 
 
     upperArmRight.rotate(BABYLON.Axis.Y, -0.7);
@@ -123,18 +141,45 @@ var importModel = function (newMeshes, particleSystems, skeletons) {
     upperArmRight.translate(new BABYLON.Vector3(3, 0, 4));
     upperArmLeft.translate(new BABYLON.Vector3(3, 0, -4));
 
-    upperLegRightInit = upperLegRight.getRotation();
-    upperLegLeftInit = upperLegLeft.getRotation();
-    lowerLegRightInit = lowerLegRight.getRotation();
-    lowerLegLeftInit = lowerLegLeft.getRotation();
+};
 
-    upperArmRightInit = upperArmRight.getRotation();
-    upperArmLeftInit = upperArmLeft.getRotation();
-    lowerArmRightInit = lowerArmRight.getRotation();
-    lowerArmLeftInit = lowerArmLeft.getRotation();
+
+var armAdjustFP=function () {
+
+
+    upperArmRight.rotate(BABYLON.Axis.Y, -1);
+    upperArmLeft.rotate(BABYLON.Axis.Y, 1);
+
+    lowerArmRight.rotate(BABYLON.Axis.Z, -1.5);
+    lowerArmLeft.rotate(BABYLON.Axis.Z, -1.5);
+
+
+};
+
+
+var armSetOP=function (istp) {
+
+
+    upperArmRight.updateMatrix(upperArmRight._restPose) ;
+
+    upperArmLeft.updateMatrix(upperArmLeft._restPose) ;
+
+    lowerArmRight.updateMatrix(lowerArmRight._restPose) ;
+
+    lowerArmLeft.updateMatrix(lowerArmLeft._restPose) ;
+
+
+
+};
+
+var legAdjust=function () {
+
+    upperLegRight.rotate(BABYLON.Axis.Y, -0.15);
+    upperLegLeft.rotate(BABYLON.Axis.Y, 0.15);
 
     upperLegRight.rotate(BABYLON.Axis.Y, 0.1);
     upperLegLeft.rotate(BABYLON.Axis.Y, -0.1);
 
-};
+
+}
 
