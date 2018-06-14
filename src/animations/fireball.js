@@ -150,13 +150,7 @@ var fireFireball = function (scene, camera, ground) {
         explosionAnimation(scene, pSystem2, bulletFireball, "Resources/map/flares/flare.png", 0.1, 0.1, 0.1, 0.5, 2, ground, false);
     });
 
-    var ground0 = ground[0];
-    bulletFireball.physicsImpostor.registerOnPhysicsCollide(ground0.physicsImpostor, function () {
-        bulletFireball.collisionsCount += 1;
-        if (bulletFireball.collisionsCount == 3) {
-            explosionAnimation(scene, pSystem2, bulletFireball, "Resources/map/flares/flare.png", 1.000, 0.271, 0.000, 0.5, 2, ground, false);
-        }
-    });
+
 };
 
 

@@ -17,11 +17,11 @@ var initGround = function (scene, groundSize) {
     var lavaMaterial = new BABYLON.LavaMaterial("lava", scene);
     lavaMaterial.noiseTexture = new BABYLON.Texture("Resources/steam/steam.png", scene); // Set the bump texture
     lavaMaterial.diffuseTexture = new BABYLON.Texture("Resources/fire/fire.jpg", scene); // Set the diffuse texture
-    lavaMaterial.speed = 0.1;
+    lavaMaterial.speed = 0;
     lavaMaterial.fogColor = new BABYLON.Color3(1, 0, 0);
     groundBox.material = lavaMaterial;
 
-    ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/poly_HM/Heightmap.png", groundSize, groundSize, 64, 0, ground_max_z, scene, false, function () {
+    ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/poly_HM/Heightmap3.png", groundSize, groundSize, 64, 0, ground_max_z, scene, false, function () {
 
         scene.executeWhenReady(function () {
             engine.runRenderLoop(function () {
