@@ -13,11 +13,6 @@ var lowerLegRightInit;
 var upperLegLeftInit;
 var lowerLegLeftInit;
 
-var upperArmRightOP;
-var lowerArmRightOP;
-var upperArmLeftOP;
-var lowerArmLeftOP;
-
 var movementBool = true;
 var body;
 var head;
@@ -107,10 +102,6 @@ var importModel = function (newMeshes, particleSystems, skeletons) {
     lowerLegLeft = skeleton.bones[55];
 
 
-    upperArmRightOP = Object.assign({}, upperArmRight.getLocalMatrix().m);
-    upperArmLeftOP = Object.assign({}, upperArmLeft.getLocalMatrix().m);
-    lowerArmRightOP = Object.assign({}, lowerArmRight.getLocalMatrix().m);
-    lowerArmLeftOP = Object.assign({}, lowerArmLeft.getLocalMatrix().m);
 
     armAdjustTP();
     legAdjust();
@@ -166,6 +157,8 @@ var armSetOP=function () {
     lowerArmRight.updateMatrix(lowerArmRight._restPose) ;
 
     lowerArmLeft.updateMatrix(lowerArmLeft._restPose) ;
+
+    body.updateMatrix(body._restPose) ;
 
 
 
