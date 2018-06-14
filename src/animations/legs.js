@@ -18,7 +18,6 @@ var legMovement = function (scene, leg, max, ccw, camera, upperLeg) {
     var angleLowerLeft = 0;
     var angleLowerRight = 0;
 
-    var incUpperRight = 0.05;
     var inc = 0.1;
 
     scene.beforeRender = function () {
@@ -151,7 +150,7 @@ var angleUpperRight0 = 0;
 
 var legsJumpCharge = function (scene) {
 
-    var inc = 0.1;
+    var inc = 0.7;
 
     scene.beforeRender = function () {
         if (canCharge && !isJumping) {
@@ -174,13 +173,41 @@ var legsJumpCharge = function (scene) {
 
 };
 
+
+function fireKeyboardEvent(event, keycode) {
+    var keyboardEvent = document.createEventObject ?
+        document.createEventObject() : document.createEvent("Events");
+
+    if(keyboardEvent.initEvent) {
+        keyboardEvent.initEvent(event, true, true);
+    }
+
+    keyboardEvent.keyCode = keycode;
+    keyboardEvent.which = keycode;
+
+    document.dispatchEvent ? document.dispatchEvent(keyboardEvent)
+        : document.fireEvent(event, keyboardEvent);
+}
+
+
 var angleUpperRight1 = 0;
+var toChange = true;
 
 var legsJumpRelease = function (scene) {
 
-    var inc = 0.1;
+    var inc = 0.7;
+
+
 
     scene.beforeRender = function () {
+        if (toChange) {
+            upperLegRight.setRotation(upperLegRightInit);
+            upperLegLeft.setRotation(upperLegLeftInit);
+            lowerLegRight.setRotation(lowerLegRightInit);
+            lowerLegLeft.setRotation(lowerLegLeftInit);
+        } else {
+            toChange = false;
+        }
         if (chargedForJump && jumpKeyRelease) {
             if (angleUpperRight1 >= -maxUpper) {
                 angleUpperRight1 -= inc;

@@ -1,5 +1,4 @@
 var max_jump_heigth = 8;
-var isJumping = true;
 
 //jump animation
 var cameraJump = function (scene) {
@@ -68,6 +67,7 @@ var cameraJump = function (scene) {
         movementBool = true;
         canCharge = true;
         falling = true;
+        toChange = true;
 
         angleUpperRight0 = 0;
         angleUpperRight1 = 0;
