@@ -67,6 +67,7 @@ var cameraJump = function (scene) {
         movementBool = true;
         canCharge = true;
         falling = true;
+        toChange = true;
 
         angleUpperRight0 = 0;
         angleUpperRight1 = 0;

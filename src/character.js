@@ -133,5 +133,5 @@ var importModel = function (newMeshes, particleSystems, skeletons) {
     lowerArmRightInit = lowerArmRight.getRotation();
     lowerArmLeftInit = lowerArmLeft.getRotation();
 
-}
+};
 

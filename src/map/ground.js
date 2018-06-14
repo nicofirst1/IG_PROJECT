@@ -17,7 +17,7 @@ var initGround = function (scene, groundSize) {
     var lavaMaterial = new BABYLON.LavaMaterial("lava", scene);
     lavaMaterial.noiseTexture = new BABYLON.Texture("Resources/steam/steam.png", scene); // Set the bump texture
     lavaMaterial.diffuseTexture = new BABYLON.Texture("Resources/fire/fire.jpg", scene); // Set the diffuse texture
-    lavaMaterial.speed = 0;
+    lavaMaterial.speed = 0.1;
     lavaMaterial.fogColor = new BABYLON.Color3(1, 0, 0);
     groundBox.material = lavaMaterial;
 
