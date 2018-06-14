@@ -4,10 +4,12 @@ var TPcamera;
 var legsCharge = true;
 var camera;
 
-var falling = true;
+var falling = false;
+var isJumping = false;
+
 var jumpKeyRelease = false;
 var modeSwitch = 0;
-var camera_position = new BABYLON.Vector3(110, 35, 0);
+var camera_position = new BABYLON.Vector3(100, 35, 0);
 
 var InitCamera = function (scene) {
     camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 10, 0), scene);
@@ -17,7 +19,7 @@ var InitCamera = function (scene) {
 
     // This attaches the camera to the canvas
     camera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
-    camera.ellipsoidOffset = new BABYLON.Vector3(0, -0.2, 0);
+    camera.ellipsoidOffset = new BABYLON.Vector3(0, 0, 0);
     camera.checkCollisions = true;
     camera.applyGravity = true;
     camera._needMoveForGravity = true;

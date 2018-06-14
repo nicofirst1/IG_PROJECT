@@ -151,7 +151,7 @@ var angleUpperRight0 = 0;
 
 var legsJumpCharge = function (scene) {
 
-    var inc = 0.1;
+    var inc = 0.7;
 
     scene.beforeRender = function () {
         if (canCharge && !isJumping) {
@@ -178,7 +178,7 @@ var angleUpperRight1 = 0;
 
 var legsJumpRelease = function (scene) {
 
-    var inc = 0.1;
+    var inc = 0.7;
 
     scene.beforeRender = function () {
         if (chargedForJump && jumpKeyRelease) {

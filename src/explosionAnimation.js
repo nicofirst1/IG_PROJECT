@@ -11,7 +11,7 @@ var explosionAnimation = function (scene, pSystem, mesh, texture_path, r, g, b, 
     if (meteoriteBool) restObject = BABYLON.Mesh.CreateSphere(name, 12, 3, scene);
     else restObject = BABYLON.Mesh.CreateSphere(name, 12, 0.1, scene);
 
-    water.addToRenderList(restObject);
+    //water.addToRenderList(restObject);
 
     var fireballMaterial = new BABYLON.StandardMaterial("material", scene);
     fireballMaterial.diffuseTexture = new BABYLON.Texture("Resources/magma/magma.jpg", scene);
@@ -107,7 +107,8 @@ var explosionAnimation = function (scene, pSystem, mesh, texture_path, r, g, b, 
 
                 }
                 createMeteorite(grounds, scene);
-                if (Math.random() >= meteoriteProb) {
+                if (Math.random() >= meteoriteProb && meteorite_number < max_meteorites) {
+                    meteorite_number += 1;
                     createMeteorite(grounds, scene);
 
                 }
