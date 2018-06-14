@@ -1,6 +1,6 @@
 var tailBool = true;
 
-var explosionAnimation = function (scene, pSystem, mesh, texture_path, r, g, b, minSize, maxSize, grounds, meteoriteBool) {
+var explosionAnimation = function (scene, pSystem, mesh, texture_path, r, g, b, minSize, maxSize, grounds, meteoriteBool, visible) {
     pSystem.stop();
 
     var posAbs = mesh.getAbsolutePosition();
@@ -29,7 +29,7 @@ var explosionAnimation = function (scene, pSystem, mesh, texture_path, r, g, b, 
         restitution: 100
     });
     restObject.position = pos;
-    //restObject.visibility = false;
+    if (!visible) restObject.visibility = false;
 
     if (tailBool) {
         pSystem.emitter = restObject;

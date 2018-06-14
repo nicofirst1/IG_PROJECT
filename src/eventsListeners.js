@@ -193,3 +193,4 @@ var setFullScreen = function () {
     engine.isPointerLock = true;
     canvas.requestPointerLock();
 };
+

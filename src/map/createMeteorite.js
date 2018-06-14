@@ -6,10 +6,10 @@ var meteorite_number = 10;
 var max_meteorites = 15;
 var meteoriteProb = 0.0;
 
-var createMeteorite = function (grounds, scene) {
+var createMeteorite = function (ground, scene) {
 
     var b = BABYLON.Mesh.CreateSphere("metheorite", 12, 3, scene);
-    //water.addToRenderList(b);
+    water.addToRenderList(b);
     b.subID = metheoriteID;
     metheoriteID += 1;
     if (metheoriteID > 1000) metheoriteID = 0;
@@ -20,21 +20,32 @@ var createMeteorite = function (grounds, scene) {
     b.scaling.x = rnd;
     b.scaling.y = rnd;
     b.scaling.z = rnd;
-    b.physicsImpostor = new BABYLON.PhysicsImpostor(b, BABYLON.PhysicsImpostor.SphereImpostor, {
-        mass: rnd * 1000,
-        friction: 1000,
-        restitution: 0
-    });
+
     b.checkCollisions = true;
 
-    var minPos = -groundSize / 2;
-    var maxPos = groundSize / 2;
+    b.physicsImpostor = new BABYLON.PhysicsImpostor(b, BABYLON.PhysicsImpostor.SphereImpostor, {
+        mass: 10,
+        friction: 0,
+        restitution: 0.1
+    });
+
+    var minPos = -groundSize / 2 + 20;
+    var maxPos = groundSize / 2 - 20;
     b.position.y = 1000;
     b.position.x = Math.random(seed++) * (maxPos - minPos) + minPos;
     b.position.z = Math.random(seed++) * (maxPos - minPos) + minPos;
+    console.log(b.position.x, b.position.z);
+
 
     var impulseDir = new BABYLON.Vector3(0, 0, 0);
-    impulseDir.y = -10;
+
+    var impulseScale = 1000;
+    //var metPos = b.getAbsolutePosition();
+    //impulseDir.x = (camera.position.x -  metPos.x) * impulseScale * rnd;
+    //impulseDir.y = (camera.position.y -  metPos.y) * impulseScale * rnd;
+    //impulseDir.z = (camera.position.z -  metPos.z) * impulseScale * rnd;
+    impulseDir.y = -impulseScale;
+
     b.physicsImpostor.applyImpulse(impulseDir, b.getAbsolutePosition());
 
     var fireballMaterial = new BABYLON.StandardMaterial("material", scene);
@@ -52,8 +63,8 @@ var createMeteorite = function (grounds, scene) {
     pSystem.color2 = new BABYLON.Color4(0.1, 0.1, 0.1, 1.0);
     pSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
 
-    pSystem.minSize = rnd * 3;
-    pSystem.maxSize = rnd * 6;
+    pSystem.minSize = rnd * 5;
+    pSystem.maxSize = rnd * 10;
 
     pSystem.minLifeTime = 0.3;
     pSystem.maxLifeTime = 1.5;
@@ -74,6 +85,8 @@ var createMeteorite = function (grounds, scene) {
     pSystem.maxEmitPower = 2;
     pSystem.updateSpeed = 0.005;
 
+    b.particleSystem = pSystem;
+
     pSystem.start();
 
     // b.onCollide = function(collidedMesh) {
@@ -81,17 +94,10 @@ var createMeteorite = function (grounds, scene) {
     //     pSystem.stop();
     // };
 
-    var groundBox = grounds[1];
-    b.physicsImpostor.registerOnPhysicsCollide(groundBox.physicsImpostor, function () {
-        if (b.position.y < 200) {
-            explosionAnimation(scene, pSystem, b, "Resources/map/flares/flare.png", 0.1, 0.1, 0.1, rnd * 6, rnd * 12, grounds, true);
-        }
-    });
 
-    var ground0 = grounds[0];
-    b.physicsImpostor.registerOnPhysicsCollide(ground0.physicsImpostor, function () {
-        if (b.position.y < 200) {
-            explosionAnimation(scene, pSystem, b, "Resources/map/flares/flare.png", 1.000, 0.271, 0.000, rnd * 6, rnd * 12, grounds, true);
+    b.physicsImpostor.registerOnPhysicsCollide(ground.physicsImpostor, function () {
+        if (b.position.y < 80) {
+            explosionAnimation(scene, pSystem, b, "Resources/map/flares/flare.png", 1.000, 0.271, 0.000, rnd * 6, rnd * 12, ground, true, true);
         }
     });
 

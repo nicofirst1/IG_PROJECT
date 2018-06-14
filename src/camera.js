@@ -9,7 +9,7 @@ var isJumping = false;
 
 var jumpKeyRelease = false;
 var modeSwitch = 0;
-var camera_position = new BABYLON.Vector3(100, 35, 0);
+var camera_position = new BABYLON.Vector3(40, 55, 0);
 
 var InitCamera = function (scene) {
     camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 10, 0), scene);
@@ -79,7 +79,7 @@ var switchTPS = function (scene, is2d) {
 
     if (is2d) {
         TPcamera.beta = 0;
-        TPcamera.radius = 500;
+        TPcamera.radius = 200;
     }
     else {
         TPcamera.beta = 1;

@@ -84,9 +84,9 @@ var fireFireball = function (scene, camera, ground) {
 
     bulletFireball.checkCollisions = true;
     bulletFireball.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireball, BABYLON.PhysicsImpostor.SphereImpostor, {
-        mass: 0.3 * scalingX,
-        friction: 0,
-        restitution: 0
+        mass: 0.3,
+        friction: 0.1,
+        restitution: 0.1
     });
 
     var invView = new BABYLON.Matrix();
@@ -138,16 +138,18 @@ var fireFireball = function (scene, camera, ground) {
     pSystem2.start();
 
     var impulseDir = new BABYLON.Vector3(0.0, 0.0, 0.0);
-    impulseDir.x = direction.x * 1000;
-    impulseDir.y = direction.y * 1000;
-    impulseDir.z = direction.z * 1000;
+    impulseDir.x = direction.x * 100;
+    impulseDir.y = direction.y * 100;
+    impulseDir.z = direction.z * 100;
 
     bulletFireball.physicsImpostor.applyImpulse(impulseDir, bulletFireball.getAbsolutePosition());
     bulletFireball.collisionsCount = 0;
 
-    var groundBox = ground[1];
-    bulletFireball.physicsImpostor.registerOnPhysicsCollide(groundBox.physicsImpostor, function () {
-        explosionAnimation(scene, pSystem2, bulletFireball, "Resources/map/flares/flare.png", 0.1, 0.1, 0.1, 0.5, 2, ground, false);
+    bulletFireball.physicsImpostor.registerOnPhysicsCollide(ground.physicsImpostor, function() {
+        bulletFireball.collisionsCount += 1;
+        if (bulletFireball.collisionsCount == 5) {
+            explosionAnimation(scene, pSystem2, bulletFireball, "Resources/map/flares/flare.png", 1.000, 0.271, 0.000, 0.5, 2, ground, false);
+        }
     });
 
 

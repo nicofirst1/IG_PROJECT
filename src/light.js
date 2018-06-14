@@ -10,6 +10,8 @@ var initLight = function (scene) {
     light.diffuse = new BABYLON.Color3.FromHexString(moon_color);
     light.specular = new BABYLON.Color3(0, 1, 1);
 
+    var light2 = new BABYLON.HemisphericLight("sun", new BABYLON.Vector3(0, 200, 0), scene);
+
     var hemisferic = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(0, 1, 0), scene);
     hemisferic.intensity = 0.01;
     hemisferic.diffuse = new BABYLON.Color3.FromHexString(moon_color);
