@@ -70,7 +70,7 @@ var InitCamera = function (scene) {
 var switchFPS = function (scene) {
 
     scene.activeCameras = remove_item(scene.activeCameras, TPcamera);
-    armAdjustFP();
+    //armAdjustFP();
 
 
 };

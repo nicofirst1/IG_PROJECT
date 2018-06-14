@@ -60,9 +60,11 @@ var start = function () {
             bodyMesh.rotation.z = -camera.rotation.z;
             //body.position.y = -0.5;
         } else {
-            //body.rotation.x = 0;
-            //body.rotation.z = 0;
-            //body.position.y = -0.2;
+            bodyMesh.rotation.x = 0;
+            bodyMesh.rotation.z = 0;
+            bodyMesh.position.z = 1;
+            bodyMesh.position.y = -3;
+
         }
 
         if (camera.position.y < -100) displayGameOver();
