@@ -89,6 +89,10 @@ var onKeyUp = function (event) {
         moveArms = false;
         if (!movementBool) {
             movementBool = true;
+            angleUpperRight = 0;
+            angleUpperLeft = 0;
+            angleLowerLeft = 0;
+            angleLowerRight = 0;
             upperLegRight.setRotation(upperLegRightInit);
             upperLegLeft.setRotation(upperLegLeftInit);
             lowerLegRight.setRotation(lowerLegRightInit);

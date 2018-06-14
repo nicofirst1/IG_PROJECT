@@ -88,6 +88,7 @@ var cameraJump = function (scene) {
                 //lowerLegLeft.setRotation(lowerLegLeftInit);
 
                 fireKeyboardEvent("keydown", 87);
+                fireKeyboardEvent("keyup", 87);
             }
 
         };

@@ -127,6 +127,10 @@ var inflictDamage = function (collidedMesh) {
                     } else {
                         upperLegRight.setRotation(upperLegRightInit);
                         upperLegLeft.setRotation(upperLegLeftInit);
+                        isJumping = false;
+                        falling = false;
+                        fireKeyboardEvent("keydown", 87);
+                        fireKeyboardEvent("keyup", 87);
                     }
                 }
             };

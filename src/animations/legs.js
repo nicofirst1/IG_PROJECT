@@ -10,13 +10,13 @@ var maxLower = 1.2;
 var chargedForJump = false;
 var canCharge = true;
 
+var angleUpperRight = 0;
+var angleUpperLeft = 0;
+var angleLowerLeft = 0;
+var angleLowerRight = 0;
+
 var legMovement = function (scene, leg, max, ccw, camera, upperLeg) {
     moveLegs = true;
-
-    var angleUpperRight = 0;
-    var angleUpperLeft = 0;
-    var angleLowerLeft = 0;
-    var angleLowerRight = 0;
 
     var inc = 0.1;
 
@@ -112,12 +112,12 @@ var legMovement = function (scene, leg, max, ccw, camera, upperLeg) {
             }
         } else {
 
-            if (angleUpperRight > 0.1) {
+            if (angleUpperRight >= 0.1) {
                 angleUpperRight -= inc;
 
                 upperLegRight.rotate(BABYLON.Axis.Z, -inc);
                 upperLegLeft.rotate(BABYLON.Axis.Z, inc);
-            } else if (angleUpperRight < -0.1) {
+            } else if (angleUpperRight <= -0.1) {
                 angleUpperRight += inc;
                 upperLegRight.rotate(BABYLON.Axis.Z, inc);
                 upperLegLeft.rotate(BABYLON.Axis.Z, -inc);
