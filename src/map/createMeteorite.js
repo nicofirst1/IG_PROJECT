@@ -2,14 +2,14 @@ var metheoriteID = 0;
 var seed = 1;
 var max_dim = 3;
 var min_dim = 0.5;
-var meteorite_number = 10;
-var max_meteorites = 15;
+var meteorite_number = 5;
+var max_meteorites = 10;
 var meteoriteProb = 0.0;
 
 var createMeteorite = function (ground, scene) {
 
     var b = BABYLON.Mesh.CreateSphere("metheorite", 12, 3, scene);
-    water.addToRenderList(b);
+   //water.addToRenderList(b);
     b.subID = metheoriteID;
     metheoriteID += 1;
     if (metheoriteID > 1000) metheoriteID = 0;
@@ -98,6 +98,12 @@ var createMeteorite = function (ground, scene) {
     b.physicsImpostor.registerOnPhysicsCollide(ground.physicsImpostor, function () {
         if (b.position.y < 80) {
             explosionAnimation(scene, pSystem, b, "Resources/map/flares/flare.png", 1.000, 0.271, 0.000, rnd * 6, rnd * 12, ground, true, true);
+        }
+    });
+
+    b.physicsImpostor.registerOnPhysicsCollide(groundBox.physicsImpostor, function () {
+        if (b.position.y < 80) {
+            explosionAnimation(scene, pSystem, b, "Resources/map/flares/flare.png", 0.1, 0.1, 0.1, rnd * 6, rnd * 12, ground, true, true);
         }
     });
 

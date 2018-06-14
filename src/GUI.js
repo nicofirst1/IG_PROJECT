@@ -90,7 +90,9 @@ var inflictDamage = function (collidedMesh) {
     }
 
     if (collidedMesh.id === "groundBox" || collidedMesh.id === "ground") {
-
+        if (Math.abs(camera.position.y - 5.51) < 0.0001 ) {
+                update_healt(-1);
+        }
 
         if (isJumping && falling && upperLegRight) {
             upperLegLeft.rotation.x = Math.PI / 2;

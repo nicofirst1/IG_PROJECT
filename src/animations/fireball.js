@@ -138,9 +138,10 @@ var fireFireball = function (scene, camera, ground) {
     pSystem2.start();
 
     var impulseDir = new BABYLON.Vector3(0.0, 0.0, 0.0);
-    impulseDir.x = direction.x * 100;
-    impulseDir.y = direction.y * 100;
-    impulseDir.z = direction.z * 100;
+    var scaling = 45;
+    impulseDir.x = direction.x * scaling;
+    impulseDir.y = direction.y * scaling;
+    impulseDir.z = direction.z * scaling;
 
     bulletFireball.physicsImpostor.applyImpulse(impulseDir, bulletFireball.getAbsolutePosition());
     bulletFireball.collisionsCount = 0;

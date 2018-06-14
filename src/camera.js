@@ -9,7 +9,7 @@ var isJumping = true;
 
 var jumpKeyRelease = false;
 var modeSwitch = 0;
-var camera_position = new BABYLON.Vector3(40, 55, 0);
+var camera_position = new BABYLON.Vector3(0, 55, 0);
 
 var InitCamera = function (scene) {
     camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 10, 0), scene);
