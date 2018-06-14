@@ -137,11 +137,21 @@ var armAdjustTP=function () {
 
 var armAdjustFP=function () {
 
-    upperArmRight.rotate(BABYLON.Axis.Y, -1);
-    upperArmLeft.rotate(BABYLON.Axis.Y, 1);
 
-    lowerArmRight.rotate(BABYLON.Axis.Z, -1.5);
-    lowerArmLeft.rotate(BABYLON.Axis.Z, -1.5);
+    // body.translate(new BABYLON.Vector3(0, 7, -7));
+    // lowerArmLeft.translate(new BABYLON.Vector3(0, 0, -5));
+    // lowerArmRight.translate(new BABYLON.Vector3(0, 0, 5));
+
+    body.translate(new BABYLON.Vector3(0, 7, -7));
+
+    upperArmRight.rotate(BABYLON.Axis.Y, 0.7);
+    upperArmLeft.rotate(BABYLON.Axis.Y,- 0.7);
+    lowerArmLeft.rotate(BABYLON.Axis.Y, -0.5);
+    lowerArmRight.rotate(BABYLON.Axis.Y, 0.5);
+    lowerArmLeft.translate(new BABYLON.Vector3(1, -1, 4));
+    lowerArmRight.translate(new BABYLON.Vector3(1, -1, -4));
+    upperArmLeft.translate(new BABYLON.Vector3(-6, 4, 0));
+    upperArmRight.translate(new BABYLON.Vector3(-6, 4, 0));
 
 
 };
