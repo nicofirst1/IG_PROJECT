@@ -146,7 +146,6 @@ var armAdjustTP=function () {
 
 var armAdjustFP=function () {
 
-
     upperArmRight.rotate(BABYLON.Axis.Y, -1);
     upperArmLeft.rotate(BABYLON.Axis.Y, 1);
 
@@ -157,7 +156,7 @@ var armAdjustFP=function () {
 };
 
 
-var armSetOP=function (istp) {
+var armSetOP=function () {
 
 
     upperArmRight.updateMatrix(upperArmRight._restPose) ;
