@@ -7,8 +7,8 @@ var snow = function (scene, skybox) {
 
     // Where the particles come from
     particleSystem.emitter = skybox; // the starting object, the emitter
-    particleSystem.minEmitBox = new BABYLON.Vector3(-100, 0, -100); // Starting all from
-    particleSystem.maxEmitBox = new BABYLON.Vector3(100, 50, 100); // To...
+    particleSystem.minEmitBox = new BABYLON.Vector3(-30, 0, -30); // Starting all from
+    particleSystem.maxEmitBox = new BABYLON.Vector3(40, 50, 40); // To...
 
     // Colors of all particles
     particleSystem.color1 = new BABYLON.Color4(1, 1, 1.0, 1.0);
@@ -24,7 +24,7 @@ var snow = function (scene, skybox) {
     particleSystem.maxLifeTime = 15;
 
     // Emission rate
-    particleSystem.emitRate = 5000;
+    particleSystem.emitRate = 500;
 
     // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
     particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;

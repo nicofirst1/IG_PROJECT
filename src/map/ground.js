@@ -21,7 +21,7 @@ var initGround = function (scene, groundSize) {
     lavaMaterial.fogColor = new BABYLON.Color3(1, 0, 0);
     groundBox.material = lavaMaterial;
 
-    ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/poly_HM/Heightmap3.png", groundSize, groundSize, 64, 0, ground_max_z, scene, false, function () {
+    ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "Resources/map/poly_HM/Heightmap3.png", groundSize, groundSize, 64, -3, ground_max_z, scene, false, function () {
 
         scene.executeWhenReady(function () {
             engine.runRenderLoop(function () {
@@ -38,12 +38,10 @@ var initGround = function (scene, groundSize) {
         }, scene);
         ground.checkCollisions = true;
 
-        var groundMateial = new BABYLON.StandardMaterial("material", scene);
-        groundMateial.uScale = 2;
-        groundMateial.vScale = 2;
-        groundMateial.specularColor = new BABYLON.Color3(0.1, 0.1, 0.1);
-        //groundMateial.diffuseTexture = new BABYLON.Texture("Resources/green/green.jpg", scene);
-        ground.material = groundMateial;
+        var groundMaterial = new BABYLON.StandardMaterial("material", scene);
+        groundMaterial.diffuseTexture = new BABYLON.Texture("Resources/ice/ice.jpg", scene);
+        groundMaterial.emissiveColor = new BABYLON.Vector3(0.878, 1.000, 1.000);
+        ground.material = groundMaterial;
 
         var grounds = [ground, groundBox];
 

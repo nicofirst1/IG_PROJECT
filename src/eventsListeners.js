@@ -87,7 +87,13 @@ var onKeyUp = function (event) {
     if (keyVec.indexOf(event.keyCode) >= 0) {
         moveLegs = false;
         moveArms = false;
-        movementBool = true;
+        if (!movementBool) {
+            movementBool = true;
+            upperLegRight.setRotation(upperLegRightInit);
+            upperLegLeft.setRotation(upperLegLeftInit);
+            lowerLegRight.setRotation(lowerLegRightInit);
+            lowerLegLeft.setRotation(lowerLegLeftInit);
+        }
     }
     switch (event.keyCode) {
         case 32:

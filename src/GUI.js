@@ -91,7 +91,7 @@ var inflictDamage = function (collidedMesh) {
 
     if (collidedMesh.id === "groundBox" || collidedMesh.id === "ground") {
 
-        if (Math.abs(camera.position.y - 5.51) < 0.01) {
+        if (round(camera.position.y, 2) === 5.51) {
             scene.beforeRender = function () {
                 update_healt(-1);
             };

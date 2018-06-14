@@ -84,7 +84,7 @@ var fireFireball = function (scene, camera, ground) {
 
     bulletFireball.checkCollisions = true;
     bulletFireball.physicsImpostor = new BABYLON.PhysicsImpostor(bulletFireball, BABYLON.PhysicsImpostor.SphereImpostor, {
-        mass: 1 * scalingX,
+        mass: 0.3 * scalingX,
         friction: 0,
         restitution: 0
     });
