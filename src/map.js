@@ -3,12 +3,14 @@ var ground_max_z = 50;// the maximum for the ground height map
 var sky_size = 10000.0; //the size of the skybox
 var subdivisions = 32; // allows you to increase the complexity of your mesh in order to improve the visual quality of it
 var ambient_fog = false;
-var snow_flag=false;
+var snow_flag=true;
+var skybox ;
 
 
 var initMap = function (scene, light, shadow, camera) {
 
-    var skybox = initSkybox(scene, sky_size);
+
+    skybox = initSkybox(scene, sky_size);
 
     if (ambient_fog) {
         scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
@@ -17,9 +19,7 @@ var initMap = function (scene, light, shadow, camera) {
     }
 
 
-    if (snow_flag) {
-        snow(scene, skybox);
-    }
+    snow(scene, skybox);
 
     var grounds = initGround(scene, groundSize);
 

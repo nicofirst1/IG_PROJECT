@@ -153,6 +153,17 @@ var onKeyUp = function (event) {
             }
             break;
 
+        case 90: //z
+            if (snow_flag){
+
+                snowPS.start();
+                snow_flag=false;
+            }
+            else{
+                snowPS.stop();
+                snow_flag=true;
+            }
+
 
     }
 };

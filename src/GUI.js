@@ -432,6 +432,14 @@ var writtenInfos = function (adcancedTexture) {
     header1.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
     header1.paddingTop = "700px";
 
+    var header2 = new BABYLON.GUI.TextBlock();
+    header2.text = "Toggle snow with 'Z'";
+    header2.width = "250px";
+    header2.color = "yellow";
+    header2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    header2.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+    header2.paddingTop = "650px";
+
 
     currentPov = new BABYLON.GUI.TextBlock();
     currentPov.text = "Current POV is TP";
@@ -444,6 +452,7 @@ var writtenInfos = function (adcancedTexture) {
 
     adcancedTexture.addControl(header);
     adcancedTexture.addControl(header1);
+    adcancedTexture.addControl(header2);
     adcancedTexture.addControl(currentPov);
 
 };
