@@ -39,7 +39,7 @@ var createMeteorite = function (ground, scene) {
 
     var impulseDir = new BABYLON.Vector3(0, 0, 0);
 
-    var impulseScale = 1000;
+    var impulseScale = 100;
     //var metPos = b.getAbsolutePosition();
     //impulseDir.x = (camera.position.x -  metPos.x) * impulseScale * rnd;
     //impulseDir.y = (camera.position.y -  metPos.y) * impulseScale * rnd;
