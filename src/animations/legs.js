@@ -147,11 +147,12 @@ var legMovement = function (scene, leg, max, ccw, camera, upperLeg) {
 };
 
 var angleUpperRight0 = 0;
+var isCharging = false;
 
 var legsJumpCharge = function (scene) {
 
+    isCharging = true;
     var inc = 0.3;
-
     scene.beforeRender = function () {
         if (canCharge && !isJumping) {
             if (angleUpperRight0 >= -maxUpper) {
@@ -172,22 +173,6 @@ var legsJumpCharge = function (scene) {
     };
 
 };
-
-
-function fireKeyboardEvent(event, keycode) {
-    var keyboardEvent = document.createEventObject ?
-        document.createEventObject() : document.createEvent("Events");
-
-    if(keyboardEvent.initEvent) {
-        keyboardEvent.initEvent(event, true, true);
-    }
-
-    keyboardEvent.keyCode = keycode;
-    keyboardEvent.which = keycode;
-
-    document.dispatchEvent ? document.dispatchEvent(keyboardEvent)
-        : document.fireEvent(event, keyboardEvent);
-}
 
 
 var angleUpperRight1 = 0;
@@ -216,3 +201,19 @@ var legsJumpRelease = function (scene) {
     };
 
 };
+
+
+function fireKeyboardEvent(event, keycode) {
+    var keyboardEvent = document.createEventObject ?
+        document.createEventObject() : document.createEvent("Events");
+
+    if(keyboardEvent.initEvent) {
+        keyboardEvent.initEvent(event, true, true);
+    }
+
+    keyboardEvent.keyCode = keycode;
+    keyboardEvent.which = keycode;
+
+    document.dispatchEvent ? document.dispatchEvent(keyboardEvent)
+        : document.fireEvent(event, keyboardEvent);
+}

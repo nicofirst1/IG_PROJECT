@@ -143,60 +143,6 @@ var inflictDamage = function (collidedMesh) {
         return;
     }
 
-    // if (collidedMesh.id === "groundBox" || collidedMesh.id === "ground") {
-    //
-    //     if(upperLegLeft)upperLegLeft.rotation.x = Math.PI / 2;
-    //     if(upperLegRight)upperLegRight.rotation.x = Math.PI / 2;
-    //
-    //
-    //     var angleUpperRight00 = 0;
-    //     var angleUpperRight11 = 0;
-    //     var inc = 0.07;
-    //
-    //     scene.beforeRender = function () {
-    //         if (Math.abs(camera.position.y - 5) < 0.1 ) {
-    //             update_healt(-damages.lava)
-    //         }
-    //         if (isJumping && falling && upperLegRight) {
-    //
-    //             if (angleUpperRight00 >= -maxUpper) {
-    //                 angleUpperRight00 -= inc;
-    //                 upperLegRight.rotate(BABYLON.Axis.Z, -inc);
-    //                 lowerLegRight.rotate(BABYLON.Axis.Z, -inc);
-    //                 upperLegLeft.rotate(BABYLON.Axis.Z, -inc);
-    //                 lowerLegLeft.rotate(BABYLON.Axis.Z, -inc);
-    //                 bodyMesh.position.y -= inc * 0.5;
-    //             } else {
-    //                 if (angleUpperRight11 >= -maxUpper) {
-    //                     angleUpperRight11 -= inc;
-    //                     upperLegRight.rotate(BABYLON.Axis.Z, inc);
-    //                     lowerLegRight.rotate(BABYLON.Axis.Z, inc);
-    //                     upperLegLeft.rotate(BABYLON.Axis.Z, inc);
-    //                     lowerLegLeft.rotate(BABYLON.Axis.Z, inc);
-    //
-    //                     upperLegRight.rotate(BABYLON.Axis.Y, -inc / 7);
-    //                     upperLegLeft.rotate(BABYLON.Axis.Y, inc / 7);
-    //
-    //                     bodyMesh.position.y += inc * 0.5;
-    //                 } else {
-    //                     upperLegRight.setRotation(upperLegRightInit);
-    //                     upperLegLeft.setRotation(upperLegLeftInit);
-    //                 }
-    //             }
-    //         }
-    //     };
-    //
-    //     if (isJumping && falling && upperLegRight) {
-    //         isJumping = false;
-    //         falling = false;
-    //     }
-    //
-    //
-    // }
-
-
-    console.log(collidedMesh);
-
 
     if (collidedMesh.id === "restObject") {
         update_healt(-damages.bulletFireballRest)

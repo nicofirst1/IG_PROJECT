@@ -67,6 +67,7 @@ var cameraJump = function (scene) {
         movementBool = true;
         canCharge = true;
         falling = true;
+        isCharging = false;
 
         angleUpperRight0 = 0;
         angleUpperRight1 = 0;
@@ -82,10 +83,6 @@ var cameraJump = function (scene) {
                 upperLegLeft.rotate(BABYLON.Axis.Y, inc/1.2);
 
             } else {
-                //upperLegRight.setRotation(upperLegRightInit);
-                //upperLegLeft.setRotation(upperLegLeftInit);
-                //lowerLegRight.setRotation(lowerLegRightInit);
-                //lowerLegLeft.setRotation(lowerLegLeftInit);
 
                 fireKeyboardEvent("keydown", 87);
                 fireKeyboardEvent("keyup", 87);

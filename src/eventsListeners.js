@@ -160,7 +160,7 @@ var onKeyUp = function (event) {
 var onKeyDown = function (event) {
     if (keyVec.indexOf(event.keyCode) >= 0) {
         if (chargedForJump) {
-            scene.stopAnimation(camera);
+            //scene.stopAnimation(camera);
             //scene.stopAnimation(upperLegRight);
             //scene.stopAnimation(upperLegLeft);
             legsCharge = true;
@@ -173,7 +173,10 @@ var onKeyDown = function (event) {
         }
     }
     if (event.keyCode === 32) {
-        legsJumpCharge(scene);
+        if (!isCharging) legsJumpCharge(scene);
+        else {
+            isCharging = false;
+        }
     }
 }
 
