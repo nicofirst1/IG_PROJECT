@@ -97,13 +97,13 @@ var createMeteorite = function (ground, scene) {
 
     b.physicsImpostor.registerOnPhysicsCollide(ground.physicsImpostor, function () {
         if (b.position.y < 80) {
-            explosionAnimation(scene, pSystem, b, "Resources/map/flares/flare.png", 1.000, 0.271, 0.000, rnd * 6, rnd * 12, ground, true, true);
+            explosion(scene, pSystem, b, "Resources/map/flares/flare.png", 1.000, 0.271, 0.000, rnd * 6, rnd * 12, ground, true, true);
         }
     });
 
     b.physicsImpostor.registerOnPhysicsCollide(groundBox.physicsImpostor, function () {
         if (b.position.y < 80) {
-            explosionAnimation(scene, pSystem, b, "Resources/map/flares/flare.png", 0.1, 0.1, 0.1, rnd * 6, rnd * 12, ground, true, true);
+            explosion(scene, pSystem, b, "Resources/map/flares/flare.png", 0.1, 0.1, 0.1, rnd * 6, rnd * 12, ground, true, true);
         }
     });
 

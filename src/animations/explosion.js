@@ -1,6 +1,6 @@
 var tailBool = true;
 
-var explosionAnimation = function (scene, pSystem, mesh, texture_path, r, g, b, minSize, maxSize, grounds, meteoriteBool, visible) {
+var explosion = function (scene, pSystem, mesh, texture_path, r, g, b, minSize, maxSize, grounds, meteoriteBool, visible) {
     pSystem.stop();
 
     var posAbs = mesh.getAbsolutePosition();

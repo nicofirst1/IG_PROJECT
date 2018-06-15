@@ -44,7 +44,7 @@ var initGround = function (scene, groundSize) {
         scene.registerBeforeRender(function () {
             scene.meshes.forEach(function (m) {
                 if (m.name == "metheorite" && m.position.y < -400) {
-                    explosionAnimation(scene, m.particleSystem, m, "Resources/map/flares/flare.png", 1.000, 0.271, 0.000, 0.5, 2, ground, true);
+                    explosion(scene, m.particleSystem, m, "Resources/map/flares/flare.png", 1.000, 0.271, 0.000, 0.5, 2, ground, true);
                 }
             });
         });

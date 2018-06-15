@@ -149,7 +149,7 @@ var fireFireball = function (scene, camera, ground) {
     bulletFireball.physicsImpostor.registerOnPhysicsCollide(ground.physicsImpostor, function() {
         bulletFireball.collisionsCount += 1;
         if (bulletFireball.collisionsCount == 5) {
-            explosionAnimation(scene, pSystem2, bulletFireball, "Resources/map/flares/flare.png", 1.000, 0.271, 0.000, 0.5, 2, ground, false);
+            explosion(scene, pSystem2, bulletFireball, "Resources/map/flares/flare.png", 1.000, 0.271, 0.000, 0.5, 2, ground, false);
         }
     });
 
