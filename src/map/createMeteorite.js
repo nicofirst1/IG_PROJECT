@@ -49,13 +49,13 @@ var createMeteorite = function (ground, scene) {
     b.physicsImpostor.applyImpulse(impulseDir, b.getAbsolutePosition());
 
     var fireballMaterial = new BABYLON.StandardMaterial("material", scene);
-    fireballMaterial.diffuseTexture = new BABYLON.Texture("Resources/fire/fire.jpg", scene);
+    fireballMaterial.diffuseTexture = new BABYLON.Texture("../Resources/fire/fire.jpg", scene);
     fireballMaterial.emissiveColor = new BABYLON.Vector3(1.0, 0.0, 0.0);
     b.material = fireballMaterial;
 
     var pSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
     pSystem.emitter = b;
-    pSystem.particleTexture = new BABYLON.Texture("Resources/map/flares/flare.png", scene);
+    pSystem.particleTexture = new BABYLON.Texture("../Resources/map/flares/flare.png", scene);
     pSystem.minEmitBox = new BABYLON.Vector3(-1, 1, -1);
     pSystem.maxEmitBox = new BABYLON.Vector3(1, 1, 1);
 
@@ -97,13 +97,13 @@ var createMeteorite = function (ground, scene) {
 
     b.physicsImpostor.registerOnPhysicsCollide(ground.physicsImpostor, function () {
         if (b.position.y < 80) {
-            explosion(scene, pSystem, b, "Resources/map/flares/flare.png", 1.000, 0.271, 0.000, rnd * 6, rnd * 12, ground, true, true);
+            explosion(scene, pSystem, b, "../Resources/map/flares/flare.png", 1.000, 0.271, 0.000, rnd * 6, rnd * 12, ground, true, true);
         }
     });
 
     b.physicsImpostor.registerOnPhysicsCollide(groundBox.physicsImpostor, function () {
         if (b.position.y < 80) {
-            explosion(scene, pSystem, b, "Resources/map/flares/flare.png", 0.1, 0.1, 0.1, rnd * 6, rnd * 12, ground, true, true);
+            explosion(scene, pSystem, b, "../Resources/map/flares/flare.png", 0.1, 0.1, 0.1, rnd * 6, rnd * 12, ground, true, true);
         }
     });
 

@@ -1,7 +1,7 @@
 var initShield = function (scene, camera) {
 
     var shieldTexture = new BABYLON.StandardMaterial("material", scene);
-    shieldTexture.diffuseTexture = new BABYLON.Texture("Resources/fire/fire.jpg", scene);
+    shieldTexture.diffuseTexture = new BABYLON.Texture("../Resources/fire/fire.jpg", scene);
     shieldTexture.emissiveColor = new BABYLON.Vector3(1.0, 0.0, 0.0);
 
     shieldTexture.alpha = 1;

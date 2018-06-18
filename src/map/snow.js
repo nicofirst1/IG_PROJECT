@@ -6,7 +6,7 @@ var snow = function (scene, skybox) {
     snowPS = new BABYLON.ParticleSystem("particles", 50000, scene);
 
     //Texture of each particle
-    snowPS.particleTexture = new BABYLON.Texture("Resources/map/flares/flare.png", scene);
+    snowPS.particleTexture = new BABYLON.Texture("../Resources/map/flares/flare.png", scene);
 
     // Where the particles come from
     snowPS.emitter = skybox; // the starting object, the emitter

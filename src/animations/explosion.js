@@ -14,7 +14,7 @@ var explosion = function (scene, pSystem, mesh, texture_path, r, g, b, minSize, 
     //water.addToRenderList(restObject);
 
     var fireballMaterial = new BABYLON.StandardMaterial("material", scene);
-    fireballMaterial.diffuseTexture = new BABYLON.Texture("Resources/magma/magma.jpg", scene);
+    fireballMaterial.diffuseTexture = new BABYLON.Texture("../Resources/magma/magma.jpg", scene);
     fireballMaterial.emissiveColor = new BABYLON.Vector3(1.0, 0.0, 0.0);
     restObject.material = fireballMaterial;
 

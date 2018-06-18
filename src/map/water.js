@@ -7,7 +7,7 @@ var initWater = function (scene, skybox, grounds) {
     var waterMesh = BABYLON.Mesh.CreateGround("waterMesh", groundSize, groundSize, 1, scene, true);
 
     water = new BABYLON.WaterMaterial("water", scene);
-    water.bumpTexture = new BABYLON.Texture("Resources/map/ground_texture/poly_water.jpg", scene);
+    water.bumpTexture = new BABYLON.Texture("../Resources/map/ground_texture/poly_water.jpg", scene);
 
     // Water properties
     water.windForce = 10;

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>Meteorite apocalypse</title>
+    <script src="src/map.js"></script>
+    <script src="libs/babylon.js"></script>
+    <script src="src/character.js"></script>
+    <script src="src/main.js"></script>
+    <script src="src/camera.js"></script>
+    <script src="src/light.js"></script>
+    <script src="src/optimizer.js"></script>
+    <script src="src/GUI.js"></script>
+    <script src="src/map/ground.js"></script>
+    <script src="src/map/skybox.js"></script>
+    <script src="src/map/snow.js"></script>
+    <script src="src/map/water.js"></script>
+    <script src="src/animations/explosion.js"></script>
+    <script src="src/map/createMeteorite.js"></script>
+    <script src="src/shield.js"></script>
+    <script src="src/sounds.js"></script>
+    <script src="src/animations/legs.js"></script>
+    <script src="src/animations/arms.js"></script>
+    <script src="src/animations/fireball.js"></script>
+    <script src="src/animations/jump.js"></script>
+    <script src="src/eventsListeners.js"></script>
+
+    <!-- Babylon.js -->
+    <script src="libs/cannon.js"></script>
+    <script src="libs/earcut.min.js"></script>
+    <script src="libs/babylon.js"></script>
+    <script src="libs/babylonjs.materials.min.js"></script>
+    <script src="libs/babylon.gui.min.js"></script>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #renderCanvas {
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+
+        }
+    </style>
+
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="menu/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="menu/fonts/fonts.css"/>
+    <link rel="stylesheet" href="menu/css/gamemenu.css"/>
+</head>
+<body>
+
+
+<h1 class="main-font title" id="menu-title">Meteorite apocalypse</h1>
+<ul id="main-menu"></ul>
+<div id="loading">
+    <img id="loading-img" width="120" src="menu/img/loading.gif"/>
+    <h2 class="main-font">Loading...</h2>
+</div>
+
+<div id="credits" style="display:none;margin-left:40px;margin-top:60px;">
+
+    <p>Interactive Graphic Project</p>
+    <p>Developed by</p>
+    <p>Nicolò Brandizzi</p>
+    <p>Eric Stefan Miele</p>
+
+    <ul class="sub-menu" id="back-credits" style="top:0px;">
+        <li class="back">Back</li>
+    </ul>
+
+</div>
+
+<div id="assets">
+    <audio id="sfx-background" loop>
+        <source src="menu/sound/background-music.ogg"></source>
+        <source src="menu/sound/background-music.mp3"></source>
+    </audio>
+    <audio id="sfx-select">
+        <source src="menu/sound/menu_select_1.ogg"></source>
+        <source src="menu/sound/menu_select_1.mp3"></source>
+    </audio>
+    <audio id="sfx-move">
+        <source src="menu/sound/menu_move_1.ogg"></source>
+        <source src="menu/sound/menu_move_1.mp3"></source>
+    </audio>
+</div>
+
+<canvas id="renderCanvas"></canvas>
+
+
+</body>
+
+
+<script src="menu/js/jquery-2.1.4.min.js"></script>
+<script src="menu/js/bootstrap.min.js"></script>
+<script src="menu/js/gamemenu.js"></script>
+
+
+</html>

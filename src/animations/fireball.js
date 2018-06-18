@@ -5,7 +5,7 @@ var createFireball = function (scene, camera) {
     fireball = BABYLON.Mesh.CreateSphere('fireball', 16, 0.1, scene);
 
     var fireballMaterial = new BABYLON.StandardMaterial("material", scene);
-    fireballMaterial.diffuseTexture = new BABYLON.Texture("Resources/fire/fire.jpg", scene);
+    fireballMaterial.diffuseTexture = new BABYLON.Texture("../Resources/fire/fire.jpg", scene);
     fireballMaterial.emissiveColor = new BABYLON.Vector3(1.0, 0.0, 0.0);
     fireball.material = fireballMaterial;
 
@@ -21,7 +21,7 @@ var createFireball = function (scene, camera) {
     pSystem.light.diffuse = new BABYLON.Color3(.8, 0, 0);
     pSystem.light.range = 15;
 
-    pSystem.particleTexture = new BABYLON.Texture("Resources/map/flares/flare.png", scene);
+    pSystem.particleTexture = new BABYLON.Texture("../Resources/map/flares/flare.png", scene);
     pSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
     pSystem.maxEmitBox = new BABYLON.Vector3(0, .2, 0);
     pSystem.color1 = new BABYLON.Color4(1.0, 0.05, 0.05, .9);
@@ -107,7 +107,7 @@ var fireFireball = function (scene, camera, ground) {
 
     bulletFireball.position = new BABYLON.Vector3(startPos.x, startPos.y, startPos.z);
     var fireballMaterial = new BABYLON.StandardMaterial("material", scene);
-    fireballMaterial.diffuseTexture = new BABYLON.Texture("Resources/fire/fire.jpg", scene);
+    fireballMaterial.diffuseTexture = new BABYLON.Texture("../Resources/fire/fire.jpg", scene);
     fireballMaterial.emissiveColor = new BABYLON.Vector3(1.0, 0.0, 0.0);
     bulletFireball.material = fireballMaterial;
 
@@ -118,7 +118,7 @@ var fireFireball = function (scene, camera, ground) {
     pSystem2.light.diffuse = new BABYLON.Color3(.8, 0, 0);
     pSystem2.light.range = 15;
 
-    pSystem2.particleTexture = new BABYLON.Texture("Resources/map/flares/flare.png", scene);
+    pSystem2.particleTexture = new BABYLON.Texture("../Resources/map/flares/flare.png", scene);
     pSystem2.minEmitBox = new BABYLON.Vector3(0, 0, 0);
     pSystem2.maxEmitBox = new BABYLON.Vector3(0, .2, 0);
     pSystem2.color1 = new BABYLON.Color4(1.0, 0.05, 0.05, .9);
@@ -150,7 +150,7 @@ var fireFireball = function (scene, camera, ground) {
     bulletFireball.physicsImpostor.registerOnPhysicsCollide(ground.physicsImpostor, function() {
         bulletFireball.collisionsCount += 1;
         if (bulletFireball.collisionsCount == 5) {
-            explosion(scene, pSystem2, bulletFireball, "Resources/map/flares/flare.png", 1.000, 0.271, 0.000, 0.5, 2, ground, false);
+            explosion(scene, pSystem2, bulletFireball, "../Resources/map/flares/flare.png", 1.000, 0.271, 0.000, 0.5, 2, ground, false);
         }
     });
 

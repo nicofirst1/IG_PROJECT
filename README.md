@@ -1,19 +1,11 @@
-# map stuff
-## Links 
-- [map](https://www.eternalcoding.com/?p=263)
-- [textures](https://opengameart.org/textures)
-- [skyboxes](http://www.custommapmakers.org/skyboxes.php)
- 
-## skyboxes
-- [image distribution](http://iwearshorts.com/Mike/uploads/2015/04/map-300x225.jpg)
+# final-project-for-interactive-graphics-course-meteorite-apocalypse
 
-### Notation conversion
-babylon work with the notation [px,py,pz,nx,ny,nz] shown in - [this image](http://iwearshorts.com/Mike/uploads/2015/04/map-300x225.jpg)
-, if you have another notation one possible conversion is this:
 
-- up->py
-- ft->pz
-- rt->nx
-- lf->px
-- dn->ny
-- bk->nz
+We implemented a game based on the Babylon.js framework, using physical engines,
+meshes, textures, lights, particle systems and much more to create a playable environment.
+Our focus was on the cyclic implementation of the character animations manually
+coded, but also on the challenging aspect of the game.
+In the documentation we analyze in detail every technical aspect and provide a user
+manual with instructions for playing the game.
+
+[Demo](https://marcoschaerfcourses.github.io/final-project-for-interactive-graphics-course-meteorite-apocalypse)
